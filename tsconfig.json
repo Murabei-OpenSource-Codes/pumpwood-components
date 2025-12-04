@@ -11,7 +11,16 @@
     "declarationDir": "dist/types",
     "outDir": "dist",
     "sourceMap": true,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "src/*"
+      ]
+    }
   },
-  "include": ["src"]
+  "include": [
+    "src",
+    "lib"
+  ]
 }
