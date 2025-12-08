@@ -29,7 +29,7 @@ const config: StorybookConfig = {
     return mergeConfig(config, {
       resolve: {
         alias: {
-          '@': path.resolve(__dirname, '../'),
+          '@': path.resolve(__dirname, '../src'),
         },
       },
       plugins: [tailwindcss()],

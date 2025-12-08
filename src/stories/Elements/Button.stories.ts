@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import PumpwoodButton from '@/src/components/Button';
+import PumpwoodButton from '@/components/Button';
 
 const meta = {
     title: 'Pumpwood/Elements/Button',
