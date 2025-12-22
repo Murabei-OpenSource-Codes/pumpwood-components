@@ -4,3 +4,4 @@
 export { default as Button } from "./components/Button";
 export { default as Stack } from "./components/Stack";
 export { ConfirmationDialog } from "./components/ConfirmationDialog";
+export { Typography } from "./components/Text";
