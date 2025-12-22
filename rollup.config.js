@@ -7,7 +7,7 @@ import image from "@rollup/plugin-image";
 
 
 export default {
-  input: "src/index.js",
+  input: "src/index.ts",
   output: [
     {
       file: "dist/index.js",
@@ -29,7 +29,8 @@ export default {
     babel({
       exclude: "node_modules/**",
       babelHelpers: "bundled",
-      presets: ["@babel/preset-react"],
+      presets: ["@babel/preset-react", "@babel/preset-typescript"],
+      extensions: ['.js', '.jsx', '.ts', '.tsx'],
     }),
     postcss(),
   ],
