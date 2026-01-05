@@ -10,7 +10,9 @@
     "build": "node node_modules/rollup/dist/bin/rollup -c",
     "prepare": "npm run build",
     "storybook": "node node_modules/storybook/dist/bin/dispatcher.js dev -p 6006",
-    "build-storybook": "node node_modules/storybook/dist/bin/dispatcher.js build"
+    "build-storybook": "node node_modules/storybook/dist/bin/dispatcher.js build",
+    "storybook:build": "storybook build",
+    "storybook:deploy": "npm run storybook:build && gh-pages -d storybook-static"
   },
   "keywords": [],
   "author": "",
@@ -45,6 +47,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "create-storybook": "^10.1.0",
+    "gh-pages": "^6.3.0",
     "playwright": "^1.57.0",
     "postcss": "^8.5.6",
     "rollup": "^4.54.0",
