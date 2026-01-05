@@ -7,7 +7,7 @@ type TypographyProps = HTMLAttributes<HTMLParagraphElement> & {
 };
 
 function H1({ children, className, ...props }: TypographyProps) {
-    return <h1 className={cn("text-3xl font-bold tracking-tight", className)} {...props}>{children}</h1>
+    return <h1 className={cn(className)} {...props}>{children}</h1>
 }
 
 function Muted({ children, className, ...props }: TypographyProps) {
