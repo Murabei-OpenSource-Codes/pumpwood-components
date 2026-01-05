@@ -12,7 +12,6 @@ import {
 	AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { cn } from "@/lib/utils";
-import { Button } from "../ui/button";
 
 export interface RootProps {
 	open: boolean;

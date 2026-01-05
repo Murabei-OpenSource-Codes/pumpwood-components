@@ -10,10 +10,6 @@ const config: Config = {
     theme: {
         extend: {
             colors: {
-                'button-primary': 'hsl(var(--button-primary))',
-                'surface-secondary': 'hsl(var(--surface-secondary))',
-                'secondary-font': 'hsl(var(--secondary-font-color))',
-                'tertiary-font': 'hsl(var(--terciary-font-color))',
                 background: 'hsl(var(--background))',
                 foreground: 'hsl(var(--foreground))',
                 card: {

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import PumpwoodDropzone from '@/components/Dropzone';
-import PumpwoodButton from '@/components/Button';
+import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 
 const meta = {
@@ -22,7 +22,7 @@ export const UploadCSV: Story = {
             "text/csv": [".csv"],
         },
         onFilesAccepted: (files) => console.log('Files accepted:', files),
-        children: <PumpwoodButton>Upload Files</PumpwoodButton>,
+        children: <Button>Upload Files</Button>,
     },
     render: (args) => {
         const [files, setFiles] = useState<File[]>([]);
@@ -36,9 +36,9 @@ export const UploadCSV: Story = {
                         setFiles(acceptedFiles);
                     }}
                 >
-                    <PumpwoodButton>
+                    <Button>
                         Upload {files.length} file(s)
-                    </PumpwoodButton>
+                    </Button>
                 </PumpwoodDropzone>
             </div>
         );
@@ -52,7 +52,7 @@ export const CustomSizeLimit: Story = {
             "text/csv": [".csv"],
         },
         onFilesAccepted: (files) => console.log('Files accepted:', files),
-        children: <PumpwoodButton>Upload Document</PumpwoodButton>,
+        children: <Button>Upload Document</Button>,
     },
     render: (args) => {
         const [files, setFiles] = useState<File[]>([]);

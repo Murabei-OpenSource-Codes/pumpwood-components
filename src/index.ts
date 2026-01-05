@@ -2,7 +2,7 @@ import "./styles/globals.css";
 // export {default as Toast} from "src/components/toast";
 // export * as Text from "src/components/text"; //for named export
 
-export { default as Button } from "./components/Button";
+export { Button } from "./components/ui/button";
 export { default as Stack } from "./components/Stack";
 export { default as Dropzone } from "./components/Dropzone";
 export { ConfirmationDialog } from "./components/ConfirmationDialog";
