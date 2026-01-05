@@ -10,6 +10,10 @@ const config: Config = {
     theme: {
         extend: {
             colors: {
+                warning: {
+                    DEFAULT: 'hsl(var(--warning))',
+                    foreground: 'hsl(var(--warning-foreground))'
+                },
                 background: 'hsl(var(--background))',
                 foreground: 'hsl(var(--foreground))',
                 card: {
@@ -80,6 +84,6 @@ const config: Config = {
             }
         }
     },
-    plugins: [require("tailwindcss-animate")],
+    plugins: [],
 };
 export default config;

@@ -102,17 +102,10 @@ export const Primary: Story = {
                                     <PumpwoodBadge
                                         variant={
                                             row.status === "Normal"
-                                                ? "default"
+                                                ? "secondary"
                                                 : row.status === "Warning"
-                                                    ? "secondary" // secondary is often yellow/orange in shadcn themes or just gray, let's stick to default variants for now or customize if needed.
+                                                    ? "warning"
                                                     : "destructive"
-                                        }
-                                        className={
-                                            row.status === "Normal"
-                                                ? "bg-green-500 hover:bg-green-600"
-                                                : row.status === "Warning"
-                                                    ? "bg-yellow-500 hover:bg-yellow-600"
-                                                    : "bg-red-500 hover:bg-red-600"
                                         }
                                     >
                                         {row.status}

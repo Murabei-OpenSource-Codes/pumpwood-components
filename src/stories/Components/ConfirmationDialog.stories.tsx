@@ -23,7 +23,7 @@ export const Primary: Story = {
             </ConfirmationDialog.Header>
             <ConfirmationDialog.Footer>
                 <ConfirmationDialog.Cancel>Cancel </ConfirmationDialog.Cancel>
-                <ConfirmationDialog.Action onClick={() => { }} className='bg-red-400 text-white'> Continue </ConfirmationDialog.Action>
+                <ConfirmationDialog.Action onClick={() => { }}> Continue </ConfirmationDialog.Action>
             </ConfirmationDialog.Footer>
         </ConfirmationDialog.Content>)
     }

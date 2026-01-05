@@ -97,7 +97,7 @@ function Action({
 	return (
 		<AlertDialogAction
 			onClick={onClick}
-			className={`${variantClass} ${className}`.trim()}
+			className={cn('bg-[#026CB6] text-[#FFFFFF]', `${variantClass} ${className}`.trim())}
 		>
 			{children}
 		</AlertDialogAction>
@@ -113,7 +113,7 @@ export interface CancelProps {
 
 function Cancel({ children, onClick, className }: CancelProps) {
 	return (
-		<AlertDialogCancel onClick={onClick} className={className}>
+		<AlertDialogCancel onClick={onClick} className={cn('bg-[#D1D5DB] text-[#3F3F46]', className)}>
 			{children}
 		</AlertDialogCancel>
 	);
