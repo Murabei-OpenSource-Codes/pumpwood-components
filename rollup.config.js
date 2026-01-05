@@ -4,7 +4,12 @@ import resolve from "@rollup/plugin-node-resolve";
 import postcss from "rollup-plugin-postcss";
 import terser from "@rollup/plugin-terser";
 import image from "@rollup/plugin-image";
+import alias from "@rollup/plugin-alias";
+import path from "path";
+import { fileURLToPath } from "url";
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 export default {
   input: "src/index.ts",
@@ -21,6 +26,11 @@ export default {
     },
   ],
   plugins: [
+    alias({
+      entries: [
+        { find: "@", replacement: path.resolve(__dirname, "src") },
+      ],
+    }),
     resolve({
       extensions: ['.js', '.jsx', '.ts', '.tsx'],
     }),
