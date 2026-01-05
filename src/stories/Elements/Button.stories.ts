@@ -14,6 +14,5 @@ export const Primary: Story = {
     args: {
         children: 'Click here',
         variant: "default",
-        className: "bg-red-200 text-black/50"
     },
 };
