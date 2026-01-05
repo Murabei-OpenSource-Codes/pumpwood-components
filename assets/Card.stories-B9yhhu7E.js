@@ -1,0 +1,41 @@
+import{j as a}from"./jsx-runtime-fXg_pr7h.js";import{r as t}from"./iframe-CNw1ZKb7.js";import{c as s}from"./utils-CDN07tui.js";import{P}from"./index-Dq18NlQw.js";import"./preload-helper-PPVm8Dsz.js";import"./index-B_jtOnfb.js";const i=t.forwardRef(({className:e,...o},d)=>a.jsx("div",{ref:d,className:s("rounded-xl border bg-card text-card-foreground shadow",e),...o}));i.displayName="Card";const m=t.forwardRef(({className:e,...o},d)=>a.jsx("div",{ref:d,className:s("flex flex-col space-y-1.5 p-6",e),...o}));m.displayName="CardHeader";const p=t.forwardRef(({className:e,...o},d)=>a.jsx("div",{ref:d,className:s("font-semibold leading-none tracking-tight",e),...o}));p.displayName="CardTitle";const c=t.forwardRef(({className:e,...o},d)=>a.jsx("div",{ref:d,className:s("text-sm text-muted-foreground",e),...o}));c.displayName="CardDescription";const u=t.forwardRef(({className:e,...o},d)=>a.jsx("div",{ref:d,className:s("p-6 pt-0",e),...o}));u.displayName="CardContent";const N=t.forwardRef(({className:e,...o},d)=>a.jsx("div",{ref:d,className:s("flex items-center p-6 pt-0",e),...o}));N.displayName="CardFooter";i.__docgenInfo={description:"",methods:[],displayName:"Card"};m.__docgenInfo={description:"",methods:[],displayName:"CardHeader"};N.__docgenInfo={description:"",methods:[],displayName:"CardFooter"};p.__docgenInfo={description:"",methods:[],displayName:"CardTitle"};c.__docgenInfo={description:"",methods:[],displayName:"CardDescription"};u.__docgenInfo={description:"",methods:[],displayName:"CardContent"};const l={Root:i,Content:u,Header:m,Title:p,Description:c},w=t.forwardRef(({className:e,...o},d)=>a.jsx("div",{className:"w-full overflow-auto",children:a.jsx("table",{ref:d,className:s("w-full caption-bottom text-sm",e),...o})}));w.displayName="Table";const b=t.forwardRef(({className:e,...o},d)=>a.jsx("thead",{ref:d,className:s(e),...o}));b.displayName="TableHeader";const f=t.forwardRef(({className:e,...o},d)=>a.jsx("tbody",{ref:d,className:s("[&_tr:last-child]:border-0",e),...o}));f.displayName="TableBody";const h=t.forwardRef(({className:e,...o},d)=>a.jsx("tfoot",{ref:d,className:s("bg-primary font-medium text-primary-foreground",e),...o}));h.displayName="TableFooter";const T=t.forwardRef(({className:e,...o},d)=>a.jsx("tr",{ref:d,className:s("text-sm text-fontcolor-secondary transition-colors data-[state=selected]:bg-muted",e),...o}));T.displayName="TableRow";const x=t.forwardRef(({className:e,...o},d)=>a.jsx("th",{ref:d,className:s("text-left align-middle font-sm text-xs font-medium [&:has([role=checkbox])]:pr-0 first:rounded-l-lg last:rounded-r-lg",e),...o}));x.displayName="TableHead";const C=t.forwardRef(({className:e,...o},d)=>a.jsx("td",{ref:d,className:s("py-2 align-middle [&:has([role=checkbox])]:pr-0",e),...o}));C.displayName="TableCell";const g=t.forwardRef(({className:e,...o},d)=>a.jsx("caption",{ref:d,className:s("mt-4 text-sm text-muted-foreground",e),...o}));g.displayName="TableCaption";w.__docgenInfo={description:"",methods:[],displayName:"Table"};f.__docgenInfo={description:"",methods:[],displayName:"TableBody"};g.__docgenInfo={description:"",methods:[],displayName:"TableCaption"};C.__docgenInfo={description:"",methods:[],displayName:"TableCell"};h.__docgenInfo={description:"",methods:[],displayName:"TableFooter"};x.__docgenInfo={description:"",methods:[],displayName:"TableHead"};b.__docgenInfo={description:"",methods:[],displayName:"TableHeader"};T.__docgenInfo={description:"",methods:[],displayName:"TableRow"};const r={Root:w,Body:f,Cell:C,Head:x,Header:b,Row:T},W={title:"Pumpwood/Components/PumpwoodCard",component:l.Root},y=[{id:1,plant:"Solar Farm Alpha",inverter:"INV-001",radiance:"850 W/m²",power:"450 kW",status:"Normal",lastUpdate:"2024-05-20 10:30 AM"},{id:2,plant:"Solar Farm Alpha",inverter:"INV-002",radiance:"845 W/m²",power:"448 kW",status:"Normal",lastUpdate:"2024-05-20 10:30 AM"},{id:3,plant:"Solar Farm Beta",inverter:"INV-B01",radiance:"600 W/m²",power:"200 kW",status:"Warning",lastUpdate:"2024-05-20 10:35 AM"},{id:4,plant:"Solar Farm Beta",inverter:"INV-B02",radiance:"610 W/m²",power:"310 kW",status:"Normal",lastUpdate:"2024-05-20 10:35 AM"},{id:5,plant:"Solar Farm Gamma",inverter:"INV-G01",radiance:"920 W/m²",power:"500 kW",status:"Normal",lastUpdate:"2024-05-20 10:40 AM"},{id:6,plant:"Solar Farm Gamma",inverter:"INV-G02",radiance:"915 W/m²",power:"0 kW",status:"Error",lastUpdate:"2024-05-20 10:40 AM"}],n={args:{children:a.jsxs(l.Root,{children:[a.jsxs(l.Header,{children:[a.jsx(l.Title,{children:"Status do inversor"}),a.jsx(l.Description,{children:"Análise dos inversores da planta"})]}),a.jsx(l.Content,{children:a.jsxs(r.Root,{children:[a.jsx(r.Header,{children:a.jsxs(r.Row,{children:[a.jsx(r.Head,{children:"Planta"}),a.jsx(r.Head,{children:"Inversor"}),a.jsx(r.Head,{children:"Radiância"}),a.jsx(r.Head,{children:"Potência Gerada"}),a.jsx(r.Head,{children:"Status"}),a.jsx(r.Head,{className:"text-right",children:"Última Atualização"})]})}),a.jsx(r.Body,{children:y.map(e=>a.jsxs(r.Row,{children:[a.jsx(r.Cell,{className:"font-medium",children:e.plant}),a.jsx(r.Cell,{children:e.inverter}),a.jsx(r.Cell,{children:e.radiance}),a.jsx(r.Cell,{children:e.power}),a.jsx(r.Cell,{children:a.jsx(P,{variant:e.status==="Normal"?"default":e.status==="Warning"?"secondary":"destructive",className:e.status==="Normal"?"bg-green-500 hover:bg-green-600":e.status==="Warning"?"bg-yellow-500 hover:bg-yellow-600":"bg-red-500 hover:bg-red-600",children:e.status})}),a.jsx(r.Cell,{className:"text-right",children:e.lastUpdate})]},e.id))})]})})]})}};n.parameters={...n.parameters,docs:{...n.parameters?.docs,source:{originalSource:`{
+  args: {
+    children: <PumpwoodCard.Root>
+            <PumpwoodCard.Header>
+                <PumpwoodCard.Title>Status do inversor</PumpwoodCard.Title>
+                <PumpwoodCard.Description>
+                    Análise dos inversores da planta
+                </PumpwoodCard.Description>
+            </PumpwoodCard.Header>
+            <PumpwoodCard.Content>
+                <PumpwoodTable.Root>
+                    <PumpwoodTable.Header>
+                        <PumpwoodTable.Row>
+                            <PumpwoodTable.Head>Planta</PumpwoodTable.Head>
+                            <PumpwoodTable.Head>Inversor</PumpwoodTable.Head>
+                            <PumpwoodTable.Head>Radiância</PumpwoodTable.Head>
+                            <PumpwoodTable.Head>Potência Gerada</PumpwoodTable.Head>
+                            <PumpwoodTable.Head>Status</PumpwoodTable.Head>
+                            <PumpwoodTable.Head className="text-right">Última Atualização</PumpwoodTable.Head>
+                        </PumpwoodTable.Row>
+                    </PumpwoodTable.Header>
+                    <PumpwoodTable.Body>
+                        {MOCKED_DATA.map(row => <PumpwoodTable.Row key={row.id}>
+                                <PumpwoodTable.Cell className="font-medium">{row.plant}</PumpwoodTable.Cell>
+                                <PumpwoodTable.Cell>{row.inverter}</PumpwoodTable.Cell>
+                                <PumpwoodTable.Cell>{row.radiance}</PumpwoodTable.Cell>
+                                <PumpwoodTable.Cell>{row.power}</PumpwoodTable.Cell>
+                                <PumpwoodTable.Cell>
+                                    <PumpwoodBadge variant={row.status === "Normal" ? "default" : row.status === "Warning" ? "secondary" // secondary is often yellow/orange in shadcn themes or just gray, let's stick to default variants for now or customize if needed.
+                : "destructive"} className={row.status === "Normal" ? "bg-green-500 hover:bg-green-600" : row.status === "Warning" ? "bg-yellow-500 hover:bg-yellow-600" : "bg-red-500 hover:bg-red-600"}>
+                                        {row.status}
+                                    </PumpwoodBadge>
+                                </PumpwoodTable.Cell>
+                                <PumpwoodTable.Cell className="text-right">{row.lastUpdate}</PumpwoodTable.Cell>
+                            </PumpwoodTable.Row>)}
+                    </PumpwoodTable.Body>
+                </PumpwoodTable.Root>
+            </PumpwoodCard.Content>
+        </PumpwoodCard.Root>
+  }
+}`,...n.parameters?.docs?.source}}};const A=["Primary"];export{n as Primary,A as __namedExportsOrder,W as default};
