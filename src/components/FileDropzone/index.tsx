@@ -1,6 +1,6 @@
 "use client";
 
-import { FileText, Pencil, Trash2, Upload } from "lucide-react";
+import { FileText, Pencil, Trash2, Upload, UploadCloud } from "lucide-react";
 import { useCallback, useMemo, useState } from "react";
 import { type Accept, type FileWithPath, useDropzone } from "react-dropzone";
 import { toast } from "react-toastify";
@@ -46,7 +46,7 @@ export default function FileDropzone({
     }, [accept, acceptExtensions]);
 
     const acceptString = useMemo(
-        () => Object.values(computedAccept).flat().join(","),
+        () => Object.values(computedAccept).reduce((acc, val) => acc.concat(val), [] as string[]).join(","),
         [computedAccept],
     );
 
@@ -87,7 +87,7 @@ export default function FileDropzone({
         onDrop,
         maxFiles: 1,
         maxSize: maxSizeBytes,
-        accept,
+        accept: computedAccept,
         multiple: false,
     });
 
@@ -100,11 +100,21 @@ export default function FileDropzone({
     const handleEditFile = () => {
         const input = document.createElement("input");
         input.type = "file";
-        input.accept = acceptExtensions;
+        input.accept = acceptString;
 
         input.onchange = (e) => {
             const file = (e.target as HTMLInputElement).files?.[0];
             if (!file) return;
+
+            const allowedExtensions = Object.values(computedAccept).reduce((acc, val) => acc.concat(val), [] as string[]);
+            const isValidExtension = allowedExtensions.some((ext) =>
+                file.name.toLowerCase().endsWith(ext.toLowerCase()),
+            );
+
+            if (!isValidExtension) {
+                toast.error(`Invalid file type. Allowed: ${allowedExtensions.join(", ")}`);
+                return;
+            }
 
             if (file.size > maxSizeBytes) {
                 toast.error(`File size must be under ${maxSizeMB} MB`);
@@ -121,7 +131,7 @@ export default function FileDropzone({
 
     return (
         <div className="space-y-2">
-            <p className="text-sm text-gray-700">
+            <p className="font-bold">
                 Envie um arquivo com até {maxSizeMB} MB.
             </p>
 
@@ -143,18 +153,18 @@ export default function FileDropzone({
             ) : (
                 <div
                     {...getRootProps()}
-                    className={`border rounded-lg text-center cursor-pointer transition-colors ${isDragActive
+                    className={`border rounded-lg text-center cursor-pointer transition-colors h-[300px] ${isDragActive
                         ? "border-blue-500 bg-blue-50"
-                        : "border-gray-300 hover:border-gray-400 bg-gray-50"
+                        : "border-gray-300 hover:border-gray-400"
                         }`}
                 >
                     <input {...getInputProps()} />
-                    <div className="py-16 px-6 flex flex-col items-center gap-3">
-                        <Upload className="h-16 w-16 text-blue-500" />
-                        <p className="text-sm text-gray-700">
+                    <div className="py-16 px-6 flex flex-col items-center">
+                        <UploadCloud strokeWidth={1} className="size-[80px] text-[#026CB6]" />
+                        <p className="text-muted">
                             Arraste e solte ou selecione um arquivo.
                         </p>
-                        <p className="text-xs text-gray-500">{acceptExtensions}</p>
+                        <p className="text-muted">Arquivos aceitos:{acceptExtensions}</p>
                     </div>
                 </div>
             )}
