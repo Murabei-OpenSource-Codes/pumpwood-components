@@ -11,3 +11,4 @@ export { PumpwoodCard as Card } from "./components/Card";
 export { PumpwoodTable as Table } from "./components/Table";
 export { PumpwoodBadge as Badge } from "./components/Badge";
 export { default as FileDropzone } from "./components/FileDropzone";
+export { Sidebar } from "./components/Sidebar";

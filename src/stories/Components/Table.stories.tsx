@@ -6,6 +6,9 @@ import { PumpwoodBadge } from '@/components/Badge';
 const meta = {
     title: 'Pumpwood/Components/Table',
     component: PumpwoodTable.Root,
+    parameters: {
+        layout: "centered",
+    },
 } satisfies Meta<typeof PumpwoodTable.Root>;
 
 export default meta;
