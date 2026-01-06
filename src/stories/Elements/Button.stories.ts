@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import PumpwoodButton from '@/components/Button';
+import { Button } from '@/components/ui/button';
 
 const meta = {
     title: 'Pumpwood/Elements/Button',
-    component: PumpwoodButton,
-} satisfies Meta<typeof PumpwoodButton>;
+    component: Button,
+} satisfies Meta<typeof Button>;
 
 export default meta;
 
@@ -13,5 +13,6 @@ type Story = StoryObj<typeof meta>;
 export const Primary: Story = {
     args: {
         children: 'Click here',
+        variant: "default",
     },
 };
