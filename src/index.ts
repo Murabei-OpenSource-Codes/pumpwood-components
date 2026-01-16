@@ -12,3 +12,6 @@ export { PumpwoodTable as Table } from "./components/Table";
 export { PumpwoodBadge as Badge } from "./components/Badge";
 export { default as FileDropzone } from "./components/FileDropzone";
 export { Sidebar } from "./components/Sidebar";
+export { Tabs, TabsContent, TabsList, TabsTrigger } from "./components/ui/tabs";
+export { Empty, EmptyHeader, EmptyTitle, EmptyDescription, EmptyContent, EmptyMedia } from "./components/ui/empty";
+export { EmptyContainer } from "./components/EmptyContainer";
