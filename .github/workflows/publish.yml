@@ -7,14 +7,20 @@ on:
 
 permissions:
   contents: read
-  id-token: write
+  id-token: write   # obrigatório para OIDC
 
 jobs:
   build-and-publish:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 10
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -23,10 +29,10 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
 
       - name: Install Dependencies
-        run: npm install
+        run: pnpm install --frozen-lockfile
 
       - name: Build Library
-        run: npm ci
+        run: pnpm run build
 
-      - name: Publish to NPM
-        run: npm publish --access public
+      - name: Publish to NPM (Trusted Publisher)
+        run: pnpm publish --access public --provenance --no-git-checks
