@@ -32,10 +32,10 @@ jobs:
       - name: Build package
         run: pnpm run build --if-present
 
-      - name: Sync package version with Git tag
+      - name: Sync version with Git tag
         run: |
           VERSION=${GITHUB_REF_NAME#v}
           pnpm version "$VERSION" --no-git-tag-version
 
-      - name: Publish to npm
-        run: pnpm publish --access public --no-git-checks
+      - name: Publish to npm (OIDC)
+        run: pnpm publish --access public --no-git-checks --provenance
