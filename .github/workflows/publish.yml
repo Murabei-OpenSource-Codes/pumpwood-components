@@ -30,10 +30,15 @@ jobs:
           VERSION=${GITHUB_REF_NAME#v}
           pnpm version "$VERSION" --no-git-tag-version
 
-      - name: Remove npm auth (force OIDC)
+      - name: Remove npm auth files
         run: |
           rm -f ~/.npmrc
           rm -f .npmrc
 
-      - name: Publish to npm
+      - name: Unset npm tokens
+        run: |
+          unset NODE_AUTH_TOKEN
+          unset NPM_TOKEN
+
+      - name: Publish to npm via OIDC
         run: pnpm publish --access public --no-git-checks --provenance
