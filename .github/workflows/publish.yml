@@ -14,29 +14,23 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+    - uses: actions/checkout@v4
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@v3
-        with:
-          version: 10
+    - uses: pnpm/action-setup@v3
+      with:
+        version: 10
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          registry-url: 'https://registry.npmjs.org'
+    - uses: actions/setup-node@v4
+      with:
+        node-version: '20'
 
-      - name: Install Dependencies
-        run: pnpm install --frozen-lockfile
+    - run: pnpm install --frozen-lockfile
+    - run: pnpm run build
 
-      - name: Build Library
-        run: pnpm run build
+    - name: Reset npm auth
+      run: |
+        rm -f ~/.npmrc
+        rm -f .npmrc
 
-      - name: Remove legacy npm auth
-        run: |
-          npm config delete //registry.npmjs.org/:_authToken || true
-
-      - name: Publish to NPM (Trusted Publisher)
-        run: pnpm publish --access public --provenance --no-git-checks
+    - name: Publish (OIDC)
+      run: npm publish --access public --provenance
