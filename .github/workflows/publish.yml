@@ -14,28 +14,26 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: '24'
           registry-url: 'https://registry.npmjs.org'
 
-      - name: Enable Corepack
-        run: corepack enable
+      - run: corepack enable
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm run build --if-present
 
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Build package
-        run: pnpm run build --if-present
-
-      - name: Sync version with Git tag
+      - name: Sync version with tag
         run: |
           VERSION=${GITHUB_REF_NAME#v}
           pnpm version "$VERSION" --no-git-tag-version
 
-      - name: Publish to npm (OIDC)
+      - name: Remove npm auth (force OIDC)
+        run: |
+          rm -f ~/.npmrc
+          rm -f .npmrc
+
+      - name: Publish to npm
         run: pnpm publish --access public --no-git-checks --provenance
