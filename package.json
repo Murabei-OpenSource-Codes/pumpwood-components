@@ -1,6 +1,9 @@
 {
-  "name": "pumpwood-components",
-  "version": "1.0.0",
+  "name": "pumpwood-ui-components",
+  "publishConfig": {
+    "access": "public"
+  },
+  "version": "1.0.1",
   "description": "",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",

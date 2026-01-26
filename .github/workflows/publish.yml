@@ -1,0 +1,44 @@
+name: Publish to NPM
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          registry-url: 'https://registry.npmjs.org'
+
+      - run: corepack enable
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm run build --if-present
+
+      - name: Sync version with tag
+        run: |
+          VERSION=${GITHUB_REF_NAME#v}
+          pnpm version "$VERSION" --no-git-tag-version
+
+      - name: Remove npm auth files
+        run: |
+          rm -f ~/.npmrc
+          rm -f .npmrc
+
+      - name: Unset npm tokens
+        run: |
+          unset NODE_AUTH_TOKEN
+          unset NPM_TOKEN
+
+      - name: Publish to npm via OIDC
+        run: pnpm publish --access public --no-git-checks --provenance
