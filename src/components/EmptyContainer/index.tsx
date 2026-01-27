@@ -16,7 +16,7 @@ export function EmptyContainer({ title, description }: EmptyContainerProps) {
     return (
         <Empty>
             <EmptyHeader className="w-[250px]">
-                <EmptyMedia variant="icon">
+                <EmptyMedia>
                     <BadgeInfo />
                 </EmptyMedia>
                 <EmptyTitle>{title}</EmptyTitle>
