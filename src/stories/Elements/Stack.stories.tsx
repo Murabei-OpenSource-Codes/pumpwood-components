@@ -19,6 +19,6 @@ export const Primary: Story = {
         </>,
         direction: 'col',
         gap: 2,
-        className: 'bg-red-500 w-fit p-10 text-white rounded-xl',
+        className: 'pw:bg-red-500 pw:w-fit pw:p-10 pw:text-white pw:rounded-xl',
     },
 };

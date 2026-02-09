@@ -35,7 +35,7 @@ export interface ContentProps {
 
 function Content({ children, className }: ContentProps) {
 	return (
-		<AlertDialogContent className={cn('bg-white', className)}>{children}</AlertDialogContent>
+		<AlertDialogContent className={cn('pw:bg-white', className)}>{children}</AlertDialogContent>
 	);
 }
 
@@ -91,13 +91,13 @@ function Action({
 }: ActionProps) {
 	const variantClass =
 		variant === "destructive"
-			? "bg-destructive text-destructive-foreground hover:bg-destructive/90"
+			? "pw:bg-destructive pw:text-destructive-foreground hover:pw:bg-destructive/90"
 			: "";
 
 	return (
 		<AlertDialogAction
 			onClick={onClick}
-			className={cn('bg-[#026CB6] text-[#FFFFFF]', `${variantClass} ${className}`.trim())}
+			className={cn('pw:bg-[#026CB6] pw:text-[#FFFFFF]', `${variantClass} ${className}`.trim())}
 		>
 			{children}
 		</AlertDialogAction>
@@ -113,7 +113,7 @@ export interface CancelProps {
 
 function Cancel({ children, onClick, className }: CancelProps) {
 	return (
-		<AlertDialogCancel onClick={onClick} className={cn('bg-[#D1D5DB] text-[#3F3F46]', className)}>
+		<AlertDialogCancel onClick={onClick} className={cn('pw:bg-[#D1D5DB] pw:text-[#3F3F46]', className)}>
 			{children}
 		</AlertDialogCancel>
 	);

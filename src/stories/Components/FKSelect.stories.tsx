@@ -34,7 +34,7 @@ export const Primary: Story = {
     render: (args) => {
         const [value, setValue] = useState<string | number | null>(args.value);
         return (
-            <div className="h-[300px] w-[300px]">
+            <div className="pw:h-[300px] pw:w-[300px]">
                 <FKSelect
                     {...args}
                     value={value}

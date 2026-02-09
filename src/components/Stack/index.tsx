@@ -16,8 +16,8 @@ function Stack({
     className,
     ...props
 }: StackProps) {
-    const baseGap = gap ? `gap-${gap}` : "gap-0";
-    const baseDirection = direction === "row" ? "flex flex-row" : "flex flex-col";
+    const baseGap = gap ? `pw:gap-${gap}` : "pw:gap-0";
+    const baseDirection = direction === "row" ? "pw:flex pw:flex-row" : "pw:flex pw:flex-col";
     const baseStyle = `${baseDirection} ${baseGap}`;
 
     return (

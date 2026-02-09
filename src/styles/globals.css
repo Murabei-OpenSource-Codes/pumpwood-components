@@ -1,20 +1,15 @@
-@import "tailwindcss";
+@import "tailwindcss" prefix(pw);
 @config "../../tailwind.config.ts";
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
 
-body {
+.pumpwood-ui {
     font-family: "Aeroport", sans-serif;
-    padding: 8px;
-}
-
-body[data-scroll-locked] {
-    padding: 8px !important;
 }
 
 @layer base {
-    :root {
+    .pumpwood-ui {
         --background: 0 0% 100%;
         --background-section-color: 158 15% 96%;
         --foreground: 158 30% 15%;
@@ -70,15 +65,15 @@ body[data-scroll-locked] {
 }
 
 @layer base {
-    * {
-        @apply border-[hsl(var(--border))];
+    .pumpwood-ui * {
+        @apply pw:border-[hsl(var(--border))];
     }
 
-    body {
-        @apply bg-[hsl(var(--background))] text-[hsl(var(--foreground))];
+    .pumpwood-ui {
+        @apply pw:bg-[hsl(var(--background))] pw:text-[hsl(var(--foreground))];
     }
 
-    body * {
+    .pumpwood-ui * {
         font-family: inherit;
     }
 
@@ -87,7 +82,7 @@ body[data-scroll-locked] {
     }
 
     /* Typography */
-    h1 {
+    .pumpwood-ui h1 {
         font-size: 2.25rem;
         line-height: 2.5rem;
         font-weight: 800;
@@ -100,7 +95,7 @@ body[data-scroll-locked] {
         }
     }
 
-    h2 {
+    .pumpwood-ui h2 {
         font-feature-settings: "dlig" on;
 
         font-size: 1px;
@@ -110,7 +105,7 @@ body[data-scroll-locked] {
         /* 155.556% */
     }
 
-    h3 {
+    .pumpwood-ui h3 {
         margin-top: 2rem;
         font-size: 1.5rem;
         line-height: 2rem;
@@ -119,7 +114,7 @@ body[data-scroll-locked] {
         scroll-margin: 5rem;
     }
 
-    h4 {
+    .pumpwood-ui h4 {
         font-size: 1.25rem;
         line-height: 1.75rem;
         font-weight: 400;
@@ -127,16 +122,16 @@ body[data-scroll-locked] {
         scroll-margin: 5rem;
     }
 
-    p {
+    .pumpwood-ui p {
         line-height: 1.75rem;
     }
 
     /* Global font color */
-    h1,
-    h2,
-    h3,
-    h4 {
-        @apply text-[hsl(var(--primary))];
+    .pumpwood-ui h1,
+    .pumpwood-ui h2,
+    .pumpwood-ui h3,
+    .pumpwood-ui h4 {
+        @apply pw:text-[hsl(var(--primary))];
     }
 
     input,

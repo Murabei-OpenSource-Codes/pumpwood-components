@@ -130,41 +130,41 @@ export default function FileDropzone({
     };
 
     return (
-        <div className="space-y-2">
-            <p className="font-bold">
+        <div className="pw:space-y-2">
+            <p className="pw:font-bold">
                 Envie um arquivo com até {maxSizeMB} MB.
             </p>
 
             {acceptedFile ? (
-                <div className="flex items-center justify-between border rounded-md px-3 py-2 bg-white">
-                    <div className="flex items-center gap-2">
-                        <FileText className="h-4 w-4 text-gray-600" />
-                        <span className="text-sm">{acceptedFile.name}</span>
+                <div className="pw:flex pw:items-center pw:justify-between pw:border pw:rounded-md pw:px-3 pw:py-2 pw:bg-white">
+                    <div className="pw:flex pw:items-center pw:gap-2">
+                        <FileText className="pw:h-4 pw:w-4 pw:text-gray-600" />
+                        <span className="pw:text-sm">{acceptedFile.name}</span>
                     </div>
-                    <div className="flex items-center gap-1">
-                        <button onClick={handleEditFile} className="p-1 hover:bg-gray-100 rounded">
-                            <Pencil className="h-4 w-4" />
+                    <div className="pw:flex pw:items-center pw:gap-1">
+                        <button onClick={handleEditFile} className="pw:p-1 hover:pw:bg-gray-100 rounded">
+                            <Pencil className="pw:h-4 pw:w-4" />
                         </button>
-                        <button onClick={handleDeleteFile} className="p-1 hover:bg-red-50 rounded">
-                            <Trash2 className="h-4 w-4 text-red-600" />
+                        <button onClick={handleDeleteFile} className="pw:p-1 hover:pw:bg-red-50 rounded">
+                            <Trash2 className="pw:h-4 pw:w-4 pw:text-red-600" />
                         </button>
                     </div>
                 </div>
             ) : (
                 <div
                     {...getRootProps()}
-                    className={`border rounded-lg text-center cursor-pointer transition-colors h-[300px] ${isDragActive
-                        ? "border-blue-500 bg-blue-50"
-                        : "border-gray-300 hover:border-gray-400"
+                    className={`pw:border pw:rounded-lg pw:text-center pw:cursor-pointer pw:transition-colors pw:h-[300px] ${isDragActive
+                        ? "pw:border-blue-500 pw:bg-blue-50"
+                        : "pw:border-gray-300 hover:pw:border-gray-400"
                         }`}
                 >
                     <input {...getInputProps()} />
-                    <div className="py-16 px-6 flex flex-col items-center">
-                        <UploadCloud strokeWidth={1} className="size-[80px] text-[#026CB6]" />
-                        <p className="text-muted">
+                    <div className="pw:py-16 pw:px-6 pw:flex pw:flex-col pw:items-center">
+                        <UploadCloud strokeWidth={1} className="pw:size-[80px] pw:text-[#026CB6]" />
+                        <p className="pw:text-muted">
                             Arraste e solte ou selecione um arquivo.
                         </p>
-                        <p className="text-muted">Arquivos aceitos:{acceptExtensions}</p>
+                        <p className="pw:text-muted">Arquivos aceitos:{acceptExtensions}</p>
                     </div>
                 </div>
             )}

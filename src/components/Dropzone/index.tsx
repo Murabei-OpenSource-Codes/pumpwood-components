@@ -56,39 +56,39 @@ export default function PumpwoodDropzone({
     };
 
     return (
-        <div className="space-y-4">
+        <div className="pw:space-y-4">
             <div
                 {...getRootProps()}
-                className={`border-2 border-dashed rounded-lg text-center cursor-pointer transition-colors ${isDragActive
-                    ? "border-blue-500 bg-blue-50"
-                    : "border-gray-300 hover:border-gray-400"
+                className={`pw:border-2 pw:border-dashed pw:rounded-lg pw:text-center pw:cursor-pointer pw:transition-colors ${isDragActive
+                    ? "pw:border-blue-500 pw:bg-blue-50"
+                    : "pw:border-gray-300 hover:pw:border-gray-400"
                     }`}
             >
                 <input {...getInputProps()} />
                 <div
                     className={cn(
-                        acceptedFiles.length > 0 ? "p-6 bg-green-100" : "p-6",
-                        "flex flex-col items-center justify-center gap-2",
+                        acceptedFiles.length > 0 ? "pw:p-6 pw:bg-green-100" : "pw:p-6",
+                        "pw:flex pw:flex-col pw:items-center pw:justify-center pw:gap-2",
                     )}
                 >
                     {isDragActive && (
-                        <p className="font-medium text-blue-500">Clique para selecionar os arquivos ou arraste-os aqui</p>
+                        <p className="pw:font-medium pw:text-blue-500">Clique para selecionar os arquivos ou arraste-os aqui</p>
                     )}
                     {!isDragActive &&
                         acceptedFiles.length > 0 &&
                         acceptedFiles.map((file) => (
                             <Stack key={file.name}>
-                                <p className="font-medium">
+                                <p className="pw:font-medium">
                                     <b>Nome do arquivo:</b> {file.name}
                                 </p>
                             </Stack>
                         ))}
                     {!isDragActive && acceptedFiles.length === 0 && (
                         <>
-                            <p className="font-medium">
+                            <p className="pw:font-medium">
                                 Clique para selecionar os arquivos ou arraste-os aqui
                             </p>
-                            <p className="text-sm text-gray-500">
+                            <p className="pw:text-sm pw:text-gray-500">
                                 {maxSize / 1024 / 1024}MB
                             </p>
                         </>
@@ -97,29 +97,29 @@ export default function PumpwoodDropzone({
             </div>
 
             {/* Button outside dropzone */}
-            {acceptedFiles.length > 0 && <div className="w-full">{children}</div>}
+            {acceptedFiles.length > 0 && <div className="pw:w-full">{children}</div>}
 
             {/* Rejected Files */}
             {rejectedFiles.length > 0 && (
-                <div className="text-sm text-red-600">
-                    <h4 className="font-medium mb-2">Rejected files:</h4>
-                    <ul className="space-y-1">
+                <div className="pw:text-sm pw:text-red-600">
+                    <h4 className="pw:font-medium pw:mb-2">Rejected files:</h4>
+                    <ul className="pw:space-y-1">
                         {rejectedFiles.map((file) => (
-                            <li key={file.name} className="flex items-center justify-between">
+                            <li key={file.name} className="pw:flex pw:items-center pw:justify-between">
                                 <span>
                                     {file.name} ({(file.size / 1024).toFixed(2)} KB)
                                 </span>
                                 <button
                                     type="button"
                                     onClick={() => removeRejected(file.name)}
-                                    className="text-red-800 hover:text-red-900"
+                                    className="pw:text-red-800 hover:pw:text-red-900"
                                 >
                                     ×
                                 </button>
                             </li>
                         ))}
                     </ul>
-                    <p className="mt-1">
+                    <p className="pw:mt-1">
                         File must be {maxSize / 1024 / 1024}MB or smaller.
                     </p>
                 </div>

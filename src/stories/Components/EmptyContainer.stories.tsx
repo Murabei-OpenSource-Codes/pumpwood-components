@@ -40,7 +40,7 @@ export const EmptyDashboard: Story = {
 
 export const InContainer: Story = {
     render: (args) => (
-        <div className="w-full min-h-[500px] border rounded-lg bg-card p-4 flex flex-col justify-center items-center">
+        <div className="pw:w-full pw:min-h-[500px] pw:border pw:rounded-lg pw:bg-card pw:p-4 pw:flex pw:flex-col pw:justify-center pw:items-center">
             <EmptyContainer {...args} />
         </div>
     ),

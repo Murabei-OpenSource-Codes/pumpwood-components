@@ -84,13 +84,13 @@ export const Primary: Story = {
                         <PumpwoodTable.Head>Radiância</PumpwoodTable.Head>
                         <PumpwoodTable.Head>Potência Gerada</PumpwoodTable.Head>
                         <PumpwoodTable.Head>Status</PumpwoodTable.Head>
-                        <PumpwoodTable.Head className="text-right">Última Atualização</PumpwoodTable.Head>
+                        <PumpwoodTable.Head className="pw:text-right">Última Atualização</PumpwoodTable.Head>
                     </PumpwoodTable.Row>
                 </PumpwoodTable.Header>
                 <PumpwoodTable.Body>
                     {MOCKED_DATA.map((row) => (
                         <PumpwoodTable.Row key={row.id}>
-                            <PumpwoodTable.Cell className="font-medium">{row.plant}</PumpwoodTable.Cell>
+                            <PumpwoodTable.Cell className="pw:font-medium">{row.plant}</PumpwoodTable.Cell>
                             <PumpwoodTable.Cell>{row.inverter}</PumpwoodTable.Cell>
                             <PumpwoodTable.Cell>{row.radiance}</PumpwoodTable.Cell>
                             <PumpwoodTable.Cell>{row.power}</PumpwoodTable.Cell>
@@ -107,7 +107,7 @@ export const Primary: Story = {
                                     {row.status}
                                 </PumpwoodBadge>
                             </PumpwoodTable.Cell>
-                            <PumpwoodTable.Cell className="text-right">{row.lastUpdate}</PumpwoodTable.Cell>
+                            <PumpwoodTable.Cell className="pw:text-right">{row.lastUpdate}</PumpwoodTable.Cell>
                         </PumpwoodTable.Row>
                     ))}
                 </PumpwoodTable.Body>

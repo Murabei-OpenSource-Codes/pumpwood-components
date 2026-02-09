@@ -11,7 +11,7 @@ function H1({ children, className, ...props }: TypographyProps) {
 }
 
 function Muted({ children, className, ...props }: TypographyProps) {
-    return <p className={cn("text-muted-foreground", className)} {...props}>{children}</p>
+    return <p className={cn("pw:text-muted-foreground", className)} {...props}>{children}</p>
 }
 
 export const Typography = {

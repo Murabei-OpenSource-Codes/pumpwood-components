@@ -71,23 +71,23 @@ export function Combobox({
                     variant="outline"
                     aria-expanded={open}
                     className={cn(
-                        "w-full justify-between truncate hover:bg-slate-100",
+                        "pw:w-full pw:justify-between truncate hover:pw:bg-slate-100",
                         className,
                     )}
                 >
                     {selectedItem ? selectedItem?.label : placeholder}
-                    <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                    <ChevronsUpDown className="pw:ml-2 pw:h-4 pw:w-4 pw:shrink-0 pw:opacity-50" />
                 </Button>
             </PopoverTrigger>
 
-            <PopoverContent className="max-w-[700px] p-0 w-full min-w-[var(--radix-popover-trigger-width)]">
+            <PopoverContent className="pw:max-w-[700px] pw:p-0 pw:w-full pw:min-w-[var(--radix-popover-trigger-width)]">
                 <Command>
                     <CommandInput
                         data-cy="combobox-input"
                         placeholder={searchPlaceholder}
                         value={searchValue}
                         onValueChange={setSearchValue}
-                        className="h-9 focus:ring-0 focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0" // removes the black outline
+                        className="pw:h-9 focus:pw:ring-0 focus:pw:outline-none focus-visible:pw:ring-0 focus-visible:pw:ring-offset-0" // removes the black outline
                     />
                     <CommandList data-cy="combobox-list">
                         <CommandEmpty>{emptyMessage}</CommandEmpty>
@@ -99,13 +99,13 @@ export function Combobox({
                                     onSelect={(selectedValue) =>
                                         handleSelectedValue(selectedValue, item)
                                     }
-                                    className="data-[selected=true]:bg-slate-100"
+                                    className="data-[selected=true]:pw:bg-slate-100"
                                 >
                                     {item.label}
                                     <Check
                                         className={cn(
-                                            "ml-auto h-4 w-4",
-                                            value === item.value ? "opacity-100" : "opacity-0",
+                                            "pw:ml-auto pw:h-4 pw:w-4",
+                                            value === item.value ? "pw:opacity-100" : "pw:opacity-0",
                                         )}
                                     />
                                 </CommandItem>

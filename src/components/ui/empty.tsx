@@ -7,7 +7,7 @@ function Empty({ className, ...props }: React.ComponentProps<"div">) {
         <div
             data-slot="empty"
             className={cn(
-                "flex min-w-0 flex-1 flex-col items-center justify-center gap-6 text-balance rounded-lg border-dashed p-6 text-center md:p-12",
+                "pw:flex pw:min-w-0 pw:flex-1 pw:flex-col pw:items-center pw:justify-center pw:gap-6 pw:text-balance pw:rounded-lg pw:border-dashed pw:p-6 pw:text-center md:pw:p-12",
                 className
             )}
             {...props}
@@ -20,7 +20,7 @@ function EmptyHeader({ className, ...props }: React.ComponentProps<"div">) {
         <div
             data-slot="empty-header"
             className={cn(
-                "flex max-w-sm flex-col items-center gap-2 text-center",
+                "pw:flex pw:max-w-sm pw:flex-col pw:items-center pw:gap-2 pw:text-center",
                 className
             )}
             {...props}
@@ -29,12 +29,12 @@ function EmptyHeader({ className, ...props }: React.ComponentProps<"div">) {
 }
 
 const emptyMediaVariants = cva(
-    "mb-2 flex shrink-0 items-center justify-center [&_svg]:pointer-events-none [&_svg]:shrink-0",
+    "pw:mb-2 pw:flex pw:shrink-0 pw:items-center pw:justify-center [&_svg]:pw:pointer-events-none [&_svg]:pw:shrink-0",
     {
         variants: {
             variant: {
-                default: "bg-transparent",
-                icon: "bg-muted text-foreground flex size-10 shrink-0 items-center justify-center rounded-lg [&_svg:not([class*='size-'])]:size-6",
+                default: "pw:bg-transparent",
+                icon: "pw:bg-muted pw:text-foreground pw:flex pw:size-10 pw:shrink-0 pw:items-center pw:justify-center pw:rounded-lg [&_svg:not([class*='pw:size-'])]:pw:size-6",
             },
         },
         defaultVariants: {
@@ -62,7 +62,7 @@ function EmptyTitle({ className, ...props }: React.ComponentProps<"div">) {
     return (
         <div
             data-slot="empty-title"
-            className={cn("text-lg font-medium tracking-tight", className)}
+            className={cn("pw:text-lg pw:font-medium pw:tracking-tight", className)}
             {...props}
         />
     )
@@ -73,7 +73,7 @@ function EmptyDescription({ className, ...props }: React.ComponentProps<"p">) {
         <div
             data-slot="empty-description"
             className={cn(
-                "text-muted-foreground [&>a:hover]:text-primary text-sm/relaxed [&>a]:underline [&>a]:underline-offset-4",
+                "pw:text-muted-foreground [&>a:hover]:pw:text-primary pw:text-sm/relaxed [&>a]:pw:underline [&>a]:pw:underline-offset-4",
                 className
             )}
             {...props}
@@ -86,7 +86,7 @@ function EmptyContent({ className, ...props }: React.ComponentProps<"div">) {
         <div
             data-slot="empty-content"
             className={cn(
-                "flex w-full min-w-0 max-w-sm flex-col items-center gap-4 text-balance text-sm",
+                "pw:flex pw:w-full pw:min-w-0 pw:max-w-sm pw:flex-col pw:items-center pw:gap-4 pw:text-balance pw:text-sm",
                 className
             )}
             {...props}

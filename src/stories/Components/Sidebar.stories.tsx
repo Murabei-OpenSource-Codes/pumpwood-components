@@ -36,13 +36,13 @@ const SidebarWrapper = (props: any) => {
     );
 
     return (
-        <div className="h-[600px] bg-[#0E2B63] w-fit rounded-xl flex">
+        <div className="pw:h-[600px] pw:bg-[#0E2B63] pw:w-fit pw:rounded-xl pw:flex">
             <Sidebar.Root
                 isCollapsed={isCollapsed}
                 onToggleCollapse={() => setIsCollapsed(!isCollapsed)}
                 {...props}
             >
-                <Sidebar.Header className="w-full flex flex-col">
+                <Sidebar.Header className="pw:w-full pw:flex pw:flex-col">
                     <Sidebar.Toggle />
                     <Sidebar.Logo src="https://placehold.co/200x40/png" alt="Logo" />
                 </Sidebar.Header>

@@ -46,10 +46,10 @@ export const CombinedFilterTable = () => {
     });
 
     return (
-        <div className="flex flex-col gap-6 p-4 border rounded-lg bg-white">
-            <h2 className="text-xl font-bold">Combined Filter & Table Demo</h2>
+        <div className="pw:flex pw:flex-col pw:gap-6 pw:p-4 pw:border pw:rounded-lg pw:bg-white">
+            <h2 className="pw:text-xl pw:font-bold">Combined Filter & Table Demo</h2>
 
-            <div className="flex flex-wrap gap-4 items-end">
+            <div className="pw:flex pw:flex-wrap pw:gap-4 pw:items-end">
                 <DateRangeFilter
                     startDate={startDate}
                     endDate={endDate}
@@ -63,7 +63,7 @@ export const CombinedFilterTable = () => {
                 />
                 <Button
                     variant="outline"
-                    className="h-full"
+                    className="pw:h-full"
                     onClick={() => {
                         setStartDate(undefined);
                         setEndDate(undefined);
@@ -74,7 +74,7 @@ export const CombinedFilterTable = () => {
                 </Button>
             </div>
 
-            <div className="border rounded-md overflow-hidden">
+            <div className="pw:border pw:rounded-md pw:overflow-hidden">
                 <PumpwoodTable.Root>
                     <PumpwoodTable.Header>
                         <PumpwoodTable.Row>
@@ -108,7 +108,7 @@ export const CombinedFilterTable = () => {
             </div>
 
 
-            <div className="text-xs text-gray-400">
+            <div className="pw:text-xs pw:text-gray-400">
                 Showing {filteredData.length} of {allData.length} records.
             </div>
         </div>

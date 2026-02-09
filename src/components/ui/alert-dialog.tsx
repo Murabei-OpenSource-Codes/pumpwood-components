@@ -36,7 +36,7 @@ function AlertDialogOverlay({
         <AlertDialogPrimitive.Overlay
             data-slot="alert-dialog-overlay"
             className={cn(
-                "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50 bg-black/50",
+                "data-[state=open]:pw:animate-in data-[state=closed]:pw:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 pw:fixed pw:inset-0 pw:z-50 pw:bg-black/50",
                 className
             )}
             {...props}
@@ -54,7 +54,7 @@ function AlertDialogContent({
             <AlertDialogPrimitive.Content
                 data-slot="alert-dialog-content"
                 className={cn(
-                    "bg-background data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 fixed top-[50%] left-[50%] z-50 grid w-full max-w-[calc(100%-2rem)] translate-x-[-50%] translate-y-[-50%] gap-4 rounded-lg border p-6 shadow-lg duration-200 sm:max-w-lg",
+                    "pw:bg-background data-[state=open]:pw:animate-in data-[state=closed]:pw:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 pw:fixed pw:top-[50%] pw:left-[50%] pw:z-50 pw:grid pw:w-full pw:max-w-[calc(100%-2rem)] pw:translate-x-[-50%] pw:translate-y-[-50%] pw:gap-4 pw:rounded-lg pw:border pw:p-6 pw:shadow-lg pw:duration-200 sm:pw:max-w-lg",
                     className
                 )}
                 {...props}
@@ -70,7 +70,7 @@ function AlertDialogHeader({
     return (
         <div
             data-slot="alert-dialog-header"
-            className={cn("flex flex-col gap-2 text-center sm:text-left", className)}
+            className={cn("pw:flex pw:flex-col pw:gap-2 pw:text-center sm:pw:text-left", className)}
             {...props}
         />
     )
@@ -84,7 +84,7 @@ function AlertDialogFooter({
         <div
             data-slot="alert-dialog-footer"
             className={cn(
-                "flex flex-col-reverse gap-2 sm:flex-row sm:justify-end",
+                "pw:flex pw:flex-col-reverse pw:gap-2 sm:pw:flex-row sm:pw:justify-end",
                 className
             )}
             {...props}
@@ -99,7 +99,7 @@ function AlertDialogTitle({
     return (
         <AlertDialogPrimitive.Title
             data-slot="alert-dialog-title"
-            className={cn("text-lg font-semibold", className)}
+            className={cn("pw:text-lg pw:font-semibold", className)}
             {...props}
         />
     )
@@ -112,7 +112,7 @@ function AlertDialogDescription({
     return (
         <AlertDialogPrimitive.Description
             data-slot="alert-dialog-description"
-            className={cn("text-muted-foreground text-sm", className)}
+            className={cn("pw:text-muted-foreground pw:text-sm", className)}
             {...props}
         />
     )
