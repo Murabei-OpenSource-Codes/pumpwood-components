@@ -42,7 +42,10 @@ export default {
       presets: ["@babel/preset-react", "@babel/preset-typescript"],
       extensions: ['.js', '.jsx', '.ts', '.tsx'],
     }),
-    postcss(),
+    postcss({
+      extract: 'index.css',
+      minimize: true,
+    }),
   ],
   external: ["react", "react-dom"],
 };
