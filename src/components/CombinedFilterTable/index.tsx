@@ -8,6 +8,14 @@ import { format } from "date-fns";
 import { EmptyContainer } from "../EmptyContainer";
 import { Button } from "../ui/button";
 
+/**
+ * A demonstration component combining filters and a table.
+ *
+ * @example
+ * ```tsx
+ * <CombinedFilterTable />
+ * ```
+ */
 export const CombinedFilterTable = () => {
     const [startDate, setStartDate] = useState<Date | undefined>();
     const [endDate, setEndDate] = useState<Date | undefined>();

@@ -16,6 +16,18 @@ export interface CreatedByUserFilterProps {
     className?: string;
 }
 
+/**
+ * A filter component to select a user who created a resource.
+ *
+ * @example
+ * ```tsx
+ * <CreatedByUserFilter
+ *   fetcher={fetchUsers}
+ *   value={selectedUser}
+ *   onChange={setSelectedUser}
+ * />
+ * ```
+ */
 export const CreatedByUserFilter = ({
     value,
     onChange,

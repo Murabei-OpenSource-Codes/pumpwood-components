@@ -23,6 +23,19 @@ export interface DateRangeFilterProps {
     className?: string;
 }
 
+/**
+ * A date range picker filter component.
+ *
+ * @example
+ * ```tsx
+ * <DateRangeFilter
+ *   startDate={startDate}
+ *   endDate={endDate}
+ *   onStartDateChange={setStartDate}
+ *   onEndDateChange={setEndDate}
+ * />
+ * ```
+ */
 export const DateRangeFilter = ({
     startDate,
     endDate,

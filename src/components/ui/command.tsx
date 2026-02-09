@@ -12,6 +12,19 @@ import {
 } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 
+/**
+ * A command palette component.
+ *
+ * @example
+ * ```tsx
+ * <Command>
+ *   <CommandInput placeholder="Type a command..." />
+ *   <CommandList>
+ *     <CommandItem>Action</CommandItem>
+ *   </CommandList>
+ * </Command>
+ * ```
+ */
 function Command({
     className,
     ...props

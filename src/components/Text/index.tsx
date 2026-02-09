@@ -14,6 +14,15 @@ function Muted({ children, className, ...props }: TypographyProps) {
     return <p className={cn("pw:text-muted-foreground", className)} {...props}>{children}</p>
 }
 
+/**
+ * Typography components for consistent text styling.
+ *
+ * @example
+ * ```tsx
+ * <Typography.H1>Main Title</Typography.H1>
+ * <Typography.Muted>Subtitle text</Typography.Muted>
+ * ```
+ */
 export const Typography = {
     H1,
     Muted,

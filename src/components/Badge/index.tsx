@@ -29,6 +29,15 @@ export interface PumpwoodBadgeProps
     extends React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof pumpwoodBadgeVariants> { }
 
+/**
+ * A Badge component for status indicators and labels.
+ *
+ * @example
+ * ```tsx
+ * <Badge variant="primary">New</Badge>
+ * <Badge variant="destructive" size="sm">Error</Badge>
+ * ```
+ */
 export function PumpwoodBadge({
     className,
     variant,

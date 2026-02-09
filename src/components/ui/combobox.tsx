@@ -34,6 +34,18 @@ interface GenericComboboxProps
     searchPlaceholder?: string;
 }
 
+/**
+ * A searchable select component (Combobox).
+ *
+ * @example
+ * ```tsx
+ * <Combobox
+ *   items={[{ value: '1', label: 'Option 1' }]}
+ *   value={selectedValue}
+ *   onChange={setSelectedValue}
+ * />
+ * ```
+ */
 export function Combobox({
     items,
     value,
@@ -80,7 +92,7 @@ export function Combobox({
                 </Button>
             </PopoverTrigger>
 
-            <PopoverContent className="pw:max-w-[700px] pw:p-0 pw:w-full pw:min-w-[var(--radix-popover-trigger-width)]">
+            <PopoverContent className="pw:max-w-[700px] pw:p-0 pw:w-full pw:min-w-(--radix-popover-trigger-width)">
                 <Command>
                     <CommandInput
                         data-cy="combobox-input"

@@ -36,6 +36,20 @@ export interface IFKSelectProps {
     debounceWait?: number;
 }
 
+/**
+ * A foreign key select component (async combobox).
+ *
+ * @example
+ * ```tsx
+ * <FKSelect
+ *   fetcher={fetchData}
+ *   modelClass="User"
+ *   labelName="username"
+ *   value={userId}
+ *   onChange={setUserId}
+ * />
+ * ```
+ */
 export const FKSelect = ({
     fetcher,
     modelClass,

@@ -120,6 +120,25 @@ function Cancel({ children, onClick, className }: CancelProps) {
 }
 
 // Export as namespace for composition
+/**
+ * A dialog component for confirming actions (e.g., delete).
+ *
+ * @example
+ * ```tsx
+ * <ConfirmationDialog.Root open={isOpen} onOpenChange={setIsOpen}>
+ *   <ConfirmationDialog.Content>
+ *     <ConfirmationDialog.Header>
+ *       <ConfirmationDialog.Title>Are you sure?</ConfirmationDialog.Title>
+ *       <ConfirmationDialog.Description>This action cannot be undone.</ConfirmationDialog.Description>
+ *     </ConfirmationDialog.Header>
+ *     <ConfirmationDialog.Footer>
+ *       <ConfirmationDialog.Cancel onClick={() => setIsOpen(false)}>Cancel</ConfirmationDialog.Cancel>
+ *       <ConfirmationDialog.Action onClick={handleDelete} variant="destructive">Delete</ConfirmationDialog.Action>
+ *     </ConfirmationDialog.Footer>
+ *   </ConfirmationDialog.Content>
+ * </ConfirmationDialog.Root>
+ * ```
+ */
 export const ConfirmationDialog = {
 	Root,
 	Content,

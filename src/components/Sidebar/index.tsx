@@ -24,10 +24,17 @@ function useSidebar() {
     return context;
 }
 
+/**
+ * Props for the Sidebar Root component.
+ */
 export interface SidebarRootProps {
+    /** The content of the sidebar. */
     children: ReactNode;
+    /** Whether the sidebar is currently collapsed. */
     isCollapsed: boolean;
+    /** Callback to toggle the collapsed state. */
     onToggleCollapse: () => void;
+    /** Additional CSS classes. */
     className?: string;
 }
 
@@ -54,6 +61,9 @@ function Root({
     );
 }
 
+/**
+ * Props for the Sidebar Header component.
+ */
 export interface SidebarHeaderProps {
     children: ReactNode;
     className?: string;
@@ -72,6 +82,9 @@ function Header({ children, className }: SidebarHeaderProps) {
     );
 }
 
+/**
+ * Props for the Sidebar Content component.
+ */
 export interface SidebarContentProps {
     children: ReactNode;
     className?: string;
@@ -85,6 +98,9 @@ function Content({ children, className }: SidebarContentProps) {
     );
 }
 
+/**
+ * Props for the Sidebar Footer component.
+ */
 export interface SidebarFooterProps {
     children: ReactNode;
     className?: string;
@@ -94,6 +110,9 @@ function Footer({ children, className }: SidebarFooterProps) {
     return <div className={cn("pw:mt-auto pw:w-full", className)}>{children}</div>;
 }
 
+/**
+ * Props for the Sidebar Toggle component.
+ */
 export interface SidebarToggleProps {
     className?: string;
 }
@@ -127,6 +146,9 @@ function Toggle({ className }: SidebarToggleProps) {
     );
 }
 
+/**
+ * Props for the Sidebar Logo component.
+ */
 export interface SidebarLogoProps {
     src: string;
     alt: string;
@@ -170,6 +192,9 @@ function Logo({
     );
 }
 
+/**
+ * Props for the Sidebar Link component.
+ */
 export interface SidebarLinkProps {
     icon: LucideIcon;
     children: ReactNode;
@@ -218,6 +243,29 @@ function Link({
     );
 }
 
+/**
+ * A composable Sidebar component.
+ *
+ * @example
+ * ```tsx
+ * const [collapsed, setCollapsed] = useState(false);
+ *
+ * return (
+ *   <Sidebar.Root isCollapsed={collapsed} onToggleCollapse={() => setCollapsed(!collapsed)}>
+ *     <Sidebar.Header>
+ *       <Sidebar.Logo src="/logo.png" alt="Logo" />
+ *       <Sidebar.Toggle />
+ *     </Sidebar.Header>
+ *     <Sidebar.Content>
+ *       <Sidebar.Link icon={HomeIcon} href="/">Home</Sidebar.Link>
+ *     </Sidebar.Content>
+ *     <Sidebar.Footer>
+ *        User Info
+ *     </Sidebar.Footer>
+ *   </Sidebar.Root>
+ * )
+ * ```
+ */
 export const Sidebar = {
     Root,
     Header,

@@ -27,6 +27,18 @@ interface FileDropzoneProps {
 }
 
 
+/**
+ * A specialized file dropzone with built-in preview and validation.
+ *
+ * @example
+ * ```tsx
+ * <FileDropzone
+ *   onFileSelected={(file) => console.log(file)}
+ *   maxSizeMB={5}
+ *   acceptExtensions={['.pdf', '.docx']}
+ * />
+ * ```
+ */
 export default function FileDropzone({
     onFileSelected,
     onFileDeleted,

@@ -6,6 +6,20 @@ import * as React from "react";
 
 import { cn } from "@/lib/utils";
 
+/**
+ * A modal dialog component.
+ *
+ * @example
+ * ```tsx
+ * <Dialog>
+ *   <DialogTrigger>Open</DialogTrigger>
+ *   <DialogContent>
+ *     <DialogTitle>Title</DialogTitle>
+ *     <DialogDescription>Desc</DialogDescription>
+ *   </DialogContent>
+ * </Dialog>
+ * ```
+ */
 const Dialog = DialogPrimitive.Root;
 
 const DialogTrigger = DialogPrimitive.Trigger;

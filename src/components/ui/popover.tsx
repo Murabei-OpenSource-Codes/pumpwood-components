@@ -5,6 +5,17 @@ import * as React from "react";
 
 import { cn } from "@/lib/utils";
 
+/**
+ * A popover component for displaying rich content in a portal.
+ *
+ * @example
+ * ```tsx
+ * <Popover>
+ *   <PopoverTrigger>Open</PopoverTrigger>
+ *   <PopoverContent>Content</PopoverContent>
+ * </Popover>
+ * ```
+ */
 const Popover = PopoverPrimitive.Root;
 
 const PopoverTrigger = PopoverPrimitive.Trigger;

@@ -36,6 +36,15 @@ const buttonVariants = cva(
     }
 )
 
+/**
+ * Displays a button or a component that looks like a button.
+ *
+ * @example
+ * ```tsx
+ * <Button variant="default">Click me</Button>
+ * <Button variant="outline" size="sm">Action</Button>
+ * ```
+ */
 const Button = React.forwardRef<HTMLButtonElement, React.ButtonHTMLAttributes<HTMLButtonElement> &
     VariantProps<typeof buttonVariants> & {
         asChild?: boolean
