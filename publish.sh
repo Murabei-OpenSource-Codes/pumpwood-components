@@ -6,15 +6,15 @@ echo "Starting the publish process..."
 
 if [ -f .env ]; then
   echo "Loading environment variables from .env..."
-  export $(grep -v '^#' .env | xargs)
+  set -a; source .env; set +a
 else
   echo "No .env file found. Ensure NODE_AUTH_TOKEN is otherwise exported!"
 fi
 
 echo "Building the components library..."
-npm run build
+pnpm run build
 
 echo "Publishing to npm registry..."
-npm publish
+pnpm publish --access public --no-git-checks
 
 echo "Successfully published!"
