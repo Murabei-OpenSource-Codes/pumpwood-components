@@ -2,6 +2,10 @@ name: Publish to npm
 
 on:
   workflow_dispatch:
+    inputs:
+      version:
+        description: 'Versão para publicar (ex: 1.0.5 ou v1.0.5)'
+        required: true
   release:
     types: [created]
 
@@ -23,6 +27,19 @@ jobs:
         with:
           node-version: '20'
           registry-url: 'https://registry.npmjs.org'
+
+      - name: Atualizar versão no package.json
+        run: |
+          if [ "${{ github.event_name }}" = "release" ]; then
+            RAW_VERSION="${{ github.event.release.tag_name }}"
+          else
+            RAW_VERSION="${{ github.event.inputs.version }}"
+          fi
+          
+          CLEAN_VERSION="${RAW_VERSION#v}"
+          
+          echo "Atualizando package.json para a versão: $CLEAN_VERSION"
+          pnpm version "$CLEAN_VERSION" --no-git-tag-version
 
       - name: Instalar dependências
         run: pnpm install --frozen-lockfile
