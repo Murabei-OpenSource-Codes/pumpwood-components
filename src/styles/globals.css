@@ -1,4 +1,4 @@
-@import "tailwindcss" prefix(pw);
+@import "tailwindcss";
 @config "../../tailwind.config.ts";
 @import "tw-animate-css";
 
