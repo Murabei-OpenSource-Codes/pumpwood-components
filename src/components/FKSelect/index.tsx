@@ -117,7 +117,7 @@ export const FKSelect = ({
                 // We can cast or extend it.
                 onChange(val, item);
             }}
-            className={cn("pw:w-full", className)}
+            className={cn("w-full", className)}
         />
     );
 };

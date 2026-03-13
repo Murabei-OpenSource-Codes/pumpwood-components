@@ -42,13 +42,13 @@ Import components directly from the package:
 import { Button } from "pumpwood-ui-components";
 
 function MyComponent() {
-  return <Button className="pw:bg-blue-500">Click Me</Button>;
+  return <Button className="bg-blue-500">Click Me</Button>;
 }
 ```
 
 ### Customized Prefix
 
-This library uses the `pw:` prefix for all Tailwind utility classes to avoid conflicts with your application's styles. When overriding styles via `className`, ensure you use valid Tailwind utilities (optionally prefixed if you configured your own Tailwind to match, but standard utilities work if your app has its own Tailwind config).
+This library uses the `` prefix for all Tailwind utility classes to avoid conflicts with your application's styles. When overriding styles via `className`, ensure you use valid Tailwind utilities (optionally prefixed if you configured your own Tailwind to match, but standard utilities work if your app has its own Tailwind config).
 
 ## Components
 

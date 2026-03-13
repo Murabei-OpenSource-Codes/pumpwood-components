@@ -47,24 +47,24 @@ export const DateRangeFilter = ({
 }: DateRangeFilterProps) => {
 
     return (
-        <div className={cn("pw:flex pw:flex-col pw:gap-2", className)}>
-            <div className="pw:flex pw:flex-row pw:gap-2 pw:items-center">
+        <div className={cn("flex flex-col gap-2", className)}>
+            <div className="flex flex-row gap-2 items-center">
                 <Popover>
                     <PopoverTrigger asChild>
                         <Button
                             variant="outline"
                             className={cn(
-                                "pw:justify-start pw:text-left pw:font-normal pw:w-[240px]",
-                                !startDate && "pw:text-muted-foreground",
+                                "justify-start text-left font-normal w-[240px]",
+                                !startDate && "text-muted-foreground",
                             )}
                         >
-                            <CalendarIcon className="pw:mr-2 pw:size-4" />
+                            <CalendarIcon className="mr-2 size-4" />
                             {startDate
                                 ? format(startDate, "PPP")
                                 : startLabel}
                         </Button>
                     </PopoverTrigger>
-                    <PopoverContent className="pw:w-auto pw:p-0" align="start">
+                    <PopoverContent className="w-auto p-0" align="start">
                         <Calendar
                             mode="single"
                             selected={startDate}
@@ -79,17 +79,17 @@ export const DateRangeFilter = ({
                         <Button
                             variant="outline"
                             className={cn(
-                                "pw:justify-start pw:text-left pw:font-normal pw:w-[240px]",
-                                !endDate && "pw:text-muted-foreground",
+                                "justify-start text-left font-normal w-[240px]",
+                                !endDate && "text-muted-foreground",
                             )}
                         >
-                            <CalendarIcon className="pw:mr-2 pw:size-4" />
+                            <CalendarIcon className="mr-2 size-4" />
                             {endDate
                                 ? format(endDate, "PPP")
                                 : endLabel}
                         </Button>
                     </PopoverTrigger>
-                    <PopoverContent className="pw:w-auto pw:p-0" align="start">
+                    <PopoverContent className="w-auto p-0" align="start">
                         <Calendar
                             mode="single"
                             selected={endDate}
