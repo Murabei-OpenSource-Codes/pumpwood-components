@@ -17,22 +17,21 @@ pnpm install pumpwood-ui-components
 Import the compiled CSS file in your application's entry point (e.g., `main.tsx`, `app.tsx`, or `_app.tsx`):
 
 ```tsx
-import "pumpwood-ui-components/dist/index.css";
-```
-
-### 2. Wrap Application
-
-To ensure proper styling and CSS variable scoping, wrap your application (or the part using these components) with the `.pumpwood-ui` class:
-
-```tsx
-function App() {
-  return (
-    <div className="pumpwood-ui">
-      {/* Your app content */}
-    </div>
-  );
+module.exports = {
+	presets: [
+		require("pumpwood-ui-components/tailwind.config")
+	],
+	content: [
+		"./pages/**/*.{ts,tsx}",
+		"./components/**/*.{ts,tsx}",
+		"./app/**/*.{ts,tsx}",
+		"./src/**/*.{ts,tsx}",
+		"./node_modules/pumpwood-ui-components/**/*.{js,ts,jsx,tsx,mdx}",
+	],
+  ...
 }
 ```
+
 
 ## Usage
 
