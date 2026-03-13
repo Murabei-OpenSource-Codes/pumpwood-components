@@ -64,19 +64,14 @@ The library exports a variety of components including:
 
 **1. Install the published package:**
 ```bash
-npm install pumpwood-ui-components
-# or
 pnpm install pumpwood-ui-components
 ```
 
 **2. Use the components and styles in a React file (`App.tsx`):**
 ```tsx
 import React from "react";
-// Import the components that your library exposes
-import { Button, Typography, Card } from "pumpwood-ui-components";
 
-// Ensure you import the bundled CSS for styles to be applied!
-import "pumpwood-ui-components/dist/index.css"; 
+import { Button, Typography, Card } from "pumpwood-ui-components";
 
 export default function App() {
   return (
