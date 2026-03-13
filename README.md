@@ -12,9 +12,9 @@ pnpm install pumpwood-ui-components
 
 ## Setup
 
-### 1. Import CSS
+### Import CSS
 
-Import the compiled CSS file in your application's entry point (e.g., `main.tsx`, `app.tsx`, or `_app.tsx`):
+Add the following to your `tailwind.config.ts` file:
 
 ```tsx
 module.exports = {
@@ -58,35 +58,6 @@ The library exports a variety of components including:
 - **Table**: Data tables.
 - **Card**: Content containers.
 -And many more.
-
-## Example Usage in Another React Project
-
-**1. Install the published package:**
-```bash
-pnpm install pumpwood-ui-components
-```
-
-**2. Use the components and styles in a React file (`App.tsx`):**
-```tsx
-import React from "react";
-
-import { Button, Typography, Card } from "pumpwood-ui-components";
-
-export default function App() {
-  return (
-    <div className="pumpwood-ui">
-      <Card className="p-6 m-4 max-w-sm">
-        <Typography variant="h2" className="mb-4">
-          Welcome to Pumpwood
-        </Typography>
-        <Button variant="default" onClick={() => alert("Action triggered!")}>
-          Click Me!
-        </Button>
-      </Card>
-    </div>
-  );
-}
-```
 
 ## Building and Publishing to npm
 
