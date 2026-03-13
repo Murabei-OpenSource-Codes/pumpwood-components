@@ -9,7 +9,8 @@ const buttonVariants = cva(
     {
         variants: {
             variant: {
-                default: "pw:bg-[#026CB6] pw:text-white hover:pw:bg-[#026CB6]/90",
+                // 👇 THIS IS THE LINE I CHANGED 👇
+                default: "pw:bg-primary pw:text-primary-foreground hover:pw:bg-primary/90",
                 destructive:
                     "pw:bg-destructive pw:text-white hover:pw:bg-destructive/90 focus-visible:pw:ring-destructive/20 dark:focus-visible:pw:ring-destructive/40 dark:pw:bg-destructive/60",
                 outline:
@@ -67,6 +68,5 @@ const Button = React.forwardRef<HTMLButtonElement, React.ButtonHTMLAttributes<HT
         )
     })
 Button.displayName = "Button"
-
 
 export { Button, buttonVariants }
