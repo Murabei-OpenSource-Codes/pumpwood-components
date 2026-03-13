@@ -3,12 +3,25 @@
   "publishConfig": {
     "access": "public"
   },
-  "version": "1.1.1",
+  "version": "1.1.4",
   "description": "",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "style": "dist/index.css",
   "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.esm.js",
+      "require": "./dist/index.js"
+    },
+    "./tailwind.config": {
+      "import": "./tailwind.config.ts",
+      "require": "./tailwind.config.ts",
+      "default": "./tailwind.config.js"
+    },
+    "./dist/index.css": "./dist/index.css"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "rollup -c",
@@ -23,7 +36,10 @@
   "license": "ISC",
   "packageManager": "pnpm@10.15.1",
   "files": [
-    "dist"
+    "dist",
+    "tailwind.config.js",
+    "tailwind.config.ts",
+    "tailwind.config.cjs"
   ],
   "peerDependencies": {
     "react": "^17.0.0 || ^18.0.0",

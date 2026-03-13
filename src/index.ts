@@ -22,3 +22,40 @@ export { Calendar } from "./components/ui/calendar";
 export { Popover, PopoverContent, PopoverTrigger } from "./components/ui/popover";
 export { Combobox, type ComboboxItem } from "./components/ui/combobox";
 export { CombinedFilterTable } from "./components/CombinedFilterTable";
+
+// Missing UI component exports
+export {
+    Dialog,
+    DialogTrigger,
+    DialogContent,
+    DialogHeader,
+    DialogFooter,
+    DialogTitle,
+    DialogDescription,
+} from "./components/ui/dialog";
+
+export {
+    AlertDialog,
+    AlertDialogPortal,
+    AlertDialogOverlay,
+    AlertDialogTrigger,
+    AlertDialogContent,
+    AlertDialogHeader,
+    AlertDialogFooter,
+    AlertDialogTitle,
+    AlertDialogDescription,
+    AlertDialogAction,
+    AlertDialogCancel,
+} from "./components/ui/alert-dialog";
+
+export {
+    Command,
+    CommandDialog,
+    CommandInput,
+    CommandList,
+    CommandEmpty,
+    CommandGroup,
+    CommandItem,
+    CommandShortcut,
+    CommandSeparator,
+} from "./components/ui/command";

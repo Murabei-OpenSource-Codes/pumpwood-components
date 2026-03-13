@@ -15,6 +15,9 @@ echo "Building the components library..."
 pnpm run build
 
 echo "Publishing to npm registry..."
+
+export NPM_CONFIG_USERCONFIG="$(pwd)/.npmrc"
+
 pnpm publish --access public --no-git-checks
 
 echo "Successfully published!"
