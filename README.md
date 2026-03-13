@@ -45,10 +45,6 @@ function MyComponent() {
 }
 ```
 
-### Customized Prefix
-
-This library uses the `` prefix for all Tailwind utility classes to avoid conflicts with your application's styles. When overriding styles via `className`, ensure you use valid Tailwind utilities (optionally prefixed if you configured your own Tailwind to match, but standard utilities work if your app has its own Tailwind config).
-
 ## Components
 
 The library exports a variety of components including:
@@ -57,7 +53,7 @@ The library exports a variety of components including:
 - **Sidebar**: Composable sidebar navigation.
 - **Table**: Data tables.
 - **Card**: Content containers.
--And many more.
+- And many more.
 
 ## Building and Publishing to npm
 
