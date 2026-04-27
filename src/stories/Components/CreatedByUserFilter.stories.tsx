@@ -16,6 +16,10 @@ const mockFetcher = async ({ search }: { search: string }) => {
 const meta = {
     title: 'Pumpwood/Components/CreatedByUserFilter',
     component: CreatedByUserFilter,
+    parameters: {
+        layout: "centered",
+    },
+    tags: ["autodocs"],
 } satisfies Meta<typeof CreatedByUserFilter>;
 
 export default meta;

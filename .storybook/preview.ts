@@ -4,7 +4,14 @@ import '../src/styles/globals.css';
 
 const preview: Preview = {
   decorators: [
-    (Story) => React.createElement('div', { className: 'pumpwood-ui' }, React.createElement(Story, null)),
+    (Story) => {
+      React.useEffect(() => {
+        document.body.classList.add('pumpwood-ui');
+        // Additional cleanup just in case, though storybook reuses the body
+        return () => document.body.classList.remove('pumpwood-ui');
+      }, []);
+      return React.createElement('div', { className: 'pumpwood-ui' }, React.createElement(Story, null));
+    },
   ],
   parameters: {
     controls: {

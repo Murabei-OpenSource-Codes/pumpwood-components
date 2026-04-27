@@ -18,6 +18,10 @@ const mockFetcher = async ({ search }: { search: string }) => {
 const meta = {
     title: 'Pumpwood/Components/FKSelect',
     component: FKSelect,
+    parameters: {
+        layout: "centered",
+    },
+    tags: ["autodocs"],
 } satisfies Meta<typeof FKSelect>;
 
 export default meta;

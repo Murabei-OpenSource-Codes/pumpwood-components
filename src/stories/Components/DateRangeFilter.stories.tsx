@@ -5,6 +5,10 @@ import { useState } from 'react';
 const meta = {
     title: 'Pumpwood/Components/DateRangeFilter',
     component: DateRangeFilter,
+    parameters: {
+        layout: "centered",
+    },
+    tags: ["autodocs"],
 } satisfies Meta<typeof DateRangeFilter>;
 
 export default meta;

@@ -4,6 +4,10 @@ import { ConfirmationDialog } from '@/components/ConfirmationDialog';
 const meta = {
     title: 'Pumpwood/Components/ConfirmationDialog',
     component: ConfirmationDialog.Root,
+    parameters: {
+        layout: "centered",
+    },
+    tags: ["autodocs"],
 } satisfies Meta<typeof ConfirmationDialog.Root>;
 
 export default meta;

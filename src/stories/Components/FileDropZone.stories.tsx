@@ -4,6 +4,10 @@ import FileDropzone from '@/components/FileDropzone';
 const meta = {
     title: 'Pumpwood/Components/FileDropzone',
     component: FileDropzone,
+    parameters: {
+        layout: "centered",
+    },
+    tags: ["autodocs"],
 } satisfies Meta<typeof FileDropzone>;
 
 export default meta;
