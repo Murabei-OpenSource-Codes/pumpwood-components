@@ -31,6 +31,7 @@ const nextConfig = {
 export default nextConfig;
 ```
 
+
 ## Usage
 
 Import components directly from the package:
@@ -39,7 +40,7 @@ Import components directly from the package:
 import { Button } from "pumpwood-ui-components";
 
 function MyComponent() {
-  return <Button className="pw:bg-blue-500">Click Me</Button>;
+  return <Button className="bg-blue-500">Click Me</Button>;
 }
 ```
 
@@ -56,3 +57,41 @@ The library exports a variety of components including:
 - **Table**: Data tables.
 - **Card**: Content containers.
 - And many more.
+
+## Building and Publishing to npm
+
+To quickly build and publish the package to npm, we have a helper script that automates the environment variable loading, building, and publishing.
+
+### 1. Setup Auth Token (One-time setup)
+
+We use an authentication token rather than logging in interactively. 
+
+Create a `.env` file at the root of the project with your npm token (this file is already in `.gitignore` so it won't be committed safely):
+```ini
+NODE_AUTH_TOKEN=your_npm_access_token_here
+```
+
+Your `.npmrc` file is already configured to automatically read this token.
+
+### 2. Update Version
+
+npm requires a new version number for every successful publish. Before publishing, bump your package version:
+```bash
+npm version patch  # For bug fixes (e.g., 1.0.1 -> 1.0.2)
+# or
+npm version minor  # For new features (e.g., 1.0.1 -> 1.1.0)
+```
+
+### 3. Run the Publish Script
+
+Finally, make sure your dependencies are installed (e.g., `pnpm install`) and simply run the automated script:
+```bash
+./publish.sh
+```
+
+This script will automatically:
+1. Load your `.env` token.
+2. Build the project using Rollup.
+3. Publish to the public npm registry.
+
+Once the command succeeds, your new version is live on the npm registry!

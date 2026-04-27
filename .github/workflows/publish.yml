@@ -1,44 +1,53 @@
-name: Publish to NPM
+name: Publish to npm
 
 on:
-  push:
-    tags:
-      - 'v*'
-
-permissions:
-  id-token: write
-  contents: read
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Versão para publicar (ex: 1.0.5 ou v1.0.5)'
+        required: true
+  release:
+    types: [created]
 
 jobs:
   publish:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout do código
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
+      - name: Instalar pnpm
+        uses: pnpm/action-setup@v3
         with:
-          node-version: '24'
+          version: 9
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
           registry-url: 'https://registry.npmjs.org'
 
-      - run: corepack enable
-      - run: pnpm install --frozen-lockfile
-      - run: pnpm run build --if-present
-
-      - name: Sync version with tag
+      - name: Atualizar versão no package.json
         run: |
-          VERSION=${GITHUB_REF_NAME#v}
-          pnpm version "$VERSION" --no-git-tag-version
+          if [ "${{ github.event_name }}" = "release" ]; then
+            RAW_VERSION="${{ github.event.release.tag_name }}"
+          else
+            RAW_VERSION="${{ github.event.inputs.version }}"
+          fi
+          
+          CLEAN_VERSION="${RAW_VERSION#v}"
+          
+          echo "Atualizando package.json para a versão: $CLEAN_VERSION"
+          pnpm version "$CLEAN_VERSION" --no-git-tag-version
 
-      - name: Remove npm auth files
-        run: |
-          rm -f ~/.npmrc
-          rm -f .npmrc
+      - name: Instalar dependências
+        run: pnpm install --frozen-lockfile
 
-      - name: Unset npm tokens
-        run: |
-          unset NODE_AUTH_TOKEN
-          unset NPM_TOKEN
+      - name: Buildar a biblioteca
+        run: pnpm run build
 
-      - name: Publish to npm via OIDC
-        run: pnpm publish --access public --no-git-checks --provenance
+      - name: Publicar no npm
+        run: pnpm publish --access public --no-git-checks
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

@@ -4,22 +4,22 @@ import type * as React from "react";
 import { cn } from "@/lib/utils";
 
 const badgeVariants = cva(
-	"pw:inline-flex pw:items-center pw:rounded-md pw:border pw:px-2.5 pw:py-0.5 pw:text-xs pw:font-semibold pw:transition-colors focus:pw:outline-none focus:pw:ring-2 focus:pw:ring-ring focus:pw:ring-offset-2",
+	"inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
 	{
 		variants: {
 			variant: {
 				default:
-					"pw:border-transparent pw:bg-primary pw:text-primary-foreground pw:shadow hover:pw:bg-primary/80",
+					"border-transparent bg-primary text-primary-foreground shadow hover:bg-primary/80",
 				secondary:
-					"pw:border-transparent pw:bg-secondary pw:text-secondary-foreground hover:pw:bg-secondary/80",
+					"border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80",
 				destructive:
-					"pw:border-transparent pw:bg-destructive pw:text-destructive-foreground pw:shadow hover:pw:bg-destructive/80",
-				outline: "pw:text-foreground",
+					"border-transparent bg-destructive text-destructive-foreground shadow hover:bg-destructive/80",
+				outline: "text-foreground",
 				success:
-					"pw:border-transparent pw:bg-green-100 pw:text-green-800 hover:pw:bg-green-200",
+					"border-transparent bg-green-100 text-green-800 hover:bg-green-200",
 				warning:
-					"pw:border-transparent pw:bg-yellow-100 pw:text-yellow-800 hover:pw:bg-yellow-200",
-				info: "pw:border-transparent pw:bg-blue-100 pw:text-blue-800 hover:pw:bg-blue-200",
+					"border-transparent bg-yellow-100 text-yellow-800 hover:bg-yellow-200",
+				info: "border-transparent bg-blue-100 text-blue-800 hover:bg-blue-200",
 			},
 		},
 		defaultVariants: {

@@ -26,7 +26,7 @@ export interface EmptyContainerProps {
 export function EmptyContainer({ title, description }: EmptyContainerProps) {
     return (
         <Empty>
-            <EmptyHeader className="pw:w-[250px]">
+            <EmptyHeader className="w-[250px]">
                 <EmptyMedia>
                     <BadgeInfo />
                 </EmptyMedia>

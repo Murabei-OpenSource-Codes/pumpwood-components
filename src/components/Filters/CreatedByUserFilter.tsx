@@ -38,7 +38,7 @@ export const CreatedByUserFilter = ({
         <FKSelect
             fetcher={fetcher}
             modelClass="User"
-            className={cn("pw:max-w-36 pw:h-10", className)}
+            className={cn("max-w-36 h-10", className)}
             placeholder="Creator user"
             emptyMessage="No user found"
             labelName="username"
