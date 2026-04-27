@@ -4,14 +4,16 @@
     "module": "ESNext",
     "jsx": "react-jsx",
     "strict": true,
+    "skipLibCheck": true,
     "moduleResolution": "Bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "declaration": true,
     "declarationDir": "dist/types",
-    "outDir": "dist",
+    "rootDir": "src",
     "sourceMap": true,
     "allowSyntheticDefaultImports": true,
+    "ignoreDeprecations": "6.0",
     "baseUrl": ".",
     "paths": {
       "@/*": [
@@ -20,7 +22,10 @@
     }
   },
   "include": [
-    "src",
-    "lib"
+    "src"
+  ],
+  "exclude": [
+    "node_modules",
+    "src/stories"
   ]
 }

@@ -12,26 +12,23 @@ pnpm install pumpwood-ui-components
 
 ## Setup
 
-### 1. Import CSS
+The library expects `React` to be available as a global variable. In Next.js 14+ with the App Router this is not the case by default. Add the following to your `next.config.mjs` to patch it at build time:
 
-Import the compiled CSS file in your application's entry point (e.g., `main.tsx`, `app.tsx`, or `_app.tsx`):
+```js
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  // ...your existing config
+  webpack: (config, { webpack }) => {
+    config.plugins.push(
+      new webpack.ProvidePlugin({
+        React: "react",
+      })
+    );
+    return config;
+  },
+};
 
-```tsx
-import "pumpwood-ui-components/dist/index.css";
-```
-
-### 2. Wrap Application
-
-To ensure proper styling and CSS variable scoping, wrap your application (or the part using these components) with the `.pumpwood-ui` class:
-
-```tsx
-function App() {
-  return (
-    <div className="pumpwood-ui">
-      {/* Your app content */}
-    </div>
-  );
-}
+export default nextConfig;
 ```
 
 ## Usage
@@ -48,7 +45,7 @@ function MyComponent() {
 
 ### Customized Prefix
 
-This library uses the `pw:` prefix for all Tailwind utility classes to avoid conflicts with your application's styles. When overriding styles via `className`, ensure you use valid Tailwind utilities (optionally prefixed if you configured your own Tailwind to match, but standard utilities work if your app has its own Tailwind config).
+This library uses the `pw:` prefix for all Tailwind utility classes to avoid conflicts with your application's styles. When overriding styles via `className`, use valid Tailwind utilities prefixed with `pw:` if your app is configured to match, or standard utilities if your app has its own separate Tailwind config.
 
 ## Components
 
@@ -58,4 +55,4 @@ The library exports a variety of components including:
 - **Sidebar**: Composable sidebar navigation.
 - **Table**: Data tables.
 - **Card**: Content containers.
--And many more.
+- And many more.

@@ -1,5 +1,6 @@
+// This file has been automatically migrated to valid ESM format by Storybook.
 import { mergeConfig } from 'vite';
-import path from 'path';
+import path, { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import type { StorybookConfig } from '@storybook/react-vite';
 import tailwindcss from '@tailwindcss/vite';
