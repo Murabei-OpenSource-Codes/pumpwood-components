@@ -8,7 +8,6 @@ export { default as Dropzone } from "./components/Dropzone";
 export { ConfirmationDialog } from "./components/ConfirmationDialog";
 export { Typography } from "./components/Text";
 export { PumpwoodCard as Card } from "./components/Card";
-export { PumpwoodTable as Table } from "./components/Table";
 export { PumpwoodBadge as Badge } from "./components/Badge";
 export { default as FileDropzone } from "./components/FileDropzone";
 export { Sidebar } from "./components/Sidebar";
@@ -23,7 +22,15 @@ export { Popover, PopoverContent, PopoverTrigger } from "./components/ui/popover
 export { Combobox, type ComboboxItem } from "./components/ui/combobox";
 export { CombinedFilterTable } from "./components/CombinedFilterTable";
 
-// Missing UI component exports
+export {
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
+} from "./components/ui/table";
+
 export {
     Dialog,
     DialogTrigger,

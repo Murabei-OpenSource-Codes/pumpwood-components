@@ -6,21 +6,21 @@ export const pumpwoodBadgeVariants = cva(
     {
         variants: {
             variant: {
-                primary: "bg-primary text-primary-foreground",
-                secondary: "bg-[#DCFCE7] text-[#15803D]",
-                warning: "bg-[#FEF3C7] text-[#B45309]",
-                destructive: "bg-[#FEE2E2] text-[#B91C1C]",
-                muted: "bg-[#F1F5F9] text-[#334155]",
+                primary: "bg-primary text-primary-foreground" as string,
+                secondary: "bg-[#DCFCE7] text-[#15803D]" as string,
+                warning: "bg-[#FEF3C7] text-[#B45309]" as string,
+                destructive: "bg-[#FEE2E2] text-[#B91C1C]" as string,
+                muted: "bg-[#F1F5F9] text-[#334155]" as string,
             },
             size: {
-                default: "",
-                sm: "text-[12px] font-bold",
-                lg: "text-[14px] font-normal",
+                default: "" as string,
+                sm: "text-[12px] font-bold" as string,
+                lg: "text-[14px] font-normal" as string,
             },
         },
         defaultVariants: {
-            variant: "primary",
-            size: "default",
+            variant: "primary" as const,
+            size: "default" as const,
         },
     }
 )
@@ -43,10 +43,13 @@ export function PumpwoodBadge({
     variant,
     size,
     ...props
-}: PumpwoodBadgeProps) {
+}: PumpwoodBadgeProps): React.JSX.Element {
+    const variantClasses: string = pumpwoodBadgeVariants({ variant, size })
+    const combinedClassName: string = cn(variantClasses, className)
+
     return (
         <div
-            className={cn(pumpwoodBadgeVariants({ variant, size }), className)}
+            className={combinedClassName}
             {...props}
         />
     )

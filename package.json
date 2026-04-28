@@ -65,6 +65,8 @@
     "@storybook/react-vite": "^10.3.5",
     "@tailwindcss/postcss": "^4.1.18",
     "@tailwindcss/vite": "^4.0.0",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
     "@vitest/browser-playwright": "^4.0.14",
     "@vitest/coverage-v8": "^4.0.14",
     "autoprefixer": "^10.4.23",
