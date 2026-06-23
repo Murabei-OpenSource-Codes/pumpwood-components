@@ -3,6 +3,7 @@ import "./styles/globals.css";
 // export * as Text from "src/components/text"; //for named export
 
 export { Button } from "./components/ui/button";
+export { Input } from "./components/ui/input";
 export { default as Stack } from "./components/Stack";
 export { default as Dropzone } from "./components/Dropzone";
 export { ConfirmationDialog } from "./components/ConfirmationDialog";

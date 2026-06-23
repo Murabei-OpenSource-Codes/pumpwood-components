@@ -1,6 +1,6 @@
 import * as class_variance_authority_types from 'class-variance-authority/types';
-import * as react from 'react';
-import { HTMLAttributes, ReactNode, ComponentType } from 'react';
+import * as React$1 from 'react';
+import { InputHTMLAttributes, ReactNode, HTMLAttributes, ComponentType } from 'react';
 import { VariantProps } from 'class-variance-authority';
 import * as react_jsx_runtime from 'react/jsx-runtime';
 import { FileWithPath, Accept } from 'react-dropzone';
@@ -9,6 +9,10 @@ import * as TabsPrimitive from '@radix-ui/react-tabs';
 import { DayPicker } from 'react-day-picker';
 import { Button as Button$1 } from '@/components/ui/button';
 import * as PopoverPrimitive from '@radix-ui/react-popover';
+import * as DialogPrimitive from '@radix-ui/react-dialog';
+import * as AlertDialogPrimitive from '@radix-ui/react-alert-dialog';
+import { Command as Command$1 } from 'cmdk';
+import { Dialog as Dialog$1 } from '@/components/ui/dialog';
 
 /**
  * Displays a button or a component that looks like a button.
@@ -19,12 +23,26 @@ import * as PopoverPrimitive from '@radix-ui/react-popover';
  * <Button variant="outline" size="sm">Action</Button>
  * ```
  */
-declare const Button: react.ForwardRefExoticComponent<react.ButtonHTMLAttributes<HTMLButtonElement> & VariantProps<(props?: ({
+declare const Button: React$1.ForwardRefExoticComponent<React$1.ButtonHTMLAttributes<HTMLButtonElement> & VariantProps<(props?: ({
     variant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link" | null | undefined;
     size?: "default" | "sm" | "lg" | "icon" | "icon-sm" | "icon-lg" | null | undefined;
 } & class_variance_authority_types.ClassProp) | undefined) => string> & {
     asChild?: boolean;
-} & react.RefAttributes<HTMLButtonElement>>;
+} & React$1.RefAttributes<HTMLButtonElement>>;
+
+interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+    icon?: ReactNode;
+}
+/**
+ * Displays a styled input field with optional leading icon.
+ *
+ * @example
+ * ```tsx
+ * <Input placeholder="Enter text..." />
+ * <Input icon={<Search className="h-4 w-4" />} placeholder="Search..." />
+ * ```
+ */
+declare const Input: React$1.ForwardRefExoticComponent<InputProps & React$1.RefAttributes<HTMLInputElement>>;
 
 type StackProps = HTMLAttributes<HTMLDivElement> & {
     children: ReactNode;
@@ -173,41 +191,11 @@ declare const Typography: {
  * ```
  */
 declare const PumpwoodCard: {
-    Root: react.ForwardRefExoticComponent<react.HTMLAttributes<HTMLDivElement> & react.RefAttributes<HTMLDivElement>>;
-    Content: react.ForwardRefExoticComponent<react.HTMLAttributes<HTMLDivElement> & react.RefAttributes<HTMLDivElement>>;
-    Header: react.ForwardRefExoticComponent<react.HTMLAttributes<HTMLDivElement> & react.RefAttributes<HTMLDivElement>>;
-    Title: react.ForwardRefExoticComponent<react.HTMLAttributes<HTMLDivElement> & react.RefAttributes<HTMLDivElement>>;
-    Description: react.ForwardRefExoticComponent<react.HTMLAttributes<HTMLDivElement> & react.RefAttributes<HTMLDivElement>>;
-};
-
-/**
- * A comprehensive Table component system.
- *
- * @example
- * ```tsx
- * <Table.Root>
- *   <Table.Header>
- *     <Table.Row>
- *       <Table.Head>ID</Table.Head>
- *       <Table.Head>Name</Table.Head>
- *     </Table.Row>
- *   </Table.Header>
- *   <Table.Body>
- *     <Table.Row>
- *       <Table.Cell>1</Table.Cell>
- *       <Table.Cell>John Doe</Table.Cell>
- *     </Table.Row>
- *   </Table.Body>
- * </Table.Root>
- * ```
- */
-declare const PumpwoodTable: {
-    Root: react.ForwardRefExoticComponent<react.HTMLAttributes<HTMLTableElement> & react.RefAttributes<HTMLTableElement>>;
-    Body: react.ForwardRefExoticComponent<react.HTMLAttributes<HTMLTableSectionElement> & react.RefAttributes<HTMLTableSectionElement>>;
-    Cell: react.ForwardRefExoticComponent<react.TdHTMLAttributes<HTMLTableCellElement> & react.RefAttributes<HTMLTableCellElement>>;
-    Head: react.ForwardRefExoticComponent<react.ThHTMLAttributes<HTMLTableCellElement> & react.RefAttributes<HTMLTableCellElement>>;
-    Header: react.ForwardRefExoticComponent<react.HTMLAttributes<HTMLTableSectionElement> & react.RefAttributes<HTMLTableSectionElement>>;
-    Row: react.ForwardRefExoticComponent<react.HTMLAttributes<HTMLTableRowElement> & react.RefAttributes<HTMLTableRowElement>>;
+    Root: React$1.ForwardRefExoticComponent<React$1.HTMLAttributes<HTMLDivElement> & React$1.RefAttributes<HTMLDivElement>>;
+    Content: React$1.ForwardRefExoticComponent<React$1.HTMLAttributes<HTMLDivElement> & React$1.RefAttributes<HTMLDivElement>>;
+    Header: React$1.ForwardRefExoticComponent<React$1.HTMLAttributes<HTMLDivElement> & React$1.RefAttributes<HTMLDivElement>>;
+    Title: React$1.ForwardRefExoticComponent<React$1.HTMLAttributes<HTMLDivElement> & React$1.RefAttributes<HTMLDivElement>>;
+    Description: React$1.ForwardRefExoticComponent<React$1.HTMLAttributes<HTMLDivElement> & React$1.RefAttributes<HTMLDivElement>>;
 };
 
 declare const pumpwoodBadgeVariants: (props?: ({
@@ -225,7 +213,7 @@ interface PumpwoodBadgeProps extends React.HTMLAttributes<HTMLDivElement>, Varia
  * <Badge variant="destructive" size="sm">Error</Badge>
  * ```
  */
-declare function PumpwoodBadge({ className, variant, size, ...props }: PumpwoodBadgeProps): react_jsx_runtime.JSX.Element;
+declare function PumpwoodBadge({ className, variant, size, ...props }: PumpwoodBadgeProps): React.JSX.Element;
 
 interface FileDropzoneProps {
     onFileSelected: (file: File) => void;
@@ -374,10 +362,10 @@ declare const Sidebar: {
  * </Tabs>
  * ```
  */
-declare const Tabs: react.ForwardRefExoticComponent<TabsPrimitive.TabsProps & react.RefAttributes<HTMLDivElement>>;
-declare const TabsList: react.ForwardRefExoticComponent<Omit<TabsPrimitive.TabsListProps & react.RefAttributes<HTMLDivElement>, "ref"> & react.RefAttributes<HTMLDivElement>>;
-declare const TabsTrigger: react.ForwardRefExoticComponent<Omit<TabsPrimitive.TabsTriggerProps & react.RefAttributes<HTMLButtonElement>, "ref"> & react.RefAttributes<HTMLButtonElement>>;
-declare const TabsContent: react.ForwardRefExoticComponent<Omit<TabsPrimitive.TabsContentProps & react.RefAttributes<HTMLDivElement>, "ref"> & react.RefAttributes<HTMLDivElement>>;
+declare const Tabs: React$1.ForwardRefExoticComponent<TabsPrimitive.TabsProps & React$1.RefAttributes<HTMLDivElement>>;
+declare const TabsList: React$1.ForwardRefExoticComponent<Omit<TabsPrimitive.TabsListProps & React$1.RefAttributes<HTMLDivElement>, "ref"> & React$1.RefAttributes<HTMLDivElement>>;
+declare const TabsTrigger: React$1.ForwardRefExoticComponent<Omit<TabsPrimitive.TabsTriggerProps & React$1.RefAttributes<HTMLButtonElement>, "ref"> & React$1.RefAttributes<HTMLButtonElement>>;
+declare const TabsContent: React$1.ForwardRefExoticComponent<Omit<TabsPrimitive.TabsContentProps & React$1.RefAttributes<HTMLDivElement>, "ref"> & React$1.RefAttributes<HTMLDivElement>>;
 
 /**
  * A placeholder component for empty states.
@@ -526,8 +514,8 @@ declare const FKSelect: ({ fetcher, modelClass, labelName, valueField, placehold
  * />
  * ```
  */
-declare function Calendar({ className, classNames, showOutsideDays, captionLayout, buttonVariant, formatters, components, ...props }: react.ComponentProps<typeof DayPicker> & {
-    buttonVariant?: react.ComponentProps<typeof Button$1>["variant"];
+declare function Calendar({ className, classNames, showOutsideDays, captionLayout, buttonVariant, formatters, components, ...props }: React$1.ComponentProps<typeof DayPicker> & {
+    buttonVariant?: React$1.ComponentProps<typeof Button$1>["variant"];
 }): react_jsx_runtime.JSX.Element;
 
 /**
@@ -541,15 +529,15 @@ declare function Calendar({ className, classNames, showOutsideDays, captionLayou
  * </Popover>
  * ```
  */
-declare const Popover: react.FC<PopoverPrimitive.PopoverProps>;
-declare const PopoverTrigger: react.ForwardRefExoticComponent<PopoverPrimitive.PopoverTriggerProps & react.RefAttributes<HTMLButtonElement>>;
-declare const PopoverContent: react.ForwardRefExoticComponent<Omit<PopoverPrimitive.PopoverContentProps & react.RefAttributes<HTMLDivElement>, "ref"> & react.RefAttributes<HTMLDivElement>>;
+declare const Popover: React$1.FC<PopoverPrimitive.PopoverProps>;
+declare const PopoverTrigger: React$1.ForwardRefExoticComponent<PopoverPrimitive.PopoverTriggerProps & React$1.RefAttributes<HTMLButtonElement>>;
+declare const PopoverContent: React$1.ForwardRefExoticComponent<Omit<PopoverPrimitive.PopoverContentProps & React$1.RefAttributes<HTMLDivElement>, "ref"> & React$1.RefAttributes<HTMLDivElement>>;
 
 interface ComboboxItem {
     value: any;
     label: string;
 }
-interface GenericComboboxProps extends Omit<react.ComponentPropsWithoutRef<"div">, "onChange"> {
+interface GenericComboboxProps extends Omit<React$1.ComponentPropsWithoutRef<"div">, "onChange"> {
     items: ComboboxItem[];
     value: string | null;
     onChange: (value: string, item: ComboboxItem | null) => void;
@@ -582,5 +570,120 @@ declare function Combobox({ items, value, onChange, placeholder, emptyMessage, c
  */
 declare const CombinedFilterTable: () => react_jsx_runtime.JSX.Element;
 
-export { PumpwoodBadge as Badge, Button, Calendar, PumpwoodCard as Card, CombinedFilterTable, Combobox, ConfirmationDialog, CreatedByUserFilter, DateRangeFilter, PumpwoodDropzone as Dropzone, Empty, EmptyContainer, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle, FKSelect, FileDropzone, Popover, PopoverContent, PopoverTrigger, Sidebar, Stack, PumpwoodTable as Table, Tabs, TabsContent, TabsList, TabsTrigger, Typography };
+/**
+ * A responsive table component.
+ *
+ * @example
+ * ```tsx
+ * <Table>
+ *   <TableHeader>
+ *     <TableRow>
+ *       <TableHead>Header</TableHead>
+ *     </TableRow>
+ *   </TableHeader>
+ *   <TableBody>
+ *     <TableRow>
+ *       <TableCell>Cell</TableCell>
+ *     </TableRow>
+ *   </TableBody>
+ * </Table>
+ * ```
+ */
+declare const Table: React$1.ForwardRefExoticComponent<React$1.HTMLAttributes<HTMLTableElement> & React$1.RefAttributes<HTMLTableElement>>;
+declare const TableHeader: React$1.ForwardRefExoticComponent<React$1.HTMLAttributes<HTMLTableSectionElement> & React$1.RefAttributes<HTMLTableSectionElement>>;
+declare const TableBody: React$1.ForwardRefExoticComponent<React$1.HTMLAttributes<HTMLTableSectionElement> & React$1.RefAttributes<HTMLTableSectionElement>>;
+declare const TableRow: React$1.ForwardRefExoticComponent<React$1.HTMLAttributes<HTMLTableRowElement> & React$1.RefAttributes<HTMLTableRowElement>>;
+declare const TableHead: React$1.ForwardRefExoticComponent<React$1.ThHTMLAttributes<HTMLTableCellElement> & React$1.RefAttributes<HTMLTableCellElement>>;
+declare const TableCell: React$1.ForwardRefExoticComponent<React$1.TdHTMLAttributes<HTMLTableCellElement> & React$1.RefAttributes<HTMLTableCellElement>>;
+
+/**
+ * A modal dialog component.
+ *
+ * @example
+ * ```tsx
+ * <Dialog>
+ *   <DialogTrigger>Open</DialogTrigger>
+ *   <DialogContent>
+ *     <DialogTitle>Title</DialogTitle>
+ *     <DialogDescription>Desc</DialogDescription>
+ *   </DialogContent>
+ * </Dialog>
+ * ```
+ */
+declare const Dialog: React$1.FC<DialogPrimitive.DialogProps>;
+declare const DialogTrigger: React$1.ForwardRefExoticComponent<DialogPrimitive.DialogTriggerProps & React$1.RefAttributes<HTMLButtonElement>>;
+declare const DialogContent: React$1.ForwardRefExoticComponent<Omit<DialogPrimitive.DialogContentProps & React$1.RefAttributes<HTMLDivElement>, "ref"> & {
+    showCloseButton?: boolean;
+} & React$1.RefAttributes<HTMLDivElement>>;
+declare const DialogHeader: {
+    ({ className, ...props }: React$1.HTMLAttributes<HTMLDivElement>): react_jsx_runtime.JSX.Element;
+    displayName: string;
+};
+declare const DialogFooter: {
+    ({ className, ...props }: React$1.HTMLAttributes<HTMLDivElement>): react_jsx_runtime.JSX.Element;
+    displayName: string;
+};
+declare const DialogTitle: React$1.ForwardRefExoticComponent<Omit<DialogPrimitive.DialogTitleProps & React$1.RefAttributes<HTMLHeadingElement>, "ref"> & React$1.RefAttributes<HTMLHeadingElement>>;
+declare const DialogDescription: React$1.ForwardRefExoticComponent<Omit<DialogPrimitive.DialogDescriptionProps & React$1.RefAttributes<HTMLParagraphElement>, "ref"> & React$1.RefAttributes<HTMLParagraphElement>>;
+
+/**
+ * A modal dialog that interrupts the user with important content and expects a response.
+ *
+ * @example
+ * ```tsx
+ * <AlertDialog>
+ *   <AlertDialogTrigger>Open</AlertDialogTrigger>
+ *   <AlertDialogContent>
+ *     <AlertDialogHeader>
+ *       <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+ *     </AlertDialogHeader>
+ *     <AlertDialogFooter>
+ *       <AlertDialogCancel>Cancel</AlertDialogCancel>
+ *       <AlertDialogAction>Continue</AlertDialogAction>
+ *     </AlertDialogFooter>
+ *   </AlertDialogContent>
+ * </AlertDialog>
+ * ```
+ */
+declare function AlertDialog({ ...props }: React$1.ComponentProps<typeof AlertDialogPrimitive.Root>): react_jsx_runtime.JSX.Element;
+declare function AlertDialogTrigger({ ...props }: React$1.ComponentProps<typeof AlertDialogPrimitive.Trigger>): react_jsx_runtime.JSX.Element;
+declare function AlertDialogPortal({ ...props }: React$1.ComponentProps<typeof AlertDialogPrimitive.Portal>): react_jsx_runtime.JSX.Element;
+declare function AlertDialogOverlay({ className, ...props }: React$1.ComponentProps<typeof AlertDialogPrimitive.Overlay>): react_jsx_runtime.JSX.Element;
+declare function AlertDialogContent({ className, ...props }: React$1.ComponentProps<typeof AlertDialogPrimitive.Content>): react_jsx_runtime.JSX.Element;
+declare function AlertDialogHeader({ className, ...props }: React$1.ComponentProps<"div">): react_jsx_runtime.JSX.Element;
+declare function AlertDialogFooter({ className, ...props }: React$1.ComponentProps<"div">): react_jsx_runtime.JSX.Element;
+declare function AlertDialogTitle({ className, ...props }: React$1.ComponentProps<typeof AlertDialogPrimitive.Title>): react_jsx_runtime.JSX.Element;
+declare function AlertDialogDescription({ className, ...props }: React$1.ComponentProps<typeof AlertDialogPrimitive.Description>): react_jsx_runtime.JSX.Element;
+declare function AlertDialogAction({ className, ...props }: React$1.ComponentProps<typeof AlertDialogPrimitive.Action>): react_jsx_runtime.JSX.Element;
+declare function AlertDialogCancel({ className, ...props }: React$1.ComponentProps<typeof AlertDialogPrimitive.Cancel>): react_jsx_runtime.JSX.Element;
+
+/**
+ * A command palette component.
+ *
+ * @example
+ * ```tsx
+ * <Command>
+ *   <CommandInput placeholder="Type a command..." />
+ *   <CommandList>
+ *     <CommandItem>Action</CommandItem>
+ *   </CommandList>
+ * </Command>
+ * ```
+ */
+declare function Command({ className, ...props }: React$1.ComponentProps<typeof Command$1>): react_jsx_runtime.JSX.Element;
+declare function CommandDialog({ title, description, children, className, showCloseButton, ...props }: React$1.ComponentProps<typeof Dialog$1> & {
+    title?: string;
+    description?: string;
+    className?: string;
+    showCloseButton?: boolean;
+}): react_jsx_runtime.JSX.Element;
+declare function CommandInput({ className, ...props }: React$1.ComponentProps<typeof Command$1.Input>): react_jsx_runtime.JSX.Element;
+declare function CommandList({ className, ...props }: React$1.ComponentProps<typeof Command$1.List>): react_jsx_runtime.JSX.Element;
+declare function CommandEmpty({ ...props }: React$1.ComponentProps<typeof Command$1.Empty>): react_jsx_runtime.JSX.Element;
+declare function CommandGroup({ className, ...props }: React$1.ComponentProps<typeof Command$1.Group>): react_jsx_runtime.JSX.Element;
+declare function CommandSeparator({ className, ...props }: React$1.ComponentProps<typeof Command$1.Separator>): react_jsx_runtime.JSX.Element;
+declare function CommandItem({ className, ...props }: React$1.ComponentProps<typeof Command$1.Item>): react_jsx_runtime.JSX.Element;
+declare function CommandShortcut({ className, ...props }: React$1.ComponentProps<"span">): react_jsx_runtime.JSX.Element;
+
+export { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, AlertDialogPortal, AlertDialogTitle, AlertDialogTrigger, PumpwoodBadge as Badge, Button, Calendar, PumpwoodCard as Card, CombinedFilterTable, Combobox, Command, CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator, CommandShortcut, ConfirmationDialog, CreatedByUserFilter, DateRangeFilter, Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger, PumpwoodDropzone as Dropzone, Empty, EmptyContainer, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle, FKSelect, FileDropzone, Input, Popover, PopoverContent, PopoverTrigger, Sidebar, Stack, Table, TableBody, TableCell, TableHead, TableHeader, TableRow, Tabs, TabsContent, TabsList, TabsTrigger, Typography };
 export type { ComboboxItem };
