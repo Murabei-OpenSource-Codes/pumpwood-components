@@ -62,7 +62,10 @@ const jsConfig = {
     babel({
       exclude: "node_modules/**",
       babelHelpers: "bundled",
-      presets: ["@babel/preset-react", "@babel/preset-typescript"],
+      presets: [
+        ["@babel/preset-react", { runtime: "automatic" }],
+        "@babel/preset-typescript",
+      ],
       extensions: [".js", ".jsx", ".ts", ".tsx"],
     }),
     postcss({
@@ -70,7 +73,10 @@ const jsConfig = {
       minimize: true,
     }),
   ],
-  external: ["react", "react-dom"],
+  external: (id) =>
+    id === "react" ||
+    id === "react-dom" ||
+    id.startsWith("react/"),
 };
 
 /**

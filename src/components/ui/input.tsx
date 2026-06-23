@@ -1,4 +1,3 @@
-import * as React from "react";
 import { InputHTMLAttributes, ReactNode, forwardRef } from "react";
 
 import { cn } from "@/lib/utils";
@@ -25,8 +24,8 @@ const inputWithIconWrapperClassName =
 	"focus-within:ring-ring focus-within:ring-offset-2 ring-offset-background";
 
 const inputWithIconInnerClassName =
-	"min-h-0 min-w-0 flex-1 border-0 bg-transparent p-0 text-sm shadow-none " +
-	"placeholder:text-muted-foreground focus:outline-none " +
+	"min-h-0 min-w-0 w-auto flex-1 rounded-none border-0 bg-transparent p-0 " +
+	"text-sm shadow-none placeholder:text-muted-foreground focus:outline-none " +
 	"focus-visible:outline-none focus-visible:ring-0 " +
 	"disabled:cursor-not-allowed disabled:opacity-50 " +
 	"file:border-0 file:bg-transparent file:text-sm file:font-medium";

@@ -64,7 +64,7 @@ export const DateRangeFilter = ({
                                 : startLabel}
                         </Button>
                     </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0" align="start">
+                    <PopoverContent className="w-fit p-0" align="start">
                         <Calendar
                             mode="single"
                             selected={startDate}
@@ -89,7 +89,7 @@ export const DateRangeFilter = ({
                                 : endLabel}
                         </Button>
                     </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0" align="start">
+                    <PopoverContent className="w-fit p-0" align="start">
                         <Calendar
                             mode="single"
                             selected={endDate}

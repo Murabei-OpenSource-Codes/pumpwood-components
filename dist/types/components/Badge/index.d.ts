@@ -14,4 +14,4 @@ export interface PumpwoodBadgeProps extends React.HTMLAttributes<HTMLDivElement>
  * <Badge variant="destructive" size="sm">Error</Badge>
  * ```
  */
-export declare function PumpwoodBadge({ className, variant, size, ...props }: PumpwoodBadgeProps): import("react/jsx-runtime").JSX.Element;
+export declare function PumpwoodBadge({ className, variant, size, ...props }: PumpwoodBadgeProps): React.JSX.Element;

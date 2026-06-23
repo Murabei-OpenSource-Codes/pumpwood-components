@@ -501,6 +501,85 @@ interface IFKSelectProps {
  */
 declare const FKSelect: ({ fetcher, modelClass, labelName, valueField, placeholder, emptyMessage, value, onChange, className, debounceWait, }: IFKSelectProps) => react_jsx_runtime.JSX.Element;
 
+type Option = {
+    value: string;
+    label: string;
+};
+/**
+ * Props for the Select component.
+ */
+interface ISelectProps {
+    /** Optional id used as data-testid on the trigger. */
+    id?: string;
+    /** Placeholder text when no value is selected. */
+    placeholder: string;
+    /** Static options with value and label. */
+    options: Option[];
+    /** Optional class names for the select wrapper (width, layout). */
+    className?: string;
+    /** Controlled selected value. */
+    value?: string;
+    /** Callback when the selected value changes. */
+    onValueChange?: (value: string) => void;
+    /** Marks the field as required in HTML forms. */
+    required?: boolean;
+    /** Name attribute for HTML form submission. */
+    name?: string;
+}
+/**
+ * A reusable dropdown component built with shadcn/ui.
+ *
+ * @example
+ * ```tsx
+ * <Select
+ *   placeholder="Choose an option"
+ *   options={[
+ *     { value: "a", label: "Option A" },
+ *     { value: "b", label: "Option B" },
+ *   ]}
+ *   value={selected}
+ *   onValueChange={setSelected}
+ * />
+ * ```
+ */
+declare const Select: ({ id, placeholder, options, className, value, onValueChange, required, name, }: ISelectProps) => react_jsx_runtime.JSX.Element;
+
+/**
+ * Props for the DatePicker component.
+ */
+interface IDatePickerProps {
+    /** Optional id used as data-testid on the trigger button. */
+    id?: string;
+    /** Placeholder text when no date is selected. */
+    placeholder: string;
+    /** Controlled ISO date string (empty = no selection). */
+    value?: string;
+    /** Callback when the selected date changes (ISO string or empty). */
+    onValueChange?: (value: string) => void;
+    /** Optional class names for the wrapper (width, layout). */
+    className?: string;
+    /** Day boundary when serializing to ISO. */
+    boundary?: "start" | "end";
+    /** Display format for the selected date. */
+    dateFormat?: string;
+}
+/**
+ * A reusable date picker built with shadcn/ui.
+ *
+ * @example
+ * ```tsx
+ * <DatePicker
+ *   placeholder="Data inicial"
+ *   boundary="start"
+ *   value={filters.created_at__gte}
+ *   onValueChange={(value) =>
+ *     onFiltersChange({ target: "created_at__gte", value })
+ *   }
+ * />
+ * ```
+ */
+declare const DatePicker: ({ id, placeholder, value, onValueChange, className, boundary, dateFormat, }: IDatePickerProps) => react_jsx_runtime.JSX.Element;
+
 /**
  * A calendar component for date selection.
  *
@@ -685,5 +764,5 @@ declare function CommandSeparator({ className, ...props }: React$1.ComponentProp
 declare function CommandItem({ className, ...props }: React$1.ComponentProps<typeof Command$1.Item>): react_jsx_runtime.JSX.Element;
 declare function CommandShortcut({ className, ...props }: React$1.ComponentProps<"span">): react_jsx_runtime.JSX.Element;
 
-export { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, AlertDialogPortal, AlertDialogTitle, AlertDialogTrigger, PumpwoodBadge as Badge, Button, Calendar, PumpwoodCard as Card, CombinedFilterTable, Combobox, Command, CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator, CommandShortcut, ConfirmationDialog, CreatedByUserFilter, DateRangeFilter, Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger, PumpwoodDropzone as Dropzone, Empty, EmptyContainer, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle, FKSelect, FileDropzone, Input, Popover, PopoverContent, PopoverTrigger, Sidebar, Stack, Table, TableBody, TableCell, TableHead, TableHeader, TableRow, Tabs, TabsContent, TabsList, TabsTrigger, Typography };
-export type { ComboboxItem };
+export { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, AlertDialogPortal, AlertDialogTitle, AlertDialogTrigger, PumpwoodBadge as Badge, Button, Calendar, PumpwoodCard as Card, CombinedFilterTable, Combobox, Command, CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator, CommandShortcut, ConfirmationDialog, CreatedByUserFilter, DatePicker, DateRangeFilter, Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger, PumpwoodDropzone as Dropzone, Empty, EmptyContainer, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle, FKSelect, FileDropzone, Input, Popover, PopoverContent, PopoverTrigger, Select, Sidebar, Stack, Table, TableBody, TableCell, TableHead, TableHeader, TableRow, Tabs, TabsContent, TabsList, TabsTrigger, Typography };
+export type { ComboboxItem, IDatePickerProps, ISelectProps };
