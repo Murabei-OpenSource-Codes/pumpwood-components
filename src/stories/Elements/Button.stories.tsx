@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { SquarePlus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const meta = {
@@ -14,5 +15,14 @@ export const Primary: Story = {
     args: {
         children: 'Click here',
         variant: "default",
+    },
+};
+
+export const WithIconAndLabel: Story = {
+    args: {
+        label: 'Criar novo lote',
+        icon: <SquarePlus size={16} />,
+        variant: 'default',
+        className: 'w-[200px] mt-6',
     },
 };

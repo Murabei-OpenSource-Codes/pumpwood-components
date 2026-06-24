@@ -15,6 +15,16 @@ import * as AlertDialogPrimitive from '@radix-ui/react-alert-dialog';
 import { Command as Command$1 } from 'cmdk';
 import { Dialog as Dialog$1 } from '@/components/ui/dialog';
 
+declare const buttonVariants: (props?: ({
+    variant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link" | null | undefined;
+    size?: "default" | "sm" | "lg" | "icon" | "icon-sm" | "icon-lg" | null | undefined;
+} & class_variance_authority_types.ClassProp) | undefined) => string;
+interface ButtonProps extends React$1.ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof buttonVariants> {
+    asChild?: boolean;
+    icon?: React$1.ReactNode;
+    label?: React$1.ReactNode;
+    iconPosition?: "start" | "end";
+}
 /**
  * Displays a button or a component that looks like a button.
  *
@@ -22,14 +32,13 @@ import { Dialog as Dialog$1 } from '@/components/ui/dialog';
  * ```tsx
  * <Button variant="default">Click me</Button>
  * <Button variant="outline" size="sm">Action</Button>
+ * <Button
+ *   label="Criar novo lote"
+ *   icon={<SquarePlus size={16} />}
+ * />
  * ```
  */
-declare const Button: React$1.ForwardRefExoticComponent<React$1.ButtonHTMLAttributes<HTMLButtonElement> & VariantProps<(props?: ({
-    variant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link" | null | undefined;
-    size?: "default" | "sm" | "lg" | "icon" | "icon-sm" | "icon-lg" | null | undefined;
-} & class_variance_authority_types.ClassProp) | undefined) => string> & {
-    asChild?: boolean;
-} & React$1.RefAttributes<HTMLButtonElement>>;
+declare const Button: React$1.ForwardRefExoticComponent<ButtonProps & React$1.RefAttributes<HTMLButtonElement>>;
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
     icon?: ReactNode;

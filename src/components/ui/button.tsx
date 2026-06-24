@@ -37,6 +37,15 @@ const buttonVariants = cva(
     }
 )
 
+export interface ButtonProps
+    extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+        VariantProps<typeof buttonVariants> {
+    asChild?: boolean
+    icon?: React.ReactNode
+    label?: React.ReactNode
+    iconPosition?: "start" | "end"
+}
+
 /**
  * Displays a button or a component that looks like a button.
  *
@@ -44,29 +53,47 @@ const buttonVariants = cva(
  * ```tsx
  * <Button variant="default">Click me</Button>
  * <Button variant="outline" size="sm">Action</Button>
+ * <Button
+ *   label="Criar novo lote"
+ *   icon={<SquarePlus size={16} />}
+ * />
  * ```
  */
-const Button = React.forwardRef<HTMLButtonElement, React.ButtonHTMLAttributes<HTMLButtonElement> &
-    VariantProps<typeof buttonVariants> & {
-        asChild?: boolean
-    }>(({
-        className,
-        variant,
-        size,
-        asChild = false,
-        ...props
-    }, ref) => {
-        const Comp = asChild ? Slot : "button"
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(({
+    className,
+    variant,
+    size,
+    asChild = false,
+    icon,
+    label,
+    iconPosition = "end",
+    children,
+    ...props
+}, ref) => {
+    const Comp = asChild ? Slot : "button"
+    const hasIconOrLabel = icon != null || label != null
 
-        return (
-            <Comp
-                ref={ref}
-                data-slot="button"
-                className={cn(buttonVariants({ variant, size, className }))}
-                {...props}
-            />
-        )
-    })
+    return (
+        <Comp
+            ref={ref}
+            data-slot="button"
+            className={cn(buttonVariants({ variant, size, className }))}
+            {...props}
+        >
+            {hasIconOrLabel ? (
+                <>
+                    {iconPosition === "start" && icon}
+                    {label != null && (
+                        <span data-slot="button-label">{label}</span>
+                    )}
+                    {iconPosition === "end" && icon}
+                </>
+            ) : (
+                children
+            )}
+        </Comp>
+    )
+})
 Button.displayName = "Button"
 
 export { Button, buttonVariants }
