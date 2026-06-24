@@ -3,13 +3,17 @@
 import { CalendarIcon } from "lucide-react";
 import { format } from "date-fns";
 import * as React from "react";
-import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {
     Popover,
     PopoverContent,
     PopoverTrigger,
 } from "@/components/ui/popover";
+import {
+    fieldTriggerClassName,
+    fieldTriggerIconClassName,
+    fieldTriggerPlaceholderClassName,
+} from "@/lib/field-trigger";
 import { cn } from "@/lib/utils";
 
 export interface DateRangeFilterProps {
@@ -51,18 +55,24 @@ export const DateRangeFilter = ({
             <div className="flex flex-row gap-2 items-center">
                 <Popover>
                     <PopoverTrigger asChild>
-                        <Button
-                            variant="outline"
+                        <button
+                            type="button"
                             className={cn(
-                                "justify-start text-left font-normal w-[240px]",
-                                !startDate && "text-muted-foreground",
+                                fieldTriggerClassName,
+                                "justify-start text-left w-[240px]",
+                                !startDate && fieldTriggerPlaceholderClassName,
                             )}
                         >
-                            <CalendarIcon className="mr-2 size-4" />
+                            <CalendarIcon
+                                className={cn(
+                                    "mr-2",
+                                    fieldTriggerIconClassName,
+                                )}
+                            />
                             {startDate
                                 ? format(startDate, "PPP")
                                 : startLabel}
-                        </Button>
+                        </button>
                     </PopoverTrigger>
                     <PopoverContent className="w-fit p-0" align="start">
                         <Calendar
@@ -76,18 +86,24 @@ export const DateRangeFilter = ({
 
                 <Popover>
                     <PopoverTrigger asChild>
-                        <Button
-                            variant="outline"
+                        <button
+                            type="button"
                             className={cn(
-                                "justify-start text-left font-normal w-[240px]",
-                                !endDate && "text-muted-foreground",
+                                fieldTriggerClassName,
+                                "justify-start text-left w-[240px]",
+                                !endDate && fieldTriggerPlaceholderClassName,
                             )}
                         >
-                            <CalendarIcon className="mr-2 size-4" />
+                            <CalendarIcon
+                                className={cn(
+                                    "mr-2",
+                                    fieldTriggerIconClassName,
+                                )}
+                            />
                             {endDate
                                 ? format(endDate, "PPP")
                                 : endLabel}
-                        </Button>
+                        </button>
                     </PopoverTrigger>
                     <PopoverContent className="w-fit p-0" align="start">
                         <Calendar

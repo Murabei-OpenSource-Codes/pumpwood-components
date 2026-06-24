@@ -2,13 +2,17 @@
 
 import { endOfDay, format, startOfDay } from "date-fns";
 import { CalendarIcon } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {
     Popover,
     PopoverContent,
     PopoverTrigger,
 } from "@/components/ui/popover";
+import {
+    fieldTriggerClassName,
+    fieldTriggerIconClassName,
+    fieldTriggerPlaceholderClassName,
+} from "@/lib/field-trigger";
 import { cn } from "@/lib/utils";
 
 /**
@@ -102,17 +106,23 @@ export const DatePicker = ({
         <div className={cn("inline-flex w-fit shrink-0", className)}>
             <Popover>
                 <PopoverTrigger asChild>
-                    <Button
+                    <button
+                        type="button"
                         data-testid={id}
-                        variant="outline"
                         className={cn(
-                            "h-10 w-full justify-start text-left font-normal",
-                            !displayValue && "text-muted-foreground",
+                            fieldTriggerClassName,
+                            "justify-start text-left",
+                            !displayValue && fieldTriggerPlaceholderClassName,
                         )}
                     >
-                        <CalendarIcon className="mr-2 h-4 w-4" />
+                        <CalendarIcon
+                            className={cn(
+                                "mr-2",
+                                fieldTriggerIconClassName,
+                            )}
+                        />
                         {displayValue ?? placeholder}
-                    </Button>
+                    </button>
                 </PopoverTrigger>
                 <PopoverContent className="w-fit p-0" align="start">
                     <Calendar

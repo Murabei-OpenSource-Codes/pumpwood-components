@@ -6,6 +6,7 @@ import * as react_jsx_runtime from 'react/jsx-runtime';
 import { FileWithPath, Accept } from 'react-dropzone';
 import { LucideIcon } from 'lucide-react';
 import * as TabsPrimitive from '@radix-ui/react-tabs';
+import { IFKSelectProps as IFKSelectProps$1 } from '@/components/FKSelect';
 import { DayPicker } from 'react-day-picker';
 import { Button as Button$1 } from '@/components/ui/button';
 import * as PopoverPrimitive from '@radix-ui/react-popover';
@@ -456,33 +457,51 @@ interface CreatedByUserFilterProps {
 declare const CreatedByUserFilter: ({ value, onChange, fetcher, className, }: CreatedByUserFilterProps) => react_jsx_runtime.JSX.Element;
 
 /**
- * Props for the FKSelect component
+ * Parameters passed to the FK fetcher function.
+ */
+type FKFetcherParams = {
+    search: string;
+    modelClass: string;
+    labelName: string;
+    additionalFilters?: Record<string, any>;
+    fields?: string[];
+    limit?: number;
+    offset?: number;
+};
+/**
+ * Props for the FKSelect component.
  */
 interface IFKSelectProps {
-    /** FUNCTION to fetch data. Should return a promise resolving to an array of items */
-    fetcher: (params: {
-        search: string;
+    /** Optional id used as data-testid on the trigger. */
+    id?: string;
+    /** Function to fetch data from the API. */
+    fetcher: (params: FKFetcherParams) => Promise<any[]>;
+    /** Optional function to resolve a value not present in the list. */
+    resolveValue?: (params: {
         modelClass: string;
-        limit?: number;
-        offset?: number;
-    }) => Promise<any[]>;
-    /** The model class name to identify the resource */
+        value: string | number;
+    }) => Promise<any>;
+    /** The model class name to identify the resource. */
     modelClass: string;
-    /** The field name to use as the display label from the fetched items */
+    /** The field name to use as the display label. */
     labelName: string;
-    /** The field name to use as the value (ID) from the fetched items. Defaults to 'pk' or 'id' */
+    /** The field name to use as the value (ID). Defaults to 'pk'. */
     valueField?: string;
-    /** Placeholder text for the search input */
+    /** Placeholder text for the search input. */
     placeholder?: string;
-    /** Message to show when no items are found */
+    /** Message to show when no items are found. */
     emptyMessage?: string;
-    /** The currently selected value */
+    /** The currently selected value. */
     value: string | number | null;
-    /** Callback function called when an item is selected */
+    /** Callback when an item is selected. */
     onChange: (value: string | number, item?: any) => void;
-    /** Additional className */
+    /** Additional filters to apply to the API request. */
+    additionalFilters?: Record<string, any>;
+    /** Extra fields to include in search. */
+    fields?: string[];
+    /** Optional class names for the wrapper. */
     className?: string;
-    /** Debounce time in ms. Defaults to 300 */
+    /** Debounce time in ms. Defaults to 300. */
     debounceWait?: number;
 }
 /**
@@ -499,24 +518,27 @@ interface IFKSelectProps {
  * />
  * ```
  */
-declare const FKSelect: ({ fetcher, modelClass, labelName, valueField, placeholder, emptyMessage, value, onChange, className, debounceWait, }: IFKSelectProps) => react_jsx_runtime.JSX.Element;
+declare const FKSelect: ({ id, fetcher, resolveValue, modelClass, labelName, valueField, placeholder, emptyMessage, value, onChange, additionalFilters, fields, className, debounceWait, }: IFKSelectProps) => react_jsx_runtime.JSX.Element;
 
 type Option = {
     value: string;
     label: string;
 };
-/**
- * Props for the Select component.
- */
-interface ISelectProps {
+type SharedSelectProps = {
     /** Optional id used as data-testid on the trigger. */
     id?: string;
+    /** Optional class names for the select wrapper (width, layout). */
+    className?: string;
+};
+/**
+ * Props for the static (default) Select variant.
+ */
+interface IStaticSelectProps extends SharedSelectProps {
+    variant?: "static";
     /** Placeholder text when no value is selected. */
     placeholder: string;
     /** Static options with value and label. */
     options: Option[];
-    /** Optional class names for the select wrapper (width, layout). */
-    className?: string;
     /** Controlled selected value. */
     value?: string;
     /** Callback when the selected value changes. */
@@ -527,7 +549,20 @@ interface ISelectProps {
     name?: string;
 }
 /**
+ * Props for the FK variant of Select.
+ */
+interface ISelectFKProps extends IFKSelectProps$1 {
+    variant: "fk";
+}
+/**
+ * Props for the Select component (static or FK variant).
+ */
+type ISelectProps = IStaticSelectProps | ISelectFKProps;
+/**
  * A reusable dropdown component built with shadcn/ui.
+ *
+ * Supports a static variant (Radix Select) and an FK variant (async
+ * Combobox) for foreign-key fields.
  *
  * @example
  * ```tsx
@@ -540,9 +575,19 @@ interface ISelectProps {
  *   value={selected}
  *   onValueChange={setSelected}
  * />
+ *
+ * <Select
+ *   variant="fk"
+ *   fetcher={fetchUsers}
+ *   modelClass="user"
+ *   labelName="username"
+ *   placeholder="Select user"
+ *   value={userId}
+ *   onChange={(id, item) => setUserId(id)}
+ * />
  * ```
  */
-declare const Select: ({ id, placeholder, options, className, value, onValueChange, required, name, }: ISelectProps) => react_jsx_runtime.JSX.Element;
+declare const Select: (props: ISelectProps) => react_jsx_runtime.JSX.Element;
 
 /**
  * Props for the DatePicker component.
@@ -624,6 +669,11 @@ interface GenericComboboxProps extends Omit<React$1.ComponentPropsWithoutRef<"di
     emptyMessage?: string;
     className?: string;
     searchPlaceholder?: string;
+    onSearchChange?: (search: string) => void;
+    filterLocally?: boolean;
+    loading?: boolean;
+    displayLabel?: string;
+    disabled?: boolean;
 }
 /**
  * A searchable select component (Combobox).
@@ -637,7 +687,7 @@ interface GenericComboboxProps extends Omit<React$1.ComponentPropsWithoutRef<"di
  * />
  * ```
  */
-declare function Combobox({ items, value, onChange, placeholder, emptyMessage, className, searchPlaceholder, }: GenericComboboxProps): react_jsx_runtime.JSX.Element;
+declare function Combobox({ items, value, onChange, placeholder, emptyMessage, className, searchPlaceholder, onSearchChange, filterLocally, loading, displayLabel, disabled, }: GenericComboboxProps): react_jsx_runtime.JSX.Element;
 
 /**
  * A demonstration component combining filters and a table.
@@ -650,30 +700,117 @@ declare function Combobox({ items, value, onChange, placeholder, emptyMessage, c
 declare const CombinedFilterTable: () => react_jsx_runtime.JSX.Element;
 
 /**
- * A responsive table component.
+ * Column definition for Table.
+ */
+interface ITableColumn<T> {
+    /** Row field key used to read cell value. */
+    key: keyof T & string;
+    /** Header label. */
+    label: string;
+    /** Tailwind width classes for head and cell. */
+    width?: string;
+    /** Extra classes for the header cell. */
+    className?: string;
+    /** Extra classes for the body cell. */
+    cellClassName?: string;
+    /** Whether the column supports sorting. */
+    sortable?: boolean;
+    /** Custom cell renderer. */
+    render?: (value: unknown, row: T) => ReactNode;
+}
+/**
+ * Props for the Table component.
+ */
+interface ITableProps<T> {
+    /** Rows to display. */
+    data: T[];
+    /** Column configuration. */
+    columns: ITableColumn<T>[];
+    /** Returns a stable key for each row. */
+    getRowKey: (row: T) => string | number;
+    /** Current sort field; prefix with '-' for descending. */
+    ordering?: string;
+    /** Called when a sortable column header is clicked. */
+    onSort?: (columnKey: string) => void;
+    /** Called when a row is clicked. */
+    onRowClick?: (row: T) => void;
+    /** Whether a data request is in progress. */
+    isLoading?: boolean;
+    /** Whether more rows can be loaded. */
+    hasMore?: boolean;
+    /** Called when the load-more button is clicked. */
+    onLoadMore?: () => void;
+    /** Extra classes for the scroll wrapper. */
+    className?: string;
+}
+/**
+ * Generic data table with loading, empty, sort, and load-more states.
  *
  * @example
  * ```tsx
- * <Table>
- *   <TableHeader>
- *     <TableRow>
- *       <TableHead>Header</TableHead>
- *     </TableRow>
- *   </TableHeader>
- *   <TableBody>
- *     <TableRow>
- *       <TableCell>Cell</TableCell>
- *     </TableRow>
- *   </TableBody>
- * </Table>
+ * <Table
+ *   data={items}
+ *   columns={columns}
+ *   getRowKey={(row) => row.pk}
+ *   ordering={ordering}
+ *   onSort={handleSort}
+ *   isLoading={isLoading}
+ *   hasMore={hasMore}
+ *   onLoadMore={handleLoadMore}
+ * />
  * ```
  */
-declare const Table: React$1.ForwardRefExoticComponent<React$1.HTMLAttributes<HTMLTableElement> & React$1.RefAttributes<HTMLTableElement>>;
-declare const TableHeader: React$1.ForwardRefExoticComponent<React$1.HTMLAttributes<HTMLTableSectionElement> & React$1.RefAttributes<HTMLTableSectionElement>>;
-declare const TableBody: React$1.ForwardRefExoticComponent<React$1.HTMLAttributes<HTMLTableSectionElement> & React$1.RefAttributes<HTMLTableSectionElement>>;
-declare const TableRow: React$1.ForwardRefExoticComponent<React$1.HTMLAttributes<HTMLTableRowElement> & React$1.RefAttributes<HTMLTableRowElement>>;
-declare const TableHead: React$1.ForwardRefExoticComponent<React$1.ThHTMLAttributes<HTMLTableCellElement> & React$1.RefAttributes<HTMLTableCellElement>>;
-declare const TableCell: React$1.ForwardRefExoticComponent<React$1.TdHTMLAttributes<HTMLTableCellElement> & React$1.RefAttributes<HTMLTableCellElement>>;
+declare function Table<T extends Record<string, unknown>>({ data, columns, getRowKey, ordering, onSort, onRowClick, isLoading, hasMore, onLoadMore, className, }: ITableProps<T>): react_jsx_runtime.JSX.Element;
+
+interface ITableSkeletonColumn {
+    /** Tailwind width classes matching the table column. */
+    width?: string;
+    /** Extra classes for the skeleton cell. */
+    cellClassName?: string;
+}
+interface ITableSkeletonProps {
+    /** Column layout or column count. */
+    columns: ITableSkeletonColumn[] | number;
+    /** Number of skeleton rows. Defaults to 5. */
+    rows?: number;
+}
+/**
+ * Skeleton rows rendered inside TableBody while data is loading.
+ *
+ * @example
+ * ```tsx
+ * <TableBody>
+ *   <TableSkeleton columns={columns} rows={5} />
+ * </TableBody>
+ * ```
+ */
+declare function TableSkeleton({ columns, rows, }: ITableSkeletonProps): react_jsx_runtime.JSX.Element;
+
+interface INoResultProps {
+    /** Title shown in the empty state. */
+    title?: string;
+    /** Description shown in the empty state. */
+    description?: string;
+}
+/**
+ * Default empty state for tables and lists with no data.
+ *
+ * @example
+ * ```tsx
+ * <NoResult />
+ * ```
+ */
+declare function NoResult({ title, description, }: INoResultProps): react_jsx_runtime.JSX.Element;
+
+/**
+ * A placeholder skeleton with pulse animation.
+ *
+ * @example
+ * ```tsx
+ * <Skeleton className="h-4 w-[200px]" />
+ * ```
+ */
+declare function Skeleton({ className, ...props }: React$1.HTMLAttributes<HTMLDivElement>): react_jsx_runtime.JSX.Element;
 
 /**
  * A modal dialog component.
@@ -764,5 +901,5 @@ declare function CommandSeparator({ className, ...props }: React$1.ComponentProp
 declare function CommandItem({ className, ...props }: React$1.ComponentProps<typeof Command$1.Item>): react_jsx_runtime.JSX.Element;
 declare function CommandShortcut({ className, ...props }: React$1.ComponentProps<"span">): react_jsx_runtime.JSX.Element;
 
-export { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, AlertDialogPortal, AlertDialogTitle, AlertDialogTrigger, PumpwoodBadge as Badge, Button, Calendar, PumpwoodCard as Card, CombinedFilterTable, Combobox, Command, CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator, CommandShortcut, ConfirmationDialog, CreatedByUserFilter, DatePicker, DateRangeFilter, Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger, PumpwoodDropzone as Dropzone, Empty, EmptyContainer, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle, FKSelect, FileDropzone, Input, Popover, PopoverContent, PopoverTrigger, Select, Sidebar, Stack, Table, TableBody, TableCell, TableHead, TableHeader, TableRow, Tabs, TabsContent, TabsList, TabsTrigger, Typography };
-export type { ComboboxItem, IDatePickerProps, ISelectProps };
+export { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, AlertDialogPortal, AlertDialogTitle, AlertDialogTrigger, PumpwoodBadge as Badge, Button, Calendar, PumpwoodCard as Card, CombinedFilterTable, Combobox, Command, CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator, CommandShortcut, ConfirmationDialog, CreatedByUserFilter, DatePicker, DateRangeFilter, Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger, PumpwoodDropzone as Dropzone, Empty, EmptyContainer, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle, FKSelect, FileDropzone, Input, NoResult, Popover, PopoverContent, PopoverTrigger, Select, Sidebar, Skeleton, Stack, Table, TableSkeleton, Tabs, TabsContent, TabsList, TabsTrigger, Typography };
+export type { ComboboxItem, FKFetcherParams, IDatePickerProps, IFKSelectProps, ISelectFKProps, ISelectProps, IStaticSelectProps, ITableColumn, ITableProps };

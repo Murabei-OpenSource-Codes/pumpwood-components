@@ -11,9 +11,9 @@ export type FKFetcherParams = {
     offset?: number;
 };
 /**
- * Props for the FKSelect component.
+ * Props for the FK variant of the Select component.
  */
-export interface IFKSelectProps {
+export interface IFKSelectVariantProps {
     /** Optional id used as data-testid on the trigger. */
     id?: string;
     /** Function to fetch data from the API. */
@@ -47,17 +47,6 @@ export interface IFKSelectProps {
     debounceWait?: number;
 }
 /**
- * A foreign key select component (async combobox).
- *
- * @example
- * ```tsx
- * <FKSelect
- *   fetcher={fetchData}
- *   modelClass="User"
- *   labelName="username"
- *   value={userId}
- *   onChange={setUserId}
- * />
- * ```
+ * FK variant of Select — async searchable combobox for foreign keys.
  */
-export declare const FKSelect: ({ id, fetcher, resolveValue, modelClass, labelName, valueField, placeholder, emptyMessage, value, onChange, additionalFilters, fields, className, debounceWait, }: IFKSelectProps) => import("react/jsx-runtime").JSX.Element;
+export declare const FKSelectVariant: ({ id, fetcher, resolveValue, modelClass, labelName, valueField, placeholder, emptyMessage, value, onChange, additionalFilters, fields, className, debounceWait, }: IFKSelectVariantProps) => import("react/jsx-runtime").JSX.Element;

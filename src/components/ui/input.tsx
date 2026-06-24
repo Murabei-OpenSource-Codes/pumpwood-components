@@ -1,5 +1,6 @@
 import { InputHTMLAttributes, ReactNode, forwardRef } from "react";
 
+import { fieldTriggerClassName } from "@/lib/field-trigger";
 import { cn } from "@/lib/utils";
 
 export interface InputProps
@@ -8,20 +9,13 @@ export interface InputProps
 }
 
 const inputClassName =
-	"h-10 w-full bg-background text-sm border border-input rounded-md " +
-	"hover:bg-[hsl(var(--hover-ring))] hover:border-[hsl(var(--focus-ring))] " +
-	"focus:outline-none focus:ring-ring focus:ring-offset-2 ring-offset-background " +
-	"file:border-0 file:bg-transparent file:text-sm file:font-medium " +
-	"placeholder:text-muted-foreground focus-visible:outline-none " +
-	"focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 " +
-	"disabled:cursor-not-allowed disabled:opacity-50";
+	fieldTriggerClassName +
+	" file:border-0 file:bg-transparent file:text-sm file:font-medium " +
+	"placeholder:text-muted-foreground";
 
 const inputWithIconWrapperClassName =
-	"flex h-10 w-full items-center gap-2 rounded-md border border-input " +
-	"bg-background px-3 " +
-	"hover:bg-[hsl(var(--hover-ring))] hover:border-[hsl(var(--focus-ring))] " +
-	"focus-within:outline-none focus-within:ring-2 " +
-	"focus-within:ring-ring focus-within:ring-offset-2 ring-offset-background";
+	fieldTriggerClassName + " gap-2 focus-within:ring-2 " +
+	"focus-within:ring-ring focus-within:ring-offset-2";
 
 const inputWithIconInnerClassName =
 	"min-h-0 min-w-0 w-auto flex-1 rounded-none border-0 bg-transparent p-0 " +
@@ -68,7 +62,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
 			<input
 				data-slot="input"
 				type={type}
-				className={cn(inputClassName, "px-3 py-2", className)}
+				className={cn(inputClassName, className)}
 				ref={ref}
 				{...props}
 			/>

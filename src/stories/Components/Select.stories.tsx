@@ -10,6 +10,27 @@ const options = [
     { value: 'pineapple', label: 'Pineapple' },
 ];
 
+const mockFetcher = async ({
+    search,
+    modelClass,
+}: {
+    search: string;
+    modelClass: string;
+}) => {
+    await new Promise((resolve) => setTimeout(resolve, 300));
+    const items = [
+        { pk: 1, username: 'alice' },
+        { pk: 2, username: 'bob' },
+        { pk: 3, username: 'carol' },
+    ];
+    if (!search) {
+        return items;
+    }
+    return items.filter((item) =>
+        item.username.toLowerCase().includes(search.toLowerCase()),
+    );
+};
+
 const meta = {
     title: 'Pumpwood/Components/Select',
     component: Select,
@@ -55,6 +76,30 @@ export const WithPlaceholder: Story = {
                     {...args}
                     value={value}
                     onValueChange={setValue}
+                />
+            </div>
+        );
+    },
+};
+
+export const FK: Story = {
+    args: {
+        variant: 'fk',
+        fetcher: mockFetcher,
+        modelClass: 'user',
+        labelName: 'username',
+        placeholder: 'Select user',
+        emptyMessage: 'No users found',
+        value: null,
+    },
+    render: (args) => {
+        const [value, setValue] = useState<string | number | null>(null);
+        return (
+            <div className="w-[300px]">
+                <Select
+                    {...args}
+                    value={value}
+                    onChange={(val) => setValue(val)}
                 />
             </div>
         );

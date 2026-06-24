@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { FKSelect, type IFKSelectProps } from "@/components/FKSelect";
 import {
     Select as SelectRoot,
     SelectContent,
@@ -8,6 +9,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
+import { fieldOptionClassName } from "@/lib/field-trigger";
 import { cn } from "@/lib/utils";
 
 type Option = {
@@ -15,18 +17,22 @@ type Option = {
     label: string;
 };
 
-/**
- * Props for the Select component.
- */
-export interface ISelectProps {
+type SharedSelectProps = {
     /** Optional id used as data-testid on the trigger. */
     id?: string;
+    /** Optional class names for the select wrapper (width, layout). */
+    className?: string;
+};
+
+/**
+ * Props for the static (default) Select variant.
+ */
+export interface IStaticSelectProps extends SharedSelectProps {
+    variant?: "static";
     /** Placeholder text when no value is selected. */
     placeholder: string;
     /** Static options with value and label. */
     options: Option[];
-    /** Optional class names for the select wrapper (width, layout). */
-    className?: string;
     /** Controlled selected value. */
     value?: string;
     /** Callback when the selected value changes. */
@@ -38,22 +44,18 @@ export interface ISelectProps {
 }
 
 /**
- * A reusable dropdown component built with shadcn/ui.
- *
- * @example
- * ```tsx
- * <Select
- *   placeholder="Choose an option"
- *   options={[
- *     { value: "a", label: "Option A" },
- *     { value: "b", label: "Option B" },
- *   ]}
- *   value={selected}
- *   onValueChange={setSelected}
- * />
- * ```
+ * Props for the FK variant of Select.
  */
-export const Select = ({
+export interface ISelectFKProps extends IFKSelectProps {
+    variant: "fk";
+}
+
+/**
+ * Props for the Select component (static or FK variant).
+ */
+export type ISelectProps = IStaticSelectProps | ISelectFKProps;
+
+const StaticSelect = ({
     id,
     placeholder,
     options,
@@ -62,7 +64,7 @@ export const Select = ({
     onValueChange,
     required,
     name,
-}: ISelectProps) => {
+}: IStaticSelectProps) => {
     const [selectedValue, setSelectedValue] = useState<string>(value || "");
 
     useEffect(() => {
@@ -101,10 +103,11 @@ export const Select = ({
                                 data-testid={option.value}
                                 value={option.value}
                                 className={cn(
-                                    "cursor-pointer transition-colors",
+                                    "cursor-pointer",
+                                    fieldOptionClassName,
                                     selectedValue === option.value
                                         ? "bg-accent text-accent-foreground"
-                                        : "hover:bg-muted",
+                                        : "",
                                 )}
                             >
                                 {option.label}
@@ -115,4 +118,42 @@ export const Select = ({
             </div>
         </>
     );
+};
+
+/**
+ * A reusable dropdown component built with shadcn/ui.
+ *
+ * Supports a static variant (Radix Select) and an FK variant (async
+ * Combobox) for foreign-key fields.
+ *
+ * @example
+ * ```tsx
+ * <Select
+ *   placeholder="Choose an option"
+ *   options={[
+ *     { value: "a", label: "Option A" },
+ *     { value: "b", label: "Option B" },
+ *   ]}
+ *   value={selected}
+ *   onValueChange={setSelected}
+ * />
+ *
+ * <Select
+ *   variant="fk"
+ *   fetcher={fetchUsers}
+ *   modelClass="user"
+ *   labelName="username"
+ *   placeholder="Select user"
+ *   value={userId}
+ *   onChange={(id, item) => setUserId(id)}
+ * />
+ * ```
+ */
+export const Select = (props: ISelectProps) => {
+    if (props.variant === "fk") {
+        const { variant: _variant, ...fkProps } = props;
+        return <FKSelect {...fkProps} />;
+    }
+
+    return <StaticSelect {...props} />;
 };
