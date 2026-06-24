@@ -4,6 +4,7 @@ import "./styles/globals.css";
 
 export { Button } from "./components/ui/button";
 export { Input } from "./components/ui/input";
+export { Textarea } from "./components/ui/textarea";
 export { default as Stack } from "./components/Stack";
 export { default as Dropzone } from "./components/Dropzone";
 export { ConfirmationDialog } from "./components/ConfirmationDialog";
