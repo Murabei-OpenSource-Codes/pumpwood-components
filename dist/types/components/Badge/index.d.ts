@@ -1,6 +1,6 @@
 import { type VariantProps } from "class-variance-authority";
 export declare const pumpwoodBadgeVariants: (props?: ({
-    variant?: "destructive" | "secondary" | "primary" | "warning" | "muted" | null | undefined;
+    variant?: "destructive" | "secondary" | "warning" | "primary" | "muted" | null | undefined;
     size?: "default" | "sm" | "lg" | null | undefined;
 } & import("class-variance-authority/types").ClassProp) | undefined) => string;
 export interface PumpwoodBadgeProps extends React.HTMLAttributes<HTMLDivElement>, VariantProps<typeof pumpwoodBadgeVariants> {

@@ -210,8 +210,24 @@ declare const PumpwoodCard: {
     Description: React$1.ForwardRefExoticComponent<React$1.HTMLAttributes<HTMLDivElement> & React$1.RefAttributes<HTMLDivElement>>;
 };
 
+declare const badgeVariants: (props?: ({
+    variant?: "default" | "destructive" | "outline" | "secondary" | "success" | "warning" | "info" | null | undefined;
+} & class_variance_authority_types.ClassProp) | undefined) => string;
+interface BadgeProps extends React$1.HTMLAttributes<HTMLDivElement>, VariantProps<typeof badgeVariants> {
+}
+/**
+ * Displays a badge or a component that looks like a badge.
+ *
+ * @example
+ * ```tsx
+ * <Badge>Default</Badge>
+ * <Badge variant="secondary">Secondary</Badge>
+ * ```
+ */
+declare function Badge({ className, variant, ...props }: BadgeProps): react_jsx_runtime.JSX.Element;
+
 declare const pumpwoodBadgeVariants: (props?: ({
-    variant?: "destructive" | "secondary" | "primary" | "warning" | "muted" | null | undefined;
+    variant?: "destructive" | "secondary" | "warning" | "primary" | "muted" | null | undefined;
     size?: "default" | "sm" | "lg" | null | undefined;
 } & class_variance_authority_types.ClassProp) | undefined) => string;
 interface PumpwoodBadgeProps extends React.HTMLAttributes<HTMLDivElement>, VariantProps<typeof pumpwoodBadgeVariants> {
@@ -912,5 +928,5 @@ declare function CommandSeparator({ className, ...props }: React$1.ComponentProp
 declare function CommandItem({ className, ...props }: React$1.ComponentProps<typeof Command$1.Item>): react_jsx_runtime.JSX.Element;
 declare function CommandShortcut({ className, ...props }: React$1.ComponentProps<"span">): react_jsx_runtime.JSX.Element;
 
-export { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, AlertDialogPortal, AlertDialogTitle, AlertDialogTrigger, PumpwoodBadge as Badge, Button, Calendar, PumpwoodCard as Card, CombinedFilterTable, Combobox, Command, CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator, CommandShortcut, ConfirmationDialog, CreatedByUserFilter, DatePicker, DateRangeFilter, Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger, PumpwoodDropzone as Dropzone, Empty, EmptyContainer, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle, FKSelect, FileDropzone, Input, NoResult, Popover, PopoverContent, PopoverTrigger, Select, Sidebar, Skeleton, Stack, Table, TableSkeleton, Tabs, TabsContent, TabsList, TabsTrigger, Textarea, Typography };
+export { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, AlertDialogPortal, AlertDialogTitle, AlertDialogTrigger, Badge, Button, Calendar, PumpwoodCard as Card, CombinedFilterTable, Combobox, Command, CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator, CommandShortcut, ConfirmationDialog, CreatedByUserFilter, DatePicker, DateRangeFilter, Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger, PumpwoodDropzone as Dropzone, Empty, EmptyContainer, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle, FKSelect, FileDropzone, Input, NoResult, Popover, PopoverContent, PopoverTrigger, PumpwoodBadge, Select, Sidebar, Skeleton, Stack, Table, TableSkeleton, Tabs, TabsContent, TabsList, TabsTrigger, Textarea, Typography, badgeVariants, pumpwoodBadgeVariants };
 export type { ComboboxItem, FKFetcherParams, IDatePickerProps, IFKSelectProps, ISelectFKProps, ISelectProps, IStaticSelectProps, ITableColumn, ITableProps };
