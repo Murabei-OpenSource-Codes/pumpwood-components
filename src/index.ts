@@ -9,7 +9,15 @@ export { default as Stack } from "./components/Stack";
 export { default as Dropzone } from "./components/Dropzone";
 export { ConfirmationDialog } from "./components/ConfirmationDialog";
 export { Typography } from "./components/Text";
-export { PumpwoodCard as Card } from "./components/Card";
+export {
+	Card,
+	CardContent,
+	CardDescription,
+	CardFooter,
+	CardHeader,
+	CardTitle,
+} from "./components/ui/card";
+export { PumpwoodCard } from "./components/Card";
 export { Badge, badgeVariants } from "./components/ui/badge";
 export {
 	PumpwoodBadge,
