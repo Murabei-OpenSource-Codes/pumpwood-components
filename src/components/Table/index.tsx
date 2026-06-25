@@ -136,7 +136,7 @@ export function Table<T extends Record<string, unknown>>({
                     <NoResult />
                 </div>
             ) : (
-                <TableRoot className="table-fixed w-full">
+                <TableRoot className="table-auto w-full">
                     <TableHeader
                         className={
                             "sticky top-0 bg-primary text-white z-10"
