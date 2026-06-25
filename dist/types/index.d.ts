@@ -12,6 +12,7 @@ export { PumpwoodBadge, pumpwoodBadgeVariants, } from "./components/Badge";
 export { default as FileDropzone } from "./components/FileDropzone";
 export { Sidebar } from "./components/Sidebar";
 export { Tabs, TabsContent, TabsList, TabsTrigger } from "./components/ui/tabs";
+export { Accordion, AccordionContent, AccordionItem, AccordionTrigger, } from "./components/ui/accordion";
 export { Empty, EmptyHeader, EmptyTitle, EmptyDescription, EmptyContent, EmptyMedia } from "./components/ui/empty";
 export { EmptyContainer } from "./components/EmptyContainer";
 export { DateRangeFilter } from "./components/Filters/DateRangeFilter";
