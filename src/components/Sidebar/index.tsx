@@ -1,4 +1,9 @@
-import { ChartNoAxesGantt, Menu, PanelRightClose, PanelRightOpen, type LucideIcon } from "lucide-react";
+import {
+    ChartNoAxesGantt,
+    ChevronDown,
+    Menu,
+    type LucideIcon,
+} from "lucide-react";
 import {
     createContext,
     useContext,
@@ -11,6 +16,7 @@ import { cn } from "../../lib/utils";
 
 interface SidebarContextType {
     isCollapsed: boolean;
+    isCollapsing?: boolean;
     onToggleCollapse: () => void;
 }
 
@@ -32,8 +38,12 @@ export interface SidebarRootProps {
     children: ReactNode;
     /** Whether the sidebar is currently collapsed. */
     isCollapsed: boolean;
+    /** Whether the sidebar is mid-collapse transition. */
+    isCollapsing?: boolean;
     /** Callback to toggle the collapsed state. */
     onToggleCollapse: () => void;
+    /** Callback when width transition ends. */
+    onTransitionEnd?: () => void;
     /** Additional CSS classes. */
     className?: string;
 }
@@ -41,19 +51,26 @@ export interface SidebarRootProps {
 function Root({
     children,
     isCollapsed,
+    isCollapsing = false,
     onToggleCollapse,
+    onTransitionEnd,
     className,
 }: SidebarRootProps) {
-    const sidebarWidth = isCollapsed ? "w-20" : "w-[232px]";
+    const sidebarWidth = isCollapsed
+        ? "smaller:w-20 w-20"
+        : "smaller:w-[232px] w-[232px]";
 
     return (
-        <SidebarContext.Provider value={{ isCollapsed, onToggleCollapse }}>
+        <SidebarContext.Provider
+            value={{ isCollapsed, isCollapsing, onToggleCollapse }}
+        >
             <nav
                 className={cn(
                     sidebarWidth,
-                    "py-6 px-4 flex flex-col items-center bg-primary mb-2 rounded-xl transition-all duration-300 ease-in-out h-full",
-                    className
+                    "smaller:p-3 px-2 py-6 flex flex-col items-center bg-primary mb-2 rounded-lg transition-all duration-300 ease-in-out h-full min-h-0",
+                    className,
                 )}
+                onTransitionEnd={onTransitionEnd}
             >
                 {children}
             </nav>
@@ -92,7 +109,12 @@ export interface SidebarContentProps {
 
 function Content({ children, className }: SidebarContentProps) {
     return (
-        <Stack className={cn("w-full items-baseline gap-1", className)}>
+        <Stack
+            className={cn(
+                "w-full flex-1 min-h-0 items-stretch gap-1 overflow-y-auto",
+                className,
+            )}
+        >
             {children}
         </Stack>
     );
@@ -198,7 +220,7 @@ function Logo({
 export interface SidebarLinkProps {
     icon: LucideIcon;
     children: ReactNode;
-    href: string;
+    href: any;
     active?: boolean;
     className?: string;
     LinkComponent?: ComponentType<{
@@ -217,29 +239,161 @@ function Link({
     className,
     LinkComponent = ({ children, ...props }) => <a {...props}>{children}</a>,
 }: SidebarLinkProps) {
-    const { isCollapsed } = useSidebar();
+    const { isCollapsed, isCollapsing } = useSidebar();
 
     return (
         <LinkComponent
             href={href}
             title={typeof children === "string" ? children : undefined}
-
             className={cn(
-                "w-full h-[48px] p-3 font-bold text-white rounded-md overflow-hidden transition-all duration-300 ease-in-out hover:bg-white/5 flex items-center",
+                "w-full h-[48px] smaller:p-3 p-4 font-bold text-white rounded-md overflow-hidden transition-all duration-300 ease-in-out hover:bg-white/5 justify-start",
                 active ? "bg-white/5" : "",
                 className,
-                !isCollapsed ? "px-6 py-3" : ""
             )}
         >
-            <Stack direction="row" gap={2} className="items-center">
-                <Icon size={24} />
-                {!isCollapsed && (
-                    <span className="transition-opacity duration-300 ease-in-out opacity-100 whitespace-nowrap">
+            <Stack direction="row" gap={2}>
+                <Icon className="size-6" />
+                {!isCollapsed && !isCollapsing && (
+                    <span className="transition-opacity duration-300 ease-in-out opacity-100">
                         {children}
                     </span>
                 )}
             </Stack>
         </LinkComponent>
+    );
+}
+
+export interface SidebarNavGroupProps {
+    icon: LucideIcon;
+    title: string;
+    isExpanded: boolean;
+    isActive?: boolean;
+    onToggle: () => void;
+    children: ReactNode;
+    className?: string;
+}
+
+function NavGroup({
+    icon: Icon,
+    title,
+    isExpanded,
+    isActive = false,
+    onToggle,
+    children,
+    className,
+}: SidebarNavGroupProps) {
+    const { isCollapsed, isCollapsing } = useSidebar();
+
+    return (
+        <Stack className={cn("w-full gap-0", className)}>
+            <Button
+                type="button"
+                title={title}
+                onClick={onToggle}
+                variant="ghost"
+                className={cn(
+                    "w-full h-[48px] smaller:p-3 p-4 font-bold text-white hover:bg-white/5 hover:text-white justify-start rounded-md transition-all duration-300 ease-in-out",
+                    isActive ? "bg-white/5" : "",
+                )}
+            >
+                <Icon className="!size-6 shrink-0" />
+                {!isCollapsed && !isCollapsing && (
+                    <>
+                        <span className="flex-1 text-left transition-opacity duration-300 ease-in-out opacity-100 text-base">
+                            {title}
+                        </span>
+                        <ChevronDown
+                            width={20}
+                            height={20}
+                            className={cn(
+                                "shrink-0 transition-transform duration-300 ease-in-out",
+                                isExpanded ? "rotate-180" : "",
+                            )}
+                        />
+                    </>
+                )}
+            </Button>
+
+            {!isCollapsed && !isCollapsing && (
+                <div
+                    className={cn(
+                        "overflow-hidden transition-all duration-300 ease-in-out",
+                        isExpanded
+                            ? "max-h-96 opacity-100 mt-1"
+                            : "max-h-0 opacity-0",
+                    )}
+                >
+                    <Stack className="ml-6 gap-1">{children}</Stack>
+                </div>
+            )}
+        </Stack>
+    );
+}
+
+export interface SidebarNavSubLinkProps {
+    title: string;
+    href: string | Record<string, unknown>;
+    active?: boolean;
+    className?: string;
+    LinkComponent?: ComponentType<{
+        href: any;
+        className?: string;
+        children: ReactNode;
+        title?: string;
+    }>;
+}
+
+function NavSubLink({
+    title,
+    href,
+    active = false,
+    className,
+    LinkComponent = ({ children, ...props }) => <a {...props}>{children}</a>,
+}: SidebarNavSubLinkProps) {
+    return (
+        <LinkComponent
+            href={href}
+            title={title}
+            className={cn(
+                "block w-full px-4 py-3 text-sm text-white rounded-md transition-all duration-200 ease-in-out hover:bg-white/5 hover:translate-x-1",
+                active ? "bg-white/10 font-semibold" : "",
+                className,
+            )}
+        >
+            {title}
+        </LinkComponent>
+    );
+}
+
+export interface SidebarActionProps {
+    icon: LucideIcon;
+    label: string;
+    onClick: () => void;
+    className?: string;
+}
+
+function Action({ icon: Icon, label, onClick, className }: SidebarActionProps) {
+    const { isCollapsed, isCollapsing } = useSidebar();
+
+    return (
+        <Button
+            title={label}
+            onClick={onClick}
+            variant="ghost"
+            className={cn(
+                "w-full h-[48px] smaller:p-3 p-4 font-bold text-white hover:bg-transparent hover:text-white/80 transition-all duration-300 ease-in-out justify-start",
+                className,
+            )}
+        >
+            <Stack direction="row" gap={2}>
+                <Icon width={24} height={24} />
+                {!isCollapsed && !isCollapsing && (
+                    <span className="transition-opacity duration-300 ease-in-out opacity-100">
+                        {label}
+                    </span>
+                )}
+            </Stack>
+        </Button>
     );
 }
 
@@ -274,4 +428,10 @@ export const Sidebar = {
     Toggle,
     Logo,
     Link,
+    NavGroup,
+    NavSubLink,
+    Action,
 };
+
+export { useSidebarCollapse } from "./useSidebarCollapse";
+export type { IUseSidebarCollapseOptions } from "./useSidebarCollapse";

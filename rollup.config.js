@@ -76,7 +76,11 @@ const jsConfig = {
   external: (id) =>
     id === "react" ||
     id === "react-dom" ||
-    id.startsWith("react/"),
+    id.startsWith("react/") ||
+    id === "@toast-ui/react-editor" ||
+    id === "@toast-ui/editor" ||
+    id.startsWith("@toast-ui/") ||
+    id === "swr",
 };
 
 /**
