@@ -5,15 +5,20 @@
   },
   "version": "1.2.0",
   "description": "",
-  "main": "dist/index.js",
-  "module": "dist/index.esm.js",
+  "main": "dist/components.js",
+  "module": "dist/components.esm.js",
   "style": "dist/index.css",
-  "types": "dist/index.d.ts",
+  "types": "dist/components.d.ts",
   "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.esm.js",
-      "require": "./dist/index.js"
+    "./components": {
+      "types": "./dist/components.d.ts",
+      "import": "./dist/components.esm.js",
+      "require": "./dist/components.js"
+    },
+    "./design-system": {
+      "types": "./dist/design-system.d.ts",
+      "import": "./dist/design-system.esm.js",
+      "require": "./dist/design-system.js"
     },
     "./tailwind.config": {
       "import": "./tailwind.config.ts",
@@ -25,6 +30,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "rollup -c",
+    "lint": "biome check .",
+    "lint:fix": "biome check --write .",
     "prepare": "npm run build",
     "storybook": "node node_modules/storybook/dist/bin/dispatcher.js dev -p 6006",
     "build-storybook": "node node_modules/storybook/dist/bin/dispatcher.js build",

@@ -1,0 +1,36 @@
+import type { Meta, StoryObj } from '@storybook/react';
+import { DateRangeFilter } from '@design-system/Filters/DateRangeFilter';
+import { useState } from 'react';
+
+const meta = {
+    title: 'Pumpwood/DesignSystem/DateRangeFilter',
+    component: DateRangeFilter,
+    parameters: {
+        layout: "centered",
+    },
+    tags: ["autodocs"],
+} satisfies Meta<typeof DateRangeFilter>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Primary: Story = {
+    args: {
+        onStartDateChange: () => { },
+        onEndDateChange: () => { },
+    },
+    render: (args) => {
+        const [startDate, setStartDate] = useState<Date | undefined>(args.startDate);
+        const [endDate, setEndDate] = useState<Date | undefined>(args.endDate);
+        return (
+            <DateRangeFilter
+                {...args}
+                startDate={startDate}
+                endDate={endDate}
+                onStartDateChange={setStartDate}
+                onEndDateChange={setEndDate}
+            />
+        );
+    }
+};
+

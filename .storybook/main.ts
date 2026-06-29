@@ -31,6 +31,8 @@ const config: StorybookConfig = {
       resolve: {
         alias: {
           '@': path.resolve(__dirname, '../src'),
+          '@components': path.resolve(__dirname, '../src/components'),
+          '@design-system': path.resolve(__dirname, '../src/design-system'),
         },
       },
       plugins: [tailwindcss()],
