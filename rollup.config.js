@@ -16,6 +16,7 @@ const __dirname = path.dirname(__filename);
 const srcDir = path.resolve(__dirname, "src");
 const componentsDir = path.resolve(srcDir, "components");
 const designSystemDir = path.resolve(srcDir, "design-system");
+const componentsEntry = "@murabei-data-science/pumpwood-ui/components";
 
 const aliasEntries = [
 	{ find: "@components", replacement: componentsDir },
@@ -63,7 +64,7 @@ function createJsConfig({ input, outputBase, externalComponents }) {
 				paths: externalComponents
 					? (id) => {
 						if (isComponentsImport(id)) {
-							return "pumpwood-ui-components/components";
+							return componentsEntry;
 						}
 						return id;
 					}
@@ -76,7 +77,7 @@ function createJsConfig({ input, outputBase, externalComponents }) {
 				paths: externalComponents
 					? (id) => {
 						if (isComponentsImport(id)) {
-							return "pumpwood-ui-components/components";
+							return componentsEntry;
 						}
 						return id;
 					}
@@ -138,7 +139,7 @@ function createDtsConfig({ input, outputFile, externalComponents }) {
 				paths: externalComponents
 					? (id) => {
 						if (id.startsWith("@components")) {
-							return "pumpwood-ui-components/components";
+							return componentsEntry;
 						}
 						return id;
 					}
@@ -153,7 +154,7 @@ function createDtsConfig({ input, outputFile, externalComponents }) {
 			if (id === "react" || id === "react-dom" || id === "react/jsx-runtime") {
 				return true;
 			}
-			if (id === "pumpwood-ui-components/components") {
+			if (id === componentsEntry) {
 				return true;
 			}
 			if (externalComponents && id.startsWith("@components")) {

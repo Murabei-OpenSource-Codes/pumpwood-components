@@ -60,6 +60,7 @@ export {
 export { Combobox, type ComboboxItem } from "./ui/combobox";
 export {
 	Table,
+	PumpwoodTable,
 	type ITableProps,
 	type ITableColumn,
 } from "./Table";

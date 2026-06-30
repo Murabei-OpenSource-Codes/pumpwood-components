@@ -1,7 +1,7 @@
 import * as react_jsx_runtime from 'react/jsx-runtime';
 import * as react from 'react';
 import { ReactNode, ComponentType, ComponentPropsWithoutRef, ImgHTMLAttributes } from 'react';
-import { FKFetcherParams } from 'pumpwood-ui-components/components';
+import { FKFetcherParams } from '@murabei-data-science/pumpwood-ui/components';
 import { LucideIcon } from 'lucide-react';
 
 interface DateRangeFilterProps {

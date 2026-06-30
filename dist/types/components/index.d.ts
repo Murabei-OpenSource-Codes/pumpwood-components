@@ -22,7 +22,7 @@ export { DatePicker, type IDatePickerProps } from "./DatePicker";
 export { Calendar } from "./ui/calendar";
 export { Popover, PopoverContent, PopoverTrigger, } from "./ui/popover";
 export { Combobox, type ComboboxItem } from "./ui/combobox";
-export { Table, type ITableProps, type ITableColumn, } from "./Table";
+export { Table, PumpwoodTable, type ITableProps, type ITableColumn, } from "./Table";
 export { TableSkeleton } from "./TableSkeleton";
 export { NoResult } from "./NoResult";
 export { Skeleton } from "./ui/skeleton";
