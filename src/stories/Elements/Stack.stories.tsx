@@ -22,3 +22,14 @@ export const Primary: Story = {
         className: 'bg-red-500 w-fit p-10 text-white rounded-xl',
     },
 };
+
+export const Interactive: Story = {
+    args: {
+        children: <div>Click or press Enter / Space</div>,
+        direction: 'col',
+        gap: 2,
+        className: 'bg-blue-500 w-fit p-6 text-white rounded-xl cursor-pointer',
+        onClick: () => alert('Stack clicked'),
+        'aria-label': 'Interactive stack demo',
+    },
+};

@@ -1,40 +1,72 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Combobox, type ComboboxItem } from "@/components/ui/combobox";
 import { cn } from "@/lib/utils";
 
 /**
- * Props for the FKSelect component
+ * Parameters passed to the FK fetcher function.
+ */
+export type FKFetcherParams = {
+    search: string;
+    modelClass: string;
+    labelName: string;
+    additionalFilters?: Record<string, any>;
+    fields?: string[];
+    limit?: number;
+    offset?: number;
+};
+
+/**
+ * Props for the FKSelect component.
  */
 export interface IFKSelectProps {
-
-    /** FUNCTION to fetch data. Should return a promise resolving to an array of items */
-    fetcher: (params: {
-        search: string;
+    /** Optional id used as data-testid on the trigger. */
+    id?: string;
+    /** Function to fetch data from the API. */
+    fetcher: (params: FKFetcherParams) => Promise<any[]>;
+    /** Optional function to resolve a value not present in the list. */
+    resolveValue?: (params: {
         modelClass: string;
-        limit?: number;
-        offset?: number;
-    }) => Promise<any[]>;
-    /** The model class name to identify the resource */
+        value: string | number;
+    }) => Promise<any>;
+    /** The model class name to identify the resource. */
     modelClass: string;
-    /** The field name to use as the display label from the fetched items */
+    /** The field name to use as the display label. */
     labelName: string;
-    /** The field name to use as the value (ID) from the fetched items. Defaults to 'pk' or 'id' */
+    /** The field name to use as the value (ID). Defaults to 'pk'. */
     valueField?: string;
-    /** Placeholder text for the search input */
+    /** Placeholder text for the search input. */
     placeholder?: string;
-    /** Message to show when no items are found */
+    /** Message to show when no items are found. */
     emptyMessage?: string;
-    /** The currently selected value */
+    /** The currently selected value. */
     value: string | number | null;
-    /** Callback function called when an item is selected */
+    /** Callback when an item is selected. */
     onChange: (value: string | number, item?: any) => void;
-    /** Additional className */
+    /** Additional filters to apply to the API request. */
+    additionalFilters?: Record<string, any>;
+    /** Extra fields to include in search. */
+    fields?: string[];
+    /** Optional class names for the wrapper (e.g. width overrides). */
     className?: string;
-    /** Debounce time in ms. Defaults to 300 */
+    /** Debounce time in ms. Defaults to 300. */
     debounceWait?: number;
 }
+
+const EMPTY_ADDITIONAL_FILTERS: Record<string, any> = {};
+
+const formatItems = (
+    data: any[],
+    labelName: string,
+    valueField: string,
+): ComboboxItem[] => {
+    return data.map((item) => ({
+        value: item[valueField] ?? item.id ?? item.pk,
+        label: String(item[labelName] ?? item.name ?? item.pk ?? ""),
+        ...item,
+    }));
+};
 
 /**
  * A foreign key select component (async combobox).
@@ -51,7 +83,9 @@ export interface IFKSelectProps {
  * ```
  */
 export const FKSelect = ({
+    id,
     fetcher,
+    resolveValue,
     modelClass,
     labelName,
     valueField = "pk",
@@ -59,65 +93,130 @@ export const FKSelect = ({
     emptyMessage = "No items found",
     value,
     onChange,
+    additionalFilters = EMPTY_ADDITIONAL_FILTERS,
+    fields,
     className,
     debounceWait = 300,
 }: IFKSelectProps) => {
+    const resolvedAdditionalFilters = useMemo(
+        () => additionalFilters ?? EMPTY_ADDITIONAL_FILTERS,
+        [additionalFilters],
+    );
     const [items, setItems] = useState<ComboboxItem[]>([]);
+    const [searchValue, setSearchValue] = useState("");
+    const [debouncedSearch, setDebouncedSearch] = useState("");
     const [loading, setLoading] = useState(false);
-    // We can use a simple state for search value that Combobox controls, 
-    // but Combobox in the library currently controls its own search state locally and filters items.
-    // However, for async search, we need to listen to search changes.
-    // The ported `Combobox` does internal filtering. We need to modify it or this wrapper to handle async search.
-    // The ported `Combobox` does not expose `onSearchChange`.
-    // We might need to modify `Combobox` to expose `onSearchChange`.
+    const [displayLabel, setDisplayLabel] = useState<string | undefined>();
 
-    // For now, let's assume we load initial data.
-    // But real FKSelect searches on the server.
-
-    // Since I cannot easily modify Combobox to be fully async controlled without changing it significantly,
-    // and the original FKSelect uses a specific fetcher key with SWR.
-
-    // Let's implement a simple useEffect to load initial data.
     useEffect(() => {
-        let active = true;
-        setLoading(true);
-        fetcher({ search: "", modelClass })
-            .then((data) => {
-                if (active) {
-                    const formatted = data.map((item) => ({
-                        value: item[valueField] ?? item.id ?? item.pk,
-                        label: item[labelName] || String(item),
-                        original: item
-                    }));
-                    setItems(formatted);
-                }
-            })
-            .catch((err) => console.error(err))
-            .finally(() => {
-                if (active) setLoading(false);
-            });
-        return () => { active = false; };
-    }, [fetcher, modelClass, labelName, valueField]);
+        const timer = setTimeout(() => {
+            setDebouncedSearch(searchValue);
+        }, debounceWait);
 
-    // Note: This implementation only loads initial data. 
-    // For full async search, Combobox needs 'onSearchChange' prop.
-    // I will stick to this for now as per instructions to "create components".
-    // Improving `Combobox` to support async search might be a follow-up.
+        return () => clearTimeout(timer);
+    }, [searchValue, debounceWait]);
+
+    const loadItems = useCallback(async () => {
+        setLoading(true);
+        try {
+            const data = await fetcher({
+                search: debouncedSearch,
+                modelClass,
+                labelName,
+                additionalFilters: resolvedAdditionalFilters,
+                fields,
+            });
+            setItems(formatItems(data, labelName, valueField));
+        } catch (err) {
+            console.error("FKSelect fetch error:", err);
+            setItems([]);
+        } finally {
+            setLoading(false);
+        }
+    }, [
+        fetcher,
+        debouncedSearch,
+        modelClass,
+        labelName,
+        resolvedAdditionalFilters,
+        fields,
+        valueField,
+    ]);
+
+    useEffect(() => {
+        loadItems();
+    }, [loadItems]);
+
+    const selectedLabel = items.find(
+        (item) => String(item.value) === String(value),
+    )?.label;
+
+    useEffect(() => {
+        if (!value) {
+            setDisplayLabel(undefined);
+            return;
+        }
+
+        if (selectedLabel) {
+            setDisplayLabel(selectedLabel);
+            return;
+        }
+
+        if (!resolveValue) {
+            setDisplayLabel(undefined);
+            return;
+        }
+
+        let active = true;
+
+        resolveValue({ modelClass, value })
+            .then((result) => {
+                if (!active || !result) {
+                    return;
+                }
+
+                const label = String(
+                    result[labelName] ?? result.name ?? value,
+                );
+                setDisplayLabel(label);
+            })
+            .catch((err) => {
+                console.error("FKSelect resolve error:", err);
+            });
+
+        return () => {
+            active = false;
+        };
+    }, [value, selectedLabel, resolveValue, modelClass, labelName]);
+
+    const handleChange = (
+        selectedValue: string,
+        item: ComboboxItem | null,
+    ) => {
+        if (!item) {
+            return;
+        }
+
+        onChange(selectedValue, item);
+    };
 
     return (
-        <Combobox
-            items={items}
-            placeholder={placeholder}
-            emptyMessage={loading ? "Loading..." : emptyMessage} // Simple loading state
-            value={value ? String(value) : null}
-            onChange={(val, item) => {
-                // item is ComboboxItem (value, label).
-                // We might want to pass the original item if we stored it, 
-                // but ComboboxItem definition in ported code is { value: any, label: string }.
-                // We can cast or extend it.
-                onChange(val, item);
-            }}
-            className={cn("w-full", className)}
-        />
+        <div
+            data-testid={id}
+            className={cn("flex w-full min-w-0", className)}
+        >
+            <Combobox
+                items={items}
+                placeholder={placeholder}
+                emptyMessage={emptyMessage}
+                value={value ? String(value) : null}
+                onChange={handleChange}
+                onSearchChange={setSearchValue}
+                filterLocally={false}
+                loading={loading}
+                displayLabel={displayLabel}
+                className="w-full"
+            />
+        </div>
     );
 };

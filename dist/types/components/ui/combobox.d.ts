@@ -11,6 +11,11 @@ interface GenericComboboxProps extends Omit<React.ComponentPropsWithoutRef<"div"
     emptyMessage?: string;
     className?: string;
     searchPlaceholder?: string;
+    onSearchChange?: (search: string) => void;
+    filterLocally?: boolean;
+    loading?: boolean;
+    displayLabel?: string;
+    disabled?: boolean;
 }
 /**
  * A searchable select component (Combobox).
@@ -24,5 +29,5 @@ interface GenericComboboxProps extends Omit<React.ComponentPropsWithoutRef<"div"
  * />
  * ```
  */
-export declare function Combobox({ items, value, onChange, placeholder, emptyMessage, className, searchPlaceholder, }: GenericComboboxProps): import("react/jsx-runtime").JSX.Element;
+export declare function Combobox({ items, value, onChange, placeholder, emptyMessage, className, searchPlaceholder, onSearchChange, filterLocally, loading, displayLabel, disabled, }: GenericComboboxProps): import("react/jsx-runtime").JSX.Element;
 export {};

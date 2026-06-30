@@ -45,8 +45,7 @@ function Calendar({
         <DayPicker
             showOutsideDays={showOutsideDays}
             className={cn(
-                "bg-background group/calendar p-3 [--cell-size:2.8rem]",
-
+                "bg-background group/calendar p-3 [--cell-size:2rem]",
                 String.raw`rtl:**:[.rdp-button\_next>svg]:rotate-180`,
                 String.raw`rtl:**:[.rdp-button\_previous>svg]:rotate-180`,
                 className,
@@ -58,36 +57,36 @@ function Calendar({
                 ...formatters,
             }}
             classNames={{
-                root: cn("w-fit min-w-[calc(var(--cell-size)*7+24px)]", defaultClassNames.root),
+                root: cn("w-fit", defaultClassNames.root),
                 months: cn(
                     "relative flex flex-col gap-4 md:flex-row",
                     defaultClassNames.months,
                 ),
                 month: cn("flex w-full flex-col gap-4", defaultClassNames.month),
                 nav: cn(
-                    "absolute inset-x-0 top-1.5 flex w-full items-center justify-between gap-1 z-10 px-2",
+                    "absolute inset-x-0 top-0 flex w-full items-center justify-between gap-1",
                     defaultClassNames.nav,
                 ),
                 button_previous: cn(
                     buttonVariants({ variant: buttonVariant }),
-                    "h-8 w-8 select-none p-0 aria-disabled:opacity-50",
+                    "size-[--cell-size] select-none p-0 aria-disabled:opacity-50",
                     defaultClassNames.button_previous,
                 ),
                 button_next: cn(
                     buttonVariants({ variant: buttonVariant }),
-                    "h-8 w-8 select-none p-0 aria-disabled:opacity-50",
+                    "size-[--cell-size] select-none p-0 aria-disabled:opacity-50",
                     defaultClassNames.button_next,
                 ),
                 month_caption: cn(
-                    "flex h-9 w-full items-center justify-center",
+                    "flex h-[--cell-size] w-full items-center justify-center px-[--cell-size]",
                     defaultClassNames.month_caption,
                 ),
                 dropdowns: cn(
-                    "flex h-9 w-full items-center justify-center gap-1.5 text-sm font-medium",
+                    "flex h-[--cell-size] w-full items-center justify-center gap-1.5 text-sm font-medium",
                     defaultClassNames.dropdowns,
                 ),
                 dropdown_root: cn(
-                    "has-focus:border-ring border-input  bg-white shadow-xs has-focus:ring-ring/50 has-focus:ring-[3px] relative rounded-md border",
+                    "has-focus:border-ring border-input shadow-xs has-focus:ring-ring/50 has-focus:ring-[3px] relative rounded-md border",
                     defaultClassNames.dropdown_root,
                 ),
                 dropdown: cn(
@@ -95,19 +94,19 @@ function Calendar({
                     defaultClassNames.dropdown,
                 ),
                 caption_label: cn(
-                    "select-none font-semibold text-sm",
+                    "select-none font-medium",
                     captionLayout === "label"
-                        ? ""
+                        ? "text-sm"
                         : "[&>svg]:text-muted-foreground flex h-8 items-center gap-1 rounded-md pl-2 pr-1 text-sm [&>svg]:size-3.5",
                     defaultClassNames.caption_label,
                 ),
-                table: "w-full",
-                weekdays: cn("grid grid-cols-7 mb-2", defaultClassNames.weekdays),
+                table: "w-full border-collapse",
+                weekdays: cn("flex", defaultClassNames.weekdays),
                 weekday: cn(
-                    "text-muted-foreground select-none rounded-md text-[0.8rem] font-medium text-center h-8 flex items-center justify-center",
+                    "text-muted-foreground flex-1 select-none rounded-md text-[0.8rem] font-normal",
                     defaultClassNames.weekday,
                 ),
-                week: cn("grid grid-cols-7 w-full", defaultClassNames.week),
+                week: cn("mt-2 flex w-full", defaultClassNames.week),
 
 
                 week_number_header: cn(

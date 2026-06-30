@@ -8,12 +8,16 @@ export interface SidebarRootProps {
     children: ReactNode;
     /** Whether the sidebar is currently collapsed. */
     isCollapsed: boolean;
+    /** Whether the sidebar is mid-collapse transition. */
+    isCollapsing?: boolean;
     /** Callback to toggle the collapsed state. */
     onToggleCollapse: () => void;
+    /** Callback when width transition ends. */
+    onTransitionEnd?: () => void;
     /** Additional CSS classes. */
     className?: string;
 }
-declare function Root({ children, isCollapsed, onToggleCollapse, className, }: SidebarRootProps): import("react/jsx-runtime").JSX.Element;
+declare function Root({ children, isCollapsed, isCollapsing, onToggleCollapse, onTransitionEnd, className, }: SidebarRootProps): import("react/jsx-runtime").JSX.Element;
 /**
  * Props for the Sidebar Header component.
  */
@@ -53,6 +57,10 @@ export interface SidebarLogoProps {
     alt: string;
     width?: number;
     height?: number;
+    /** Logo width when the sidebar is collapsed. Defaults to 48. */
+    collapsedWidth?: number;
+    /** Logo height when the sidebar is collapsed. */
+    collapsedHeight?: number;
     className?: string;
     ImageComponent?: ComponentType<{
         src: string;
@@ -62,14 +70,14 @@ export interface SidebarLogoProps {
         className?: string;
     }>;
 }
-declare function Logo({ src, alt, width, height, className, ImageComponent, }: SidebarLogoProps): import("react/jsx-runtime").JSX.Element;
+declare function Logo({ src, alt, width, height, collapsedWidth, collapsedHeight, className, ImageComponent, }: SidebarLogoProps): import("react/jsx-runtime").JSX.Element;
 /**
  * Props for the Sidebar Link component.
  */
 export interface SidebarLinkProps {
     icon: LucideIcon;
     children: ReactNode;
-    href: string;
+    href: any;
     active?: boolean;
     className?: string;
     LinkComponent?: ComponentType<{
@@ -80,6 +88,36 @@ export interface SidebarLinkProps {
     }>;
 }
 declare function Link({ icon: Icon, children, href, active, className, LinkComponent, }: SidebarLinkProps): import("react/jsx-runtime").JSX.Element;
+export interface SidebarNavGroupProps {
+    icon: LucideIcon;
+    title: string;
+    isExpanded: boolean;
+    isActive?: boolean;
+    onToggle: () => void;
+    children: ReactNode;
+    className?: string;
+}
+declare function NavGroup({ icon: Icon, title, isExpanded, isActive, onToggle, children, className, }: SidebarNavGroupProps): import("react/jsx-runtime").JSX.Element;
+export interface SidebarNavSubLinkProps {
+    title: string;
+    href: string | Record<string, unknown>;
+    active?: boolean;
+    className?: string;
+    LinkComponent?: ComponentType<{
+        href: any;
+        className?: string;
+        children: ReactNode;
+        title?: string;
+    }>;
+}
+declare function NavSubLink({ title, href, active, className, LinkComponent, }: SidebarNavSubLinkProps): import("react/jsx-runtime").JSX.Element;
+export interface SidebarActionProps {
+    icon: LucideIcon;
+    label: string;
+    onClick: () => void;
+    className?: string;
+}
+declare function Action({ icon: Icon, label, onClick, className }: SidebarActionProps): import("react/jsx-runtime").JSX.Element;
 /**
  * A composable Sidebar component.
  *
@@ -111,5 +149,9 @@ export declare const Sidebar: {
     Toggle: typeof Toggle;
     Logo: typeof Logo;
     Link: typeof Link;
+    NavGroup: typeof NavGroup;
+    NavSubLink: typeof NavSubLink;
+    Action: typeof Action;
 };
-export {};
+export { useSidebarCollapse } from "./useSidebarCollapse";
+export type { IUseSidebarCollapseOptions } from "./useSidebarCollapse";

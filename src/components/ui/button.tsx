@@ -22,12 +22,12 @@ const buttonVariants = cva(
                 link: "text-primary underline-offset-4 hover:underline",
             },
             size: {
-                default: "h-9 px-4 py-2 has-[>svg]:px-3",
+                default: "h-10 px-4 py-2 has-[>svg]:px-3",
                 sm: "h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5",
-                lg: "h-10 rounded-md px-6 has-[>svg]:px-4",
-                icon: "size-9",
+                lg: "h-11 rounded-md px-6 has-[>svg]:px-4",
+                icon: "size-10",
                 "icon-sm": "size-8",
-                "icon-lg": "size-10",
+                "icon-lg": "size-11",
             },
         },
         defaultVariants: {
@@ -37,6 +37,22 @@ const buttonVariants = cva(
     }
 )
 
+export interface ButtonProps
+    extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+        VariantProps<typeof buttonVariants> {
+    asChild?: boolean
+    icon?: React.ReactNode
+    label?: React.ReactNode
+    iconPosition?: "start" | "end"
+    /** Button height in pixels or any valid CSS length. */
+    height?: number | string
+    /** Button width in pixels or any valid CSS length. */
+    width?: number | string
+}
+
+const toCssSize = (value: number | string): string =>
+    typeof value === "number" ? `${value}px` : value
+
 /**
  * Displays a button or a component that looks like a button.
  *
@@ -44,29 +60,56 @@ const buttonVariants = cva(
  * ```tsx
  * <Button variant="default">Click me</Button>
  * <Button variant="outline" size="sm">Action</Button>
+ * <Button
+ *   label="Criar novo lote"
+ *   icon={<SquarePlus size={16} />}
+ *   width={200}
+ * />
  * ```
  */
-const Button = React.forwardRef<HTMLButtonElement, React.ButtonHTMLAttributes<HTMLButtonElement> &
-    VariantProps<typeof buttonVariants> & {
-        asChild?: boolean
-    }>(({
-        className,
-        variant,
-        size,
-        asChild = false,
-        ...props
-    }, ref) => {
-        const Comp = asChild ? Slot : "button"
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(({
+    className,
+    variant,
+    size,
+    asChild = false,
+    icon,
+    label,
+    iconPosition = "end",
+    height,
+    width,
+    style,
+    children,
+    ...props
+}, ref) => {
+    const Comp = asChild ? Slot : "button"
+    const hasIconOrLabel = icon != null || label != null
 
-        return (
-            <Comp
-                ref={ref}
-                data-slot="button"
-                className={cn(buttonVariants({ variant, size, className }))}
-                {...props}
-            />
-        )
-    })
+    return (
+        <Comp
+            ref={ref}
+            data-slot="button"
+            className={cn(buttonVariants({ variant, size }), className)}
+            style={{
+                ...style,
+                ...(height != null ? { height: toCssSize(height) } : {}),
+                ...(width != null ? { width: toCssSize(width) } : {}),
+            }}
+            {...props}
+        >
+            {hasIconOrLabel ? (
+                <>
+                    {iconPosition === "start" && icon}
+                    {label != null && (
+                        <span data-slot="button-label">{label}</span>
+                    )}
+                    {iconPosition === "end" && icon}
+                </>
+            ) : (
+                children
+            )}
+        </Comp>
+    )
+})
 Button.displayName = "Button"
 
 export { Button, buttonVariants }

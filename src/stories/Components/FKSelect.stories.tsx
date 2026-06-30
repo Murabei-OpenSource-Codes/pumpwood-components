@@ -48,3 +48,42 @@ export const Primary: Story = {
         );
     },
 };
+
+export const InFilterRow: Story = {
+    args: {
+        fetcher: mockFetcher,
+        modelClass: "MockModel",
+        labelName: "name",
+        value: null,
+        onChange: (val) => console.log('FKSelect value:', val),
+    },
+    render: (args) => {
+        const [value, setValue] = useState<string | number | null>(args.value);
+        const filterClass = "min-w-0 flex-1 basis-0";
+        return (
+            <div className="flex w-full flex-wrap items-end gap-4">
+                <FKSelect
+                    {...args}
+                    className={filterClass}
+                    placeholder="Plano"
+                    value={value}
+                    onChange={(val) => setValue(val)}
+                />
+                <FKSelect
+                    {...args}
+                    className={filterClass}
+                    placeholder="Área"
+                    value={value}
+                    onChange={(val) => setValue(val)}
+                />
+                <FKSelect
+                    {...args}
+                    className={filterClass}
+                    placeholder="Atributo"
+                    value={value}
+                    onChange={(val) => setValue(val)}
+                />
+            </div>
+        );
+    },
+};

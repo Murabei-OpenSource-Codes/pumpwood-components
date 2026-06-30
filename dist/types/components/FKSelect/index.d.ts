@@ -1,31 +1,49 @@
 /**
- * Props for the FKSelect component
+ * Parameters passed to the FK fetcher function.
+ */
+export type FKFetcherParams = {
+    search: string;
+    modelClass: string;
+    labelName: string;
+    additionalFilters?: Record<string, any>;
+    fields?: string[];
+    limit?: number;
+    offset?: number;
+};
+/**
+ * Props for the FKSelect component.
  */
 export interface IFKSelectProps {
-    /** FUNCTION to fetch data. Should return a promise resolving to an array of items */
-    fetcher: (params: {
-        search: string;
+    /** Optional id used as data-testid on the trigger. */
+    id?: string;
+    /** Function to fetch data from the API. */
+    fetcher: (params: FKFetcherParams) => Promise<any[]>;
+    /** Optional function to resolve a value not present in the list. */
+    resolveValue?: (params: {
         modelClass: string;
-        limit?: number;
-        offset?: number;
-    }) => Promise<any[]>;
-    /** The model class name to identify the resource */
+        value: string | number;
+    }) => Promise<any>;
+    /** The model class name to identify the resource. */
     modelClass: string;
-    /** The field name to use as the display label from the fetched items */
+    /** The field name to use as the display label. */
     labelName: string;
-    /** The field name to use as the value (ID) from the fetched items. Defaults to 'pk' or 'id' */
+    /** The field name to use as the value (ID). Defaults to 'pk'. */
     valueField?: string;
-    /** Placeholder text for the search input */
+    /** Placeholder text for the search input. */
     placeholder?: string;
-    /** Message to show when no items are found */
+    /** Message to show when no items are found. */
     emptyMessage?: string;
-    /** The currently selected value */
+    /** The currently selected value. */
     value: string | number | null;
-    /** Callback function called when an item is selected */
+    /** Callback when an item is selected. */
     onChange: (value: string | number, item?: any) => void;
-    /** Additional className */
+    /** Additional filters to apply to the API request. */
+    additionalFilters?: Record<string, any>;
+    /** Extra fields to include in search. */
+    fields?: string[];
+    /** Optional class names for the wrapper (e.g. width overrides). */
     className?: string;
-    /** Debounce time in ms. Defaults to 300 */
+    /** Debounce time in ms. Defaults to 300. */
     debounceWait?: number;
 }
 /**
@@ -42,4 +60,4 @@ export interface IFKSelectProps {
  * />
  * ```
  */
-export declare const FKSelect: ({ fetcher, modelClass, labelName, valueField, placeholder, emptyMessage, value, onChange, className, debounceWait, }: IFKSelectProps) => import("react/jsx-runtime").JSX.Element;
+export declare const FKSelect: ({ id, fetcher, resolveValue, modelClass, labelName, valueField, placeholder, emptyMessage, value, onChange, additionalFilters, fields, className, debounceWait, }: IFKSelectProps) => import("react/jsx-runtime").JSX.Element;

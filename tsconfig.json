@@ -18,6 +18,12 @@
     "paths": {
       "@/*": [
         "src/*"
+      ],
+      "@components/*": [
+        "src/components/*"
+      ],
+      "@design-system/*": [
+        "src/design-system/*"
       ]
     },
     "types": [
