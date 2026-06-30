@@ -59,32 +59,30 @@ export const InFilterRow: Story = {
     },
     render: (args) => {
         const [value, setValue] = useState<string | number | null>(args.value);
+        const filterClass = "min-w-0 flex-1 basis-0";
         return (
-            <div className="flex w-[720px] gap-4">
-                <div className="min-w-[160px] flex-1">
-                    <FKSelect
-                        {...args}
-                        placeholder="Plano"
-                        value={value}
-                        onChange={(val) => setValue(val)}
-                    />
-                </div>
-                <div className="min-w-[160px] flex-1">
-                    <FKSelect
-                        {...args}
-                        placeholder="Área"
-                        value={value}
-                        onChange={(val) => setValue(val)}
-                    />
-                </div>
-                <div className="min-w-[160px] flex-1">
-                    <FKSelect
-                        {...args}
-                        placeholder="Atributo"
-                        value={value}
-                        onChange={(val) => setValue(val)}
-                    />
-                </div>
+            <div className="flex w-full flex-wrap items-end gap-4">
+                <FKSelect
+                    {...args}
+                    className={filterClass}
+                    placeholder="Plano"
+                    value={value}
+                    onChange={(val) => setValue(val)}
+                />
+                <FKSelect
+                    {...args}
+                    className={filterClass}
+                    placeholder="Área"
+                    value={value}
+                    onChange={(val) => setValue(val)}
+                />
+                <FKSelect
+                    {...args}
+                    className={filterClass}
+                    placeholder="Atributo"
+                    value={value}
+                    onChange={(val) => setValue(val)}
+                />
             </div>
         );
     },

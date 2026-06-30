@@ -103,7 +103,7 @@ export const DatePicker = ({
     };
 
     return (
-        <div className={cn("inline-flex w-fit shrink-0", className)}>
+        <div className={cn("flex w-full min-w-0", className)}>
             <Popover>
                 <PopoverTrigger asChild>
                     <button

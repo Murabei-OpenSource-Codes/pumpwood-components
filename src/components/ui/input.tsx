@@ -39,7 +39,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
 			return (
 				<div
 					data-slot="input-icon-wrapper"
-					className={inputWithIconWrapperClassName}
+					className={cn(inputWithIconWrapperClassName, className)}
 				>
 					<span
 						data-slot="input-icon"
@@ -50,7 +50,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
 					<input
 						data-slot="input"
 						type={type}
-						className={cn(inputWithIconInnerClassName, className)}
+						className={inputWithIconInnerClassName}
 						ref={ref}
 						{...props}
 					/>
