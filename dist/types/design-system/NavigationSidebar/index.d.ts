@@ -15,6 +15,8 @@ export interface INavigationSidebarLogo {
     alt: string;
     width?: number;
     height?: number;
+    collapsedWidth?: number;
+    collapsedHeight?: number;
 }
 export interface INavigationSidebarProps {
     links: INavigationSidebarLink[];

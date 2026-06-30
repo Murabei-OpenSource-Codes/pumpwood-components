@@ -8,6 +8,7 @@ import {
 } from "react";
 import { Sidebar } from "@components/Sidebar";
 import { useSidebarCollapse } from "@components/Sidebar/useSidebarCollapse";
+import { Stack } from "@components/index";
 
 export interface INavigationSidebarSubLink {
     title: string;
@@ -26,6 +27,8 @@ export interface INavigationSidebarLogo {
     alt: string;
     width?: number;
     height?: number;
+    collapsedWidth?: number;
+    collapsedHeight?: number;
 }
 
 export interface INavigationSidebarProps {
@@ -127,17 +130,21 @@ export function NavigationSidebar({
             onTransitionEnd={handleTransitionEnd}
             className="h-full"
         >
-            <Sidebar.Toggle />
+            <Stack className="w-full shrink-0 items-center gap-1 mb-2">
+                <Sidebar.Toggle />
 
-            <Sidebar.Logo
-                src={logo.src}
-                width={logo.width}
-                height={logo.height}
-                alt={logo.alt}
-                ImageComponent={ImageComponent}
-            />
+                <Sidebar.Logo
+                    src={logo.src}
+                    width={logo.width}
+                    height={logo.height}
+                    collapsedWidth={logo.collapsedWidth}
+                    collapsedHeight={logo.collapsedHeight}
+                    alt={logo.alt}
+                    ImageComponent={ImageComponent}
+                />
+            </Stack>
 
-            <Sidebar.Content className="mt-8">
+            <Sidebar.Content className="mt-6">
                 {links.map((link) => {
                     const Icon = iconMap[link.icon];
                     const hasSubItems = !!link.subItems?.length;

@@ -1,53 +1,24 @@
 name: Publish to npm
 
 on:
-  workflow_dispatch:
-    inputs:
-      version:
-        description: 'Versão para publicar (ex: 1.0.5 ou v1.0.5)'
-        required: true
   release:
-    types: [created]
+    types: [published]
 
 jobs:
   publish:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout do código
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Instalar pnpm
-        uses: pnpm/action-setup@v3
+      - uses: actions/setup-node@v4
         with:
-          version: 9
+          node-version: 20
+          registry-url: https://registry.npmjs.org
 
-      - name: Configurar Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          registry-url: 'https://registry.npmjs.org'
+      - run: npm ci
+      - run: npm run build
 
-      - name: Atualizar versão no package.json
-        run: |
-          if [ "${{ github.event_name }}" = "release" ]; then
-            RAW_VERSION="${{ github.event.release.tag_name }}"
-          else
-            RAW_VERSION="${{ github.event.inputs.version }}"
-          fi
-          
-          CLEAN_VERSION="${RAW_VERSION#v}"
-          
-          echo "Atualizando package.json para a versão: $CLEAN_VERSION"
-          pnpm version "$CLEAN_VERSION" --no-git-tag-version
-
-      - name: Instalar dependências
-        run: pnpm install --frozen-lockfile
-
-      - name: Buildar a biblioteca
-        run: pnpm run build
-
-      - name: Publicar no npm
-        run: pnpm publish --access public --no-git-checks
+      - name: Publish to npm
+        run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

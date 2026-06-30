@@ -57,6 +57,10 @@ export interface SidebarLogoProps {
     alt: string;
     width?: number;
     height?: number;
+    /** Logo width when the sidebar is collapsed. Defaults to 48. */
+    collapsedWidth?: number;
+    /** Logo height when the sidebar is collapsed. */
+    collapsedHeight?: number;
     className?: string;
     ImageComponent?: ComponentType<{
         src: string;
@@ -66,7 +70,7 @@ export interface SidebarLogoProps {
         className?: string;
     }>;
 }
-declare function Logo({ src, alt, width, height, className, ImageComponent, }: SidebarLogoProps): import("react/jsx-runtime").JSX.Element;
+declare function Logo({ src, alt, width, height, collapsedWidth, collapsedHeight, className, ImageComponent, }: SidebarLogoProps): import("react/jsx-runtime").JSX.Element;
 /**
  * Props for the Sidebar Link component.
  */

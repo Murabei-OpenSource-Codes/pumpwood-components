@@ -141,27 +141,30 @@ export interface SidebarToggleProps {
 
 function Toggle({ className }: SidebarToggleProps) {
     const { isCollapsed, isCollapsing, onToggleCollapse } = useSidebar();
+    const showCollapsed = isCollapsed && !isCollapsing;
 
     return (
         <div
             className={cn(
                 "w-full flex transition-all duration-300 ease-in-out",
-                !isCollapsed && !isCollapsing
-                    ? "justify-end"
-                    : "justify-center",
-                className
+                showCollapsed ? "justify-center" : "justify-end",
+                className,
             )}
         >
             <Button
-                title="Recolher Barra Lateral"
+                title={
+                    showCollapsed
+                        ? "Expandir Barra Lateral"
+                        : "Recolher Barra Lateral"
+                }
                 height={48}
                 className={cn(
                     "min-w-[48px] bg-transparent rounded-full hover:bg-white/5 transition-all duration-300 ease-in-out",
-                    !isCollapsed ? "justify-end" : "justify-center",
+                    showCollapsed ? "justify-center" : "justify-end",
                 )}
                 onClick={onToggleCollapse}
             >
-                {isCollapsed && !isCollapsing ? (
+                {showCollapsed ? (
                     <PanelRightClose className="size-[28px] text-white" />
                 ) : (
                     <PanelRightOpen className="size-[28px] text-white" />
@@ -179,6 +182,10 @@ export interface SidebarLogoProps {
     alt: string;
     width?: number;
     height?: number;
+    /** Logo width when the sidebar is collapsed. Defaults to 48. */
+    collapsedWidth?: number;
+    /** Logo height when the sidebar is collapsed. */
+    collapsedHeight?: number;
     className?: string;
     ImageComponent?: ComponentType<{
         src: string;
@@ -194,23 +201,33 @@ function Logo({
     alt,
     width = 200,
     height = 40,
+    collapsedWidth = 48,
+    collapsedHeight,
     className,
     ImageComponent = ({ src, alt, ...props }) => (
         <img src={src} alt={alt} {...props} />
     ),
 }: SidebarLogoProps) {
-    const { isCollapsed } = useSidebar();
+    const { isCollapsed, isCollapsing } = useSidebar();
+    const showCollapsed = isCollapsed && !isCollapsing;
+    const displayWidth = showCollapsed ? collapsedWidth : width;
+    const displayHeight = showCollapsed
+        ? (collapsedHeight ??
+          Math.max(16, Math.round((height / width) * collapsedWidth)))
+        : height;
 
     return (
-        <Stack className={cn("py-2", className)}>
+        <Stack
+            className={cn(
+                "w-full items-center justify-center py-2",
+                className,
+            )}
+        >
             <ImageComponent
-                className={cn(
-                    "transition-opacity duration-300 ease-in-out",
-                    isCollapsed ? "opacity-0 invisible" : "opacity-100"
-                )}
+                className="object-contain transition-all duration-300 ease-in-out"
                 src={src}
-                width={width}
-                height={height}
+                width={displayWidth}
+                height={displayHeight}
                 alt={alt}
             />
         </Stack>

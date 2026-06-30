@@ -356,6 +356,8 @@ interface INavigationSidebarLogo {
     alt: string;
     width?: number;
     height?: number;
+    collapsedWidth?: number;
+    collapsedHeight?: number;
 }
 interface INavigationSidebarProps {
     links: INavigationSidebarLink[];
