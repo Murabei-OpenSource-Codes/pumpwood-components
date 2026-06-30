@@ -67,7 +67,7 @@ function Root({
             <nav
                 className={cn(
                     sidebarWidth,
-                    "smaller:p-3 px-2 py-6 flex flex-col items-center bg-primary mb-2 rounded-lg transition-all duration-300 ease-in-out h-full min-h-0",
+                    "smaller:p-3 px-2 py-6 flex flex-col items-stretch bg-primary mb-2 rounded-lg transition-all duration-300 ease-in-out h-full min-h-0",
                     className,
                 )}
                 onTransitionEnd={onTransitionEnd}
@@ -154,9 +154,10 @@ function Toggle({ className }: SidebarToggleProps) {
         >
             <Button
                 title="Recolher Barra Lateral"
+                height={48}
                 className={cn(
-                    "h-[48px] min-w-[48px] bg-transparent rounded-full hover:bg-white/5 transition-all duration-300 ease-in-out",
-                    !isCollapsed ? "justify-end" : "justify-center"
+                    "min-w-[48px] bg-transparent rounded-full hover:bg-white/5 transition-all duration-300 ease-in-out",
+                    !isCollapsed ? "justify-end" : "justify-center",
                 )}
                 onClick={onToggleCollapse}
             >
@@ -248,13 +249,13 @@ function Link({
             href={href}
             title={typeof children === "string" ? children : undefined}
             className={cn(
-                "w-full h-[48px] smaller:p-3 p-4 font-bold text-white rounded-md overflow-hidden transition-all duration-300 ease-in-out hover:bg-white/5 justify-start",
+                "flex w-full h-12 smaller:p-3 p-4 font-bold text-white rounded-md overflow-hidden transition-all duration-300 ease-in-out hover:bg-white/5",
                 active ? "bg-white/5" : "",
                 className,
             )}
         >
-            <Stack direction="row" gap={2}>
-                <Icon className="size-6" />
+            <Stack direction="row" gap={2} className="w-full items-center">
+                <Icon className="size-6 shrink-0" />
                 {!isCollapsed && !isCollapsing && (
                     <span className="transition-opacity duration-300 ease-in-out opacity-100">
                         {children}
@@ -293,27 +294,34 @@ function NavGroup({
                 title={title}
                 onClick={onToggle}
                 variant="ghost"
+                height={48}
                 className={cn(
-                    "w-full h-[48px] smaller:p-3 p-4 font-bold text-white hover:bg-white/5 hover:text-white justify-start rounded-md transition-all duration-300 ease-in-out",
+                    "w-full smaller:p-3 p-4 font-bold text-white hover:bg-white/5 hover:text-white justify-start rounded-md transition-all duration-300 ease-in-out",
                     isActive ? "bg-white/5" : "",
                 )}
             >
-                <Icon className="!size-6 shrink-0" />
-                {!isCollapsed && !isCollapsing && (
-                    <>
-                        <span className="flex-1 text-left transition-opacity duration-300 ease-in-out opacity-100 text-base">
-                            {title}
-                        </span>
-                        <ChevronDown
-                            width={20}
-                            height={20}
-                            className={cn(
-                                "shrink-0 transition-transform duration-300 ease-in-out",
-                                isExpanded ? "rotate-180" : "",
-                            )}
-                        />
-                    </>
-                )}
+                <Stack
+                    direction="row"
+                    gap={2}
+                    className="w-full items-center"
+                >
+                    <Icon className="size-6 shrink-0" />
+                    {!isCollapsed && !isCollapsing && (
+                        <>
+                            <span className="flex-1 text-left transition-opacity duration-300 ease-in-out opacity-100 text-base">
+                                {title}
+                            </span>
+                            <ChevronDown
+                                width={20}
+                                height={20}
+                                className={cn(
+                                    "shrink-0 transition-transform duration-300 ease-in-out",
+                                    isExpanded ? "rotate-180" : "",
+                                )}
+                            />
+                        </>
+                    )}
+                </Stack>
             </Button>
 
             {!isCollapsed && !isCollapsing && (
@@ -325,7 +333,7 @@ function NavGroup({
                             : "max-h-0 opacity-0",
                     )}
                 >
-                    <Stack className="ml-6 gap-1">{children}</Stack>
+                    <Stack className="w-full gap-1 pl-9 pr-1">{children}</Stack>
                 </div>
             )}
         </Stack>
@@ -357,7 +365,7 @@ function NavSubLink({
             href={href}
             title={title}
             className={cn(
-                "block w-full px-4 py-3 text-sm text-white rounded-md transition-all duration-200 ease-in-out hover:bg-white/5 hover:translate-x-1",
+                "flex w-full h-10 items-center px-3 text-sm text-white rounded-md transition-all duration-200 ease-in-out hover:bg-white/5",
                 active ? "bg-white/10 font-semibold" : "",
                 className,
             )}
@@ -382,13 +390,14 @@ function Action({ icon: Icon, label, onClick, className }: SidebarActionProps) {
             title={label}
             onClick={onClick}
             variant="ghost"
+            height={48}
             className={cn(
-                "w-full h-[48px] smaller:p-3 p-4 font-bold text-white hover:bg-transparent hover:text-white/80 transition-all duration-300 ease-in-out justify-start",
+                "w-full smaller:p-3 p-4 font-bold text-white hover:bg-transparent hover:text-white/80 transition-all duration-300 ease-in-out justify-start",
                 className,
             )}
         >
-            <Stack direction="row" gap={2}>
-                <Icon width={24} height={24} />
+            <Stack direction="row" gap={2} className="w-full items-center">
+                <Icon width={24} height={24} className="shrink-0" />
                 {!isCollapsed && !isCollapsing && (
                     <span className="transition-opacity duration-300 ease-in-out opacity-100">
                         {label}

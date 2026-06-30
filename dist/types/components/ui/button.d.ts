@@ -9,6 +9,10 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
     icon?: React.ReactNode;
     label?: React.ReactNode;
     iconPosition?: "start" | "end";
+    /** Button height in pixels or any valid CSS length. */
+    height?: number | string;
+    /** Button width in pixels or any valid CSS length. */
+    width?: number | string;
 }
 /**
  * Displays a button or a component that looks like a button.
@@ -20,6 +24,7 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
  * <Button
  *   label="Criar novo lote"
  *   icon={<SquarePlus size={16} />}
+ *   width={200}
  * />
  * ```
  */

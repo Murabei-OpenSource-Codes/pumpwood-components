@@ -23,6 +23,7 @@ export const WithIconAndLabel: Story = {
         label: 'Criar novo lote',
         icon: <SquarePlus size={16} />,
         variant: 'default',
-        className: 'w-[200px] mt-6',
+        width: 200,
+        className: 'mt-6',
     },
 };
