@@ -1,7 +1,7 @@
 import {
-    ChartNoAxesGantt,
     ChevronDown,
-    Menu,
+    PanelRightClose,
+    PanelRightOpen,
     type LucideIcon,
 } from "lucide-react";
 import {
@@ -140,28 +140,30 @@ export interface SidebarToggleProps {
 }
 
 function Toggle({ className }: SidebarToggleProps) {
-    const { isCollapsed, onToggleCollapse } = useSidebar();
+    const { isCollapsed, isCollapsing, onToggleCollapse } = useSidebar();
 
     return (
         <div
             className={cn(
                 "w-full flex transition-all duration-300 ease-in-out",
-                !isCollapsed ? "justify-end" : "justify-center",
+                !isCollapsed && !isCollapsing
+                    ? "justify-end"
+                    : "justify-center",
                 className
             )}
         >
             <Button
                 title="Recolher Barra Lateral"
                 className={cn(
-                    "size-[40px] bg-transparent rounded-full hover:bg-white/5 transition-all duration-300 ease-in-out",
+                    "h-[48px] min-w-[48px] bg-transparent rounded-full hover:bg-white/5 transition-all duration-300 ease-in-out",
                     !isCollapsed ? "justify-end" : "justify-center"
                 )}
                 onClick={onToggleCollapse}
             >
-                {isCollapsed ? (
-                    <Menu className="size-[32px] text-white" />
+                {isCollapsed && !isCollapsing ? (
+                    <PanelRightClose className="size-[28px] text-white" />
                 ) : (
-                    <ChartNoAxesGantt className="size-[32px] text-white" />
+                    <PanelRightOpen className="size-[28px] text-white" />
                 )}
             </Button>
         </div>
