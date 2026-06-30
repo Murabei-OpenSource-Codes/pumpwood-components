@@ -48,3 +48,44 @@ export const Primary: Story = {
         );
     },
 };
+
+export const InFilterRow: Story = {
+    args: {
+        fetcher: mockFetcher,
+        modelClass: "MockModel",
+        labelName: "name",
+        value: null,
+        onChange: (val) => console.log('FKSelect value:', val),
+    },
+    render: (args) => {
+        const [value, setValue] = useState<string | number | null>(args.value);
+        return (
+            <div className="flex w-[720px] gap-4">
+                <div className="min-w-[160px] flex-1">
+                    <FKSelect
+                        {...args}
+                        placeholder="Plano"
+                        value={value}
+                        onChange={(val) => setValue(val)}
+                    />
+                </div>
+                <div className="min-w-[160px] flex-1">
+                    <FKSelect
+                        {...args}
+                        placeholder="Área"
+                        value={value}
+                        onChange={(val) => setValue(val)}
+                    />
+                </div>
+                <div className="min-w-[160px] flex-1">
+                    <FKSelect
+                        {...args}
+                        placeholder="Atributo"
+                        value={value}
+                        onChange={(val) => setValue(val)}
+                    />
+                </div>
+            </div>
+        );
+    },
+};

@@ -41,7 +41,7 @@ export interface IFKSelectProps {
     additionalFilters?: Record<string, any>;
     /** Extra fields to include in search. */
     fields?: string[];
-    /** Optional class names for the wrapper. */
+    /** Optional class names for the wrapper (e.g. width overrides). */
     className?: string;
     /** Debounce time in ms. Defaults to 300. */
     debounceWait?: number;

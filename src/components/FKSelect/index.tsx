@@ -48,7 +48,7 @@ export interface IFKSelectProps {
     additionalFilters?: Record<string, any>;
     /** Extra fields to include in search. */
     fields?: string[];
-    /** Optional class names for the wrapper. */
+    /** Optional class names for the wrapper (e.g. width overrides). */
     className?: string;
     /** Debounce time in ms. Defaults to 300. */
     debounceWait?: number;
@@ -203,7 +203,7 @@ export const FKSelect = ({
     return (
         <div
             data-testid={id}
-            className={cn("inline-flex w-fit shrink-0", className)}
+            className={cn("flex w-full min-w-0", className)}
         >
             <Combobox
                 items={items}
