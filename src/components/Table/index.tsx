@@ -123,6 +123,7 @@ export function Table<T extends Record<string, unknown>>({
     className,
 }: ITableProps<T>) {
     const isInitialLoading = Boolean(isLoading && data.length === 0);
+    const safeColumns = columns ?? [];
 
     return (
         <div
@@ -143,7 +144,7 @@ export function Table<T extends Record<string, unknown>>({
                         }
                     >
                         <HeaderRow
-                            columns={columns}
+                            columns={safeColumns}
                             ordering={ordering}
                             onSort={onSort}
                         />
@@ -151,7 +152,7 @@ export function Table<T extends Record<string, unknown>>({
                     <TableBody>
                         {isInitialLoading ? (
                             <TableSkeleton
-                                columns={columns.map((column) => ({
+                                columns={safeColumns.map((column) => ({
                                     width: column.width,
                                     cellClassName: column.cellClassName,
                                 }))}
@@ -161,7 +162,7 @@ export function Table<T extends Record<string, unknown>>({
                                 <BodyRow
                                     key={getRowKey(item)}
                                     item={item}
-                                    columns={columns}
+                                    columns={safeColumns}
                                     onClick={
                                         onRowClick
                                             ? () => onRowClick(item)
@@ -173,7 +174,7 @@ export function Table<T extends Record<string, unknown>>({
                         {hasMore && onLoadMore && !isInitialLoading && (
                             <TableRow>
                                 <TableCell
-                                    colSpan={columns.length}
+                                    colSpan={safeColumns.length}
                                     className="text-center py-6"
                                 >
                                     <Button
@@ -204,9 +205,11 @@ function HeaderRow<T extends Record<string, unknown>>({
     ordering?: string;
     onSort?: (columnKey: string) => void;
 }) {
+    const safeColumns = columns ?? [];
+
     return (
         <TableRow>
-            {columns.map((column) => {
+            {safeColumns.map((column) => {
                 const isSortable = Boolean(column.sortable);
                 const isActiveAsc = ordering === column.key;
                 const isActiveDesc = ordering === "-".concat(column.key);
@@ -252,6 +255,8 @@ function BodyRow<T extends Record<string, unknown>>({
     columns: ITableColumn<T>[];
     onClick?: () => void;
 }) {
+    const safeColumns = columns ?? [];
+
     return (
         <TableRow
             className={cn(
@@ -259,7 +264,7 @@ function BodyRow<T extends Record<string, unknown>>({
             )}
             onClick={onClick}
         >
-            {columns.map((column) => {
+            {safeColumns.map((column) => {
                 const value = item[column.key];
 
                 return (

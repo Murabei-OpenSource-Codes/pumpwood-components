@@ -61,6 +61,10 @@ const formatItems = (
     labelName: string,
     valueField: string,
 ): ComboboxItem[] => {
+    if (!Array.isArray(data)) {
+        return [];
+    }
+
     return data.map((item) => ({
         value: item[valueField] ?? item.id ?? item.pk,
         label: String(item[labelName] ?? item.name ?? item.pk ?? ""),

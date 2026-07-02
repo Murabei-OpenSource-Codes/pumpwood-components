@@ -97,7 +97,7 @@ const StaticSelect = ({
                         <SelectValue placeholder={placeholder} />
                     </SelectTrigger>
                     <SelectContent>
-                        {options.map((option) => (
+                        {(options ?? []).map((option) => (
                             <SelectItem
                                 key={option.value}
                                 data-testid={option.value}
