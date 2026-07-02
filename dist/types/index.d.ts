@@ -58,7 +58,6 @@ export { TooltipComponent } from "./components/TooltipComponent";
 export { Pagination } from "./components/Pagination";
 export { default as TagInput, type ITagItem } from "./components/TagInput";
 export { AutoFormContent, type IFormField, type IFormSection, type IAutoFormContentProps, } from "./components/AutoFormContent";
-export { M2MTable, M2MCreateDialog, type M2MListFn, } from "./components/M2MTable";
 export { DownloadButton, type RetrieveFileFn, } from "./components/DownloadButton";
 export { MultiSelectDropdown, type IMultiSelectOption, } from "./components/MultiSelectDropdown";
 export { default as CustomBreadcrumb } from "./components/CustomBreadcrumb";

@@ -8,7 +8,7 @@ The library is split into two entry points:
 - **`pumpwood-ui-components/components`** — primitives and reusable UI
   blocks (Button, Table, Select, Dialog, etc.)
 - **`pumpwood-ui-components/design-system`** — product patterns
-  (Auth, AutoFormContent, DetailPage, M2MTable, Filters, etc.)
+  (Auth, AutoFormContent, DetailPage, Filters, etc.)
 
 ## Installation
 
@@ -69,7 +69,7 @@ function MyComponent() {
 Patterns under `design-system` may require additional peers depending on
 what you import:
 
-- `swr` — M2MTable, Filters with FKSelect
+- `swr` — Filters with FKSelect
 - `react-hook-form` — forms integrated with AutoFormContent consumers
 
 ### Customized Prefix
