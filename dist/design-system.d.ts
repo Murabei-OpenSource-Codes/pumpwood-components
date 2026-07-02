@@ -323,6 +323,20 @@ interface IM2MTableProps extends Omit<ComponentPropsWithoutRef<"div">, "onChange
 }
 declare const M2MTable: ({ modelClass, targetModelClass, targetField, filterDict, relationName, fields, displayFields, handleCreateNew, handleDeleteItem, listFn, fkFetcher, }: IM2MTableProps) => react_jsx_runtime.JSX.Element;
 
+type ListWithoutPagFn = (modelClass: string, body?: Record<string, unknown>, queryParams?: Record<string, string>) => Promise<[
+    Record<string, unknown>[] | null,
+    {
+        message?: string;
+    } | null
+]>;
+type CreateM2MListFnOptions = {
+    orderBy?: string[];
+};
+/**
+ * Creates a M2MListFn adapter over an injected list-without-pag function.
+ */
+declare const createM2MListFn: (listWithoutPag: ListWithoutPagFn, options?: CreateM2MListFnOptions) => M2MListFn;
+
 interface ICustomBreadcrumbProps {
     label: string;
     steps?: string[];
@@ -387,5 +401,5 @@ interface INavigationSidebarProps {
  */
 declare function NavigationSidebar({ links, iconMap, pathname, isSidebarCollapsedFromQuery, logo, onLogout, logoutIcon, logoutLabel, LinkComponent, ImageComponent, }: INavigationSidebarProps): react_jsx_runtime.JSX.Element;
 
-export { AuthenticatedView, AutoDetailContent, AutoFormContent, CombinedFilterTable, CreatedByUserFilter, CustomBreadcrumb, DateRangeFilter, DetailPage, FULL_WIDTH_DETAIL_FIELDS, FilePreview, KeyValueContent, LoginCard, LoginCardSSO, M2MCreateDialog, M2MTable, NavigationSidebar, NotAuthenticatedView, formatDetailLabel, formatDetailValue, getDetailFieldValue };
-export type { FileTypeCategory, IAuthenticatedViewProps, IAutoDetailContentProps, IAutoFormContentProps, IDetailFieldConfig, IDetailPageProps, IDetailPageSection, IDetailSection, IFormField, IFormSection, IFormatDetailValueOptions, ILoginCardProps, ILoginCardSSOProps, INavigationSidebarLink, INavigationSidebarLogo, INavigationSidebarProps, INavigationSidebarSubLink, INotAuthenticatedViewProps, M2MListFn };
+export { AuthenticatedView, AutoDetailContent, AutoFormContent, CombinedFilterTable, CreatedByUserFilter, CustomBreadcrumb, DateRangeFilter, DetailPage, FULL_WIDTH_DETAIL_FIELDS, FilePreview, KeyValueContent, LoginCard, LoginCardSSO, M2MCreateDialog, M2MTable, NavigationSidebar, NotAuthenticatedView, createM2MListFn, formatDetailLabel, formatDetailValue, getDetailFieldValue };
+export type { CreateM2MListFnOptions, FileTypeCategory, IAuthenticatedViewProps, IAutoDetailContentProps, IAutoFormContentProps, IDetailFieldConfig, IDetailPageProps, IDetailPageSection, IDetailSection, IFormField, IFormSection, IFormatDetailValueOptions, ILoginCardProps, ILoginCardSSOProps, INavigationSidebarLink, INavigationSidebarLogo, INavigationSidebarProps, INavigationSidebarSubLink, INotAuthenticatedViewProps, ListWithoutPagFn, M2MListFn };

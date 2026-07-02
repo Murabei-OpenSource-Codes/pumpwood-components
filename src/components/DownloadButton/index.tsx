@@ -23,7 +23,7 @@ interface IDownloadButtonProps<T extends ExpectedFile> {
 	item: T;
 	propertyName: keyof T;
 	modelClass: string;
-	retrieveFile: RetrieveFileFn;
+	retrieveFile?: RetrieveFileFn;
 }
 
 export const DownloadButton = <T extends ExpectedFile>({
@@ -35,6 +35,11 @@ export const DownloadButton = <T extends ExpectedFile>({
 	const [isDownloading, setIsDownloading] = useState(false);
 
 	const handleDownload = async () => {
+		if (!retrieveFile) {
+			toast.error("Função de download não configurada");
+			return;
+		}
+
 		setIsDownloading(true);
 		try {
 			const [data, error] = await retrieveFile(
@@ -77,7 +82,7 @@ export const DownloadButton = <T extends ExpectedFile>({
 		<Button
 			variant="outline"
 			size="icon"
-			disabled={isDownloading}
+			disabled={isDownloading || !retrieveFile}
 			onClick={handleDownload}
 		>
 			{isDownloading ? <Loader2 className="animate-spin" /> : <Download />}

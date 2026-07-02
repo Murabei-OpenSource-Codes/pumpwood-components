@@ -37,6 +37,11 @@ export {
 	M2MCreateDialog,
 	type M2MListFn,
 } from "./M2MTable";
+export {
+	createM2MListFn,
+	type ListWithoutPagFn,
+	type CreateM2MListFnOptions,
+} from "../lib/m2m-list-fn";
 export { default as CustomBreadcrumb } from "./CustomBreadcrumb";
 export {
 	FilePreview,

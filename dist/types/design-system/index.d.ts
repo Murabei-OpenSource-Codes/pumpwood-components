@@ -6,6 +6,7 @@ export { LoginCard, LoginCardSSO, AuthenticatedView, NotAuthenticatedView, type 
 export { AutoDetailContent, DetailPage, formatDetailLabel, formatDetailValue, getDetailFieldValue, FULL_WIDTH_DETAIL_FIELDS, type IAutoDetailContentProps, type IDetailPageProps, type IDetailPageSection, type IDetailFieldConfig, type IDetailSection, type IFormatDetailValueOptions, } from "./DetailPage";
 export { AutoFormContent, type IFormField, type IFormSection, type IAutoFormContentProps, } from "./AutoFormContent";
 export { M2MTable, M2MCreateDialog, type M2MListFn, } from "./M2MTable";
+export { createM2MListFn, type ListWithoutPagFn, type CreateM2MListFnOptions, } from "../lib/m2m-list-fn";
 export { default as CustomBreadcrumb } from "./CustomBreadcrumb";
 export { FilePreview, type FileTypeCategory, } from "./FilePreview";
 export { NavigationSidebar, type INavigationSidebarLink, type INavigationSidebarSubLink, type INavigationSidebarLogo, type INavigationSidebarProps, } from "./NavigationSidebar";
