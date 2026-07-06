@@ -14,7 +14,9 @@ export interface IMarkdownEditorProps {
 }
 
 type ToastEditorInstance = {
-    getMarkdown: () => string;
+    getInstance: () => {
+        getMarkdown: () => string;
+    };
 };
 
 type ToastEditorComponent = ComponentType<{
@@ -88,9 +90,13 @@ export function MarkdownEditor({
                 previewStyle="disabled"
                 useCommandShortcut={true}
                 hideModeSwitch={disabled}
-                onChange={() =>
-                    onChange(editorRef.current?.getMarkdown() || "")
-                }
+                onChange={() => {
+                    const markdown =
+                        editorRef.current
+                            ?.getInstance()
+                            ?.getMarkdown() ?? "";
+                    onChange(markdown);
+                }}
                 ref={editorRef}
             />
             {error && <p className="text-sm text-destructive">{error}</p>}

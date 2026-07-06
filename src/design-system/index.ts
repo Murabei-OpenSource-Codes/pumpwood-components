@@ -32,11 +32,6 @@ export {
 	type IFormSection,
 	type IAutoFormContentProps,
 } from "./AutoFormContent";
-export {
-	M2MTable,
-	M2MCreateDialog,
-	type M2MListFn,
-} from "./M2MTable";
 export { default as CustomBreadcrumb } from "./CustomBreadcrumb";
 export {
 	FilePreview,

@@ -5,18 +5,10 @@ import { type ChangeEvent, useEffect, useState } from "react";
 import { Button } from "@components/ui/button";
 import { Checkbox } from "@components/ui/checkbox";
 import { Input } from "@components/ui/input";
-import {
-	Select as SelectPrimitive,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "@components/ui/select";
+import { Select } from "@components/Select";
 import { Stack } from "@components/index";
 import { Textarea } from "@components/ui/textarea";
 import { cn } from "@/lib/utils";
-
-const Select = SelectPrimitive;
 
 /**
  * Interface representing a form field specification
@@ -314,27 +306,14 @@ export function AutoFormContent({
 			case "select":
 				return (
 					<Select
-						key={val ? "loaded" : "empty"}
+						id={key}
 						name={key}
-						value={val}
+						placeholder={field.placeholder || "Selecione..."}
+						options={field.options ?? []}
+						value={val != null ? String(val) : ""}
 						onValueChange={(newVal) => handleValueChange(key, newVal)}
-						disabled={disabled}
-					>
-						<SelectTrigger data-testid={`${key}-select-trigger`}>
-							<SelectValue placeholder={field.placeholder || "Selecione..."} />
-						</SelectTrigger>
-						<SelectContent>
-							{field.options?.map((opt) => (
-								<SelectItem
-									data-testid={`${key}-select-item-${opt.value}`}
-									key={opt.value}
-									value={opt.value}
-								>
-									{opt.label}
-								</SelectItem>
-							))}
-						</SelectContent>
-					</Select>
+						required={field.required}
+					/>
 				);
 
 			case "key-value":

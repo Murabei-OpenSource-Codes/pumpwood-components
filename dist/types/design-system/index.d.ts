@@ -5,7 +5,6 @@ export { KeyValueContent } from "./KeyValueContent";
 export { LoginCard, LoginCardSSO, AuthenticatedView, NotAuthenticatedView, type ILoginCardProps, type ILoginCardSSOProps, type IAuthenticatedViewProps, type INotAuthenticatedViewProps, } from "./Auth";
 export { AutoDetailContent, DetailPage, formatDetailLabel, formatDetailValue, getDetailFieldValue, FULL_WIDTH_DETAIL_FIELDS, type IAutoDetailContentProps, type IDetailPageProps, type IDetailPageSection, type IDetailFieldConfig, type IDetailSection, type IFormatDetailValueOptions, } from "./DetailPage";
 export { AutoFormContent, type IFormField, type IFormSection, type IAutoFormContentProps, } from "./AutoFormContent";
-export { M2MTable, M2MCreateDialog, type M2MListFn, } from "./M2MTable";
 export { default as CustomBreadcrumb } from "./CustomBreadcrumb";
 export { FilePreview, type FileTypeCategory, } from "./FilePreview";
 export { NavigationSidebar, type INavigationSidebarLink, type INavigationSidebarSubLink, type INavigationSidebarLogo, type INavigationSidebarProps, } from "./NavigationSidebar";

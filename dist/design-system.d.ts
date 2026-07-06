@@ -1,7 +1,6 @@
 import * as react_jsx_runtime from 'react/jsx-runtime';
 import * as react from 'react';
-import { ReactNode, ComponentType, ComponentPropsWithoutRef, ImgHTMLAttributes } from 'react';
-import { FKFetcherParams } from '@murabei-data-science/pumpwood-ui/components';
+import { ReactNode, ComponentType, ImgHTMLAttributes } from 'react';
 import { LucideIcon } from 'lucide-react';
 
 interface DateRangeFilterProps {
@@ -290,39 +289,6 @@ interface IAutoFormContentProps {
 }
 declare function AutoFormContent({ fields, values: externalValues, defaultValue, onChange, errors, config, customFields, }: IAutoFormContentProps): react_jsx_runtime.JSX.Element;
 
-type M2MListFn = (modelClass: string, filterDict: Record<string, any>, fields: string[]) => Promise<[
-    Record<string, any>[] | null,
-    {
-        message?: string;
-    } | null
-]>;
-declare const M2MCreateDialog: ({ open, onOpenChange, targetModelClass, relationName, handleCreateNew, mutate, fkFetcher, }: {
-    open: boolean;
-    onOpenChange: (open: boolean) => void;
-    targetModelClass: string;
-    relationName: string;
-    handleCreateNew: (id: string) => void;
-    mutate: () => void;
-    fkFetcher: (params: FKFetcherParams) => Promise<any[]>;
-}) => react_jsx_runtime.JSX.Element;
-interface IM2MTableProps extends Omit<ComponentPropsWithoutRef<"div">, "onChange"> {
-    modelClass: string;
-    targetModelClass: string;
-    filterDict: Record<string, any>;
-    targetField: string;
-    relationName: string;
-    displayFields: {
-        name: string;
-        field: string;
-    }[];
-    handleCreateNew: (id: string) => void;
-    handleDeleteItem: (id: string) => void;
-    fields: string[];
-    listFn: M2MListFn;
-    fkFetcher: (params: FKFetcherParams) => Promise<any[]>;
-}
-declare const M2MTable: ({ modelClass, targetModelClass, targetField, filterDict, relationName, fields, displayFields, handleCreateNew, handleDeleteItem, listFn, fkFetcher, }: IM2MTableProps) => react_jsx_runtime.JSX.Element;
-
 interface ICustomBreadcrumbProps {
     label: string;
     steps?: string[];
@@ -387,5 +353,5 @@ interface INavigationSidebarProps {
  */
 declare function NavigationSidebar({ links, iconMap, pathname, isSidebarCollapsedFromQuery, logo, onLogout, logoutIcon, logoutLabel, LinkComponent, ImageComponent, }: INavigationSidebarProps): react_jsx_runtime.JSX.Element;
 
-export { AuthenticatedView, AutoDetailContent, AutoFormContent, CombinedFilterTable, CreatedByUserFilter, CustomBreadcrumb, DateRangeFilter, DetailPage, FULL_WIDTH_DETAIL_FIELDS, FilePreview, KeyValueContent, LoginCard, LoginCardSSO, M2MCreateDialog, M2MTable, NavigationSidebar, NotAuthenticatedView, formatDetailLabel, formatDetailValue, getDetailFieldValue };
-export type { FileTypeCategory, IAuthenticatedViewProps, IAutoDetailContentProps, IAutoFormContentProps, IDetailFieldConfig, IDetailPageProps, IDetailPageSection, IDetailSection, IFormField, IFormSection, IFormatDetailValueOptions, ILoginCardProps, ILoginCardSSOProps, INavigationSidebarLink, INavigationSidebarLogo, INavigationSidebarProps, INavigationSidebarSubLink, INotAuthenticatedViewProps, M2MListFn };
+export { AuthenticatedView, AutoDetailContent, AutoFormContent, CombinedFilterTable, CreatedByUserFilter, CustomBreadcrumb, DateRangeFilter, DetailPage, FULL_WIDTH_DETAIL_FIELDS, FilePreview, KeyValueContent, LoginCard, LoginCardSSO, NavigationSidebar, NotAuthenticatedView, formatDetailLabel, formatDetailValue, getDetailFieldValue };
+export type { FileTypeCategory, IAuthenticatedViewProps, IAutoDetailContentProps, IAutoFormContentProps, IDetailFieldConfig, IDetailPageProps, IDetailPageSection, IDetailSection, IFormField, IFormSection, IFormatDetailValueOptions, ILoginCardProps, ILoginCardSSOProps, INavigationSidebarLink, INavigationSidebarLogo, INavigationSidebarProps, INavigationSidebarSubLink, INotAuthenticatedViewProps };
