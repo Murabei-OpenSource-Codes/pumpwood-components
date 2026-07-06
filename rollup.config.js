@@ -6,6 +6,7 @@ import terser from "@rollup/plugin-terser";
 import image from "@rollup/plugin-image";
 import alias from "@rollup/plugin-alias";
 import dts from "rollup-plugin-dts";
+import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import { execSync } from "child_process";
@@ -51,6 +52,26 @@ function isComponentsImport(id) {
 		id.startsWith("@components") ||
 		id.startsWith(componentsDir)
 	);
+}
+
+const legacyIndexArtifacts = [
+	"dist/index.js",
+	"dist/index.esm.js",
+	"dist/index.d.ts",
+];
+
+function removeLegacyIndexArtifacts() {
+	return {
+		name: "remove-legacy-index-artifacts",
+		buildEnd() {
+			for (const file of legacyIndexArtifacts) {
+				const filePath = path.resolve(__dirname, file);
+				if (fs.existsSync(filePath)) {
+					fs.unlinkSync(filePath);
+				}
+			}
+		},
+	};
 }
 
 function createJsConfig({ input, outputBase, externalComponents }) {
@@ -104,6 +125,7 @@ function createJsConfig({ input, outputBase, externalComponents }) {
 				extract: outputBase === "components" ? "index.css" : false,
 				minimize: true,
 			}),
+			removeLegacyIndexArtifacts(),
 		],
 		external: (id) => {
 			if (isPeerExternal(id)) {
@@ -149,6 +171,7 @@ function createDtsConfig({ input, outputFile, externalComponents }) {
 		plugins: [
 			emitDeclarations(),
 			dts(),
+			removeLegacyIndexArtifacts(),
 		],
 		external: (id) => {
 			if (id === "react" || id === "react-dom" || id === "react/jsx-runtime") {
