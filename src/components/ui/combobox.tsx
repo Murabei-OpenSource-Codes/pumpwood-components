@@ -127,12 +127,14 @@ export function Combobox({
                     aria-expanded={open}
                     className={cn(
                         fieldTriggerClassName,
-                        "justify-between truncate",
+                        "justify-between overflow-hidden",
                         isPlaceholder && fieldTriggerPlaceholderClassName,
                         className,
                     )}
                 >
-                    <span className="truncate">{triggerLabel}</span>
+                    <span className="truncate min-w-0 flex-1 text-left">
+                        {triggerLabel}
+                    </span>
                     <ChevronsUpDown className="ml-2 size-4 shrink-0 opacity-50" />
                 </button>
             </PopoverTrigger>
