@@ -1,0 +1,12 @@
+.markdown-editor .toastui-editor-md-tab-container {
+    display: none;
+}
+
+.markdown-editor .toastui-editor-mode-switch {
+    display: none;
+}
+
+.markdown-editor .toastui-editor-contents .ProseMirror .placeholder {
+    background-color: transparent;
+    color: hsl(var(--muted-foreground));
+}
