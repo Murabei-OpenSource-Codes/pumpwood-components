@@ -5,6 +5,7 @@ export { Textarea } from "./ui/textarea";
 export { default as Stack } from "./Stack";
 export { default as Dropzone } from "./Dropzone";
 export { ConfirmationDialog } from "./ConfirmationDialog";
+export { PopConfirm, type PopConfirmProps } from "./PopConfirm";
 export { Typography } from "./Text";
 export { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle, } from "./ui/card";
 export { PumpwoodCard } from "./Card";
