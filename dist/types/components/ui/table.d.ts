@@ -1,24 +1,8 @@
 import * as React from "react";
-/**
- * A responsive table component.
- *
- * @example
- * ```tsx
- * <Table>
- *   <TableHeader>
- *     <TableRow>
- *       <TableHead>Header</TableHead>
- *     </TableRow>
- *   </TableHeader>
- *   <TableBody>
- *     <TableRow>
- *       <TableCell>Cell</TableCell>
- *     </TableRow>
- *   </TableBody>
- * </Table>
- * ```
- */
-declare const Table: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLTableElement> & React.RefAttributes<HTMLTableElement>>;
+declare const Table: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLTableElement> & {
+    /** When false, renders only the table element (no scroll wrapper). */
+    wrap?: boolean;
+} & React.RefAttributes<HTMLTableElement>>;
 declare const TableHeader: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLTableSectionElement> & React.RefAttributes<HTMLTableSectionElement>>;
 declare const TableBody: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLTableSectionElement> & React.RefAttributes<HTMLTableSectionElement>>;
 declare const TableFooter: React.ForwardRefExoticComponent<React.HTMLAttributes<HTMLTableSectionElement> & React.RefAttributes<HTMLTableSectionElement>>;

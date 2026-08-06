@@ -1,4 +1,4 @@
-import { type ReactNode } from "react";
+import type { ReactNode } from "react";
 /**
  * Column definition for Table.
  */
@@ -65,7 +65,9 @@ export interface ITableProps<T> {
  * ```
  */
 export declare const PumpwoodTable: {
-    Root: import("react").ForwardRefExoticComponent<import("react").HTMLAttributes<HTMLTableElement> & import("react").RefAttributes<HTMLTableElement>>;
+    Root: import("react").ForwardRefExoticComponent<import("react").HTMLAttributes<HTMLTableElement> & {
+        wrap?: boolean;
+    } & import("react").RefAttributes<HTMLTableElement>>;
     Body: import("react").ForwardRefExoticComponent<import("react").HTMLAttributes<HTMLTableSectionElement> & import("react").RefAttributes<HTMLTableSectionElement>>;
     Cell: import("react").ForwardRefExoticComponent<import("react").TdHTMLAttributes<HTMLTableCellElement> & import("react").RefAttributes<HTMLTableCellElement>>;
     Head: import("react").ForwardRefExoticComponent<import("react").ThHTMLAttributes<HTMLTableCellElement> & import("react").RefAttributes<HTMLTableCellElement>>;

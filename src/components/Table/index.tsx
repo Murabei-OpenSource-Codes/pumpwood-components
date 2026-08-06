@@ -1,7 +1,7 @@
 "use client";
 
 import { ArrowDown, ArrowUp } from "lucide-react";
-import { type ReactNode, useCallback, useRef } from "react";
+import type { ReactNode } from "react";
 
 import { NoResult } from "@/components/NoResult";
 import { TableSkeleton } from "@/components/TableSkeleton";
@@ -63,9 +63,6 @@ export interface ITableProps<T> {
     className?: string;
 }
 
-const TABLE_LAYOUT_CLASS = "table-auto w-full min-w-max";
-const ROOT_SCROLL_OVERRIDE = "[&>div]:overflow-visible";
-
 /**
  * A comprehensive Table component system.
  *
@@ -125,19 +122,8 @@ export function Table<T extends Record<string, unknown>>({
     onLoadMore,
     className,
 }: ITableProps<T>) {
-    const headerScrollRef = useRef<HTMLDivElement>(null);
-    const bodyScrollRef = useRef<HTMLDivElement>(null);
     const isInitialLoading = Boolean(isLoading && data.length === 0);
     const safeColumns = columns ?? [];
-
-    const handleBodyScroll = useCallback(() => {
-        if (!headerScrollRef.current || !bodyScrollRef.current) {
-            return;
-        }
-
-        headerScrollRef.current.scrollLeft =
-            bodyScrollRef.current.scrollLeft;
-    }, []);
 
     if (!isLoading && data.length === 0) {
         return (
@@ -151,35 +137,19 @@ export function Table<T extends Record<string, unknown>>({
 
     return (
         <div className={cn("flex flex-1 min-h-0 flex-col mt-4", className)}>
-            <div
-                ref={headerScrollRef}
-                className={cn(
-                    "shrink-0 overflow-x-auto overflow-y-hidden",
-                    "[scrollbar-width:none] [-ms-overflow-style:none]",
-                    "[&::-webkit-scrollbar]:hidden",
-                    ROOT_SCROLL_OVERRIDE,
-                )}
-            >
-                <TableRoot className={TABLE_LAYOUT_CLASS}>
-                    <TableHeader className="bg-primary text-white">
+            <div className="flex-1 min-h-0 overflow-auto">
+                <TableRoot wrap={false} className="table-fixed w-full">
+                    <TableHeader
+                        className={
+                            "sticky top-0 z-10 bg-primary text-white"
+                        }
+                    >
                         <HeaderRow
                             columns={safeColumns}
                             ordering={ordering}
                             onSort={onSort}
                         />
                     </TableHeader>
-                </TableRoot>
-            </div>
-
-            <div
-                ref={bodyScrollRef}
-                onScroll={handleBodyScroll}
-                className={cn(
-                    "flex-1 min-h-0 overflow-auto",
-                    ROOT_SCROLL_OVERRIDE,
-                )}
-            >
-                <TableRoot className={TABLE_LAYOUT_CLASS}>
                     <TableBody>
                         {isInitialLoading ? (
                             <TableSkeleton

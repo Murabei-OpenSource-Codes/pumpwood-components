@@ -836,7 +836,9 @@ interface ITableProps<T> {
  * ```
  */
 declare const PumpwoodTable: {
-    Root: React$1.ForwardRefExoticComponent<React$1.HTMLAttributes<HTMLTableElement> & React$1.RefAttributes<HTMLTableElement>>;
+    Root: React$1.ForwardRefExoticComponent<React$1.HTMLAttributes<HTMLTableElement> & {
+        wrap?: boolean;
+    } & React$1.RefAttributes<HTMLTableElement>>;
     Body: React$1.ForwardRefExoticComponent<React$1.HTMLAttributes<HTMLTableSectionElement> & React$1.RefAttributes<HTMLTableSectionElement>>;
     Cell: React$1.ForwardRefExoticComponent<React$1.TdHTMLAttributes<HTMLTableCellElement> & React$1.RefAttributes<HTMLTableCellElement>>;
     Head: React$1.ForwardRefExoticComponent<React$1.ThHTMLAttributes<HTMLTableCellElement> & React$1.RefAttributes<HTMLTableCellElement>>;
@@ -1213,26 +1215,10 @@ interface IMultiSelectDropdownProps {
 }
 declare function MultiSelectDropdown({ options, selected, onChange, placeholder, className, maxDisplay, }: IMultiSelectDropdownProps): react_jsx_runtime.JSX.Element;
 
-/**
- * A responsive table component.
- *
- * @example
- * ```tsx
- * <Table>
- *   <TableHeader>
- *     <TableRow>
- *       <TableHead>Header</TableHead>
- *     </TableRow>
- *   </TableHeader>
- *   <TableBody>
- *     <TableRow>
- *       <TableCell>Cell</TableCell>
- *     </TableRow>
- *   </TableBody>
- * </Table>
- * ```
- */
-declare const Table: React$1.ForwardRefExoticComponent<React$1.HTMLAttributes<HTMLTableElement> & React$1.RefAttributes<HTMLTableElement>>;
+declare const Table: React$1.ForwardRefExoticComponent<React$1.HTMLAttributes<HTMLTableElement> & {
+    /** When false, renders only the table element (no scroll wrapper). */
+    wrap?: boolean;
+} & React$1.RefAttributes<HTMLTableElement>>;
 declare const TableHeader: React$1.ForwardRefExoticComponent<React$1.HTMLAttributes<HTMLTableSectionElement> & React$1.RefAttributes<HTMLTableSectionElement>>;
 declare const TableBody: React$1.ForwardRefExoticComponent<React$1.HTMLAttributes<HTMLTableSectionElement> & React$1.RefAttributes<HTMLTableSectionElement>>;
 declare const TableFooter: React$1.ForwardRefExoticComponent<React$1.HTMLAttributes<HTMLTableSectionElement> & React$1.RefAttributes<HTMLTableSectionElement>>;
