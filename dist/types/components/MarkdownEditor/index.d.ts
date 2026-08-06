@@ -1,3 +1,4 @@
+import "./markdown-editor.css";
 export interface IMarkdownEditorProps {
     value: string;
     onChange: (value: string) => void;
