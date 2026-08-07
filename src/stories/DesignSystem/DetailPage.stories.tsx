@@ -35,3 +35,26 @@ export const Default: Story = {
         />
     ),
 };
+
+export const CardSections: Story = {
+    render: () => (
+        <AutoDetailContent
+            data={sampleData}
+            sectionVariant="card"
+            config={{
+                sections: [
+                    {
+                        title: "Identificação",
+                        fields: ["code", "description", "created_by"],
+                        cols: 2,
+                    },
+                    {
+                        title: "Datas",
+                        fields: ["created_at"],
+                        cols: 2,
+                    },
+                ],
+            }}
+        />
+    ),
+};

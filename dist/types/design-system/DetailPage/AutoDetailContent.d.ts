@@ -1,9 +1,13 @@
 import type { ReactNode } from "react";
 import { type IDetailFieldConfig } from "./detail-utils";
 export type { IDetailFieldConfig, IDetailSection } from "./detail-utils";
+export type DetailSectionVariant = "default" | "card";
 export interface IAutoDetailContentProps {
     data: Record<string, any>;
     config?: IDetailFieldConfig;
+    className?: string;
+    sectionVariant?: DetailSectionVariant;
+    sectionClassName?: string;
     formatters?: {
         key: string;
         formatter: (value: unknown) => string;
@@ -24,4 +28,4 @@ export interface IAutoDetailContentProps {
 /**
  * Auto-render entity detail fields in configurable sections.
  */
-export declare function AutoDetailContent({ data, config, formatters, wrapperElements, statusLabels, formatDate, }: IAutoDetailContentProps): import("react/jsx-runtime").JSX.Element;
+export declare function AutoDetailContent({ data, config, className, sectionVariant, sectionClassName, formatters, wrapperElements, statusLabels, formatDate, }: IAutoDetailContentProps): import("react/jsx-runtime").JSX.Element;

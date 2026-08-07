@@ -174,6 +174,8 @@ interface IDetailSection {
     fields: string[];
     cols?: 2 | 3 | 4;
     isFullWidth?: boolean;
+    className?: string;
+    fullWidthFields?: string[];
 }
 interface IDetailFieldConfig {
     exclude?: string[];
@@ -194,9 +196,13 @@ declare const formatDetailValue: (value: unknown, key: string, options?: IFormat
 declare const getDetailFieldValue: (data: Record<string, unknown>, key: string) => unknown;
 declare const FULL_WIDTH_DETAIL_FIELDS: string[];
 
+type DetailSectionVariant = "default" | "card";
 interface IAutoDetailContentProps {
     data: Record<string, any>;
     config?: IDetailFieldConfig;
+    className?: string;
+    sectionVariant?: DetailSectionVariant;
+    sectionClassName?: string;
     formatters?: {
         key: string;
         formatter: (value: unknown) => string;
@@ -217,7 +223,7 @@ interface IAutoDetailContentProps {
 /**
  * Auto-render entity detail fields in configurable sections.
  */
-declare function AutoDetailContent({ data, config, formatters, wrapperElements, statusLabels, formatDate, }: IAutoDetailContentProps): react_jsx_runtime.JSX.Element;
+declare function AutoDetailContent({ data, config, className, sectionVariant, sectionClassName, formatters, wrapperElements, statusLabels, formatDate, }: IAutoDetailContentProps): react_jsx_runtime.JSX.Element;
 
 interface IDetailPageSection {
     id?: string;

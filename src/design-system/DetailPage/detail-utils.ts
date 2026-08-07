@@ -3,6 +3,8 @@ export interface IDetailSection {
     fields: string[];
     cols?: 2 | 3 | 4;
     isFullWidth?: boolean;
+    className?: string;
+    fullWidthFields?: string[];
 }
 
 export interface IDetailFieldConfig {

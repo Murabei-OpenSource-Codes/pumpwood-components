@@ -1,4 +1,8 @@
-export { AutoDetailContent, type IAutoDetailContentProps } from "./AutoDetailContent";
+export {
+    AutoDetailContent,
+    type DetailSectionVariant,
+    type IAutoDetailContentProps,
+} from "./AutoDetailContent";
 export { DetailPage, type IDetailPageProps, type IDetailPageSection } from "./DetailPage";
 export {
     formatDetailLabel,
