@@ -737,6 +737,43 @@ interface IDatePickerProps {
 declare const DatePicker: ({ id, placeholder, value, onValueChange, className, boundary, dateFormat, }: IDatePickerProps) => react_jsx_runtime.JSX.Element;
 
 /**
+ * Props for the RangePicker component.
+ */
+interface IRangePickerProps {
+    /** Optional id used as data-testid on the trigger button. */
+    id?: string;
+    /** Placeholder text when no range is selected. */
+    placeholder: string;
+    /** Controlled ISO date string for range start (empty = no selection). */
+    fromValue?: string;
+    /** Controlled ISO date string for range end (empty = no selection). */
+    toValue?: string;
+    /** Callback when the range start changes (ISO string or empty). */
+    onFromChange?: (value: string) => void;
+    /** Callback when the range end changes (ISO string or empty). */
+    onToChange?: (value: string) => void;
+    /** Optional class names for the wrapper (width, layout). */
+    className?: string;
+    /** Display format for selected dates. */
+    dateFormat?: string;
+}
+/**
+ * A date range picker with a single calendar for selecting start and end dates.
+ *
+ * @example
+ * ```tsx
+ * <RangePicker
+ *   placeholder="Selecione o período"
+ *   fromValue={filters.lastUpdateAtFrom}
+ *   toValue={filters.lastUpdateAtTo}
+ *   onFromChange={(value) => onFilterChange("lastUpdateAtFrom", value)}
+ *   onToChange={(value) => onFilterChange("lastUpdateAtTo", value)}
+ * />
+ * ```
+ */
+declare const RangePicker: ({ id, placeholder, fromValue, toValue, onFromChange, onToChange, className, dateFormat, }: IRangePickerProps) => react_jsx_runtime.JSX.Element;
+
+/**
  * A calendar component for date selection.
  *
  * @example
@@ -1268,5 +1305,5 @@ declare const SelectLabel: React$1.ForwardRefExoticComponent<Omit<SelectPrimitiv
 declare const SelectItem: React$1.ForwardRefExoticComponent<Omit<SelectPrimitive.SelectItemProps & React$1.RefAttributes<HTMLDivElement>, "ref"> & React$1.RefAttributes<HTMLDivElement>>;
 declare const SelectSeparator: React$1.ForwardRefExoticComponent<Omit<SelectPrimitive.SelectSeparatorProps & React$1.RefAttributes<HTMLDivElement>, "ref"> & React$1.RefAttributes<HTMLDivElement>>;
 
-export { Accordion, AccordionContent, AccordionItem, AccordionTrigger, Alert, AlertDescription, AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, AlertDialogPortal, AlertDialogTitle, AlertDialogTrigger, AlertTitle, AlertWithIcon, Badge, Breadcrumb, BreadcrumbEllipsis, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator, Button, Calendar, Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle, Checkbox, ClearButton, Combobox, Command, CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator, CommandShortcut, ConfirmationDialog, DatePicker, DeleteDialog, Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger, DownloadButton, DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuPortal, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger, PumpwoodDropzone as Dropzone, Empty, EmptyContainer, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle, ErrorBoundary, ErrorMessage, ErrorToastContent, FKSelect, FileDropzone, Input, Label, Loading, MarkdownEditor, MultiSelectDropdown, NoResult, Pagination, PopConfirm, Popover, PopoverContent, PopoverTrigger, PumpwoodBadge, PumpwoodCard, PumpwoodTable, Radio, Select$1 as Select, SelectContent, SelectGroup, SelectItem, SelectLabel, Select as SelectPrimitive, SelectScrollDownButton, SelectScrollUpButton, SelectSeparator, SelectTrigger, SelectValue, Sidebar, Skeleton, Spinner, Stack, Table$1 as Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, Table as TablePrimitive, TableRow, TableSkeleton, Tabs, TabsContent, TabsList, TabsTrigger, TagInput, Textarea, Tooltip, TooltipComponent, TooltipContent, TooltipProvider, TooltipTrigger, Typography, badgeVariants, createFKSelectFetcher, fkSelectFetcher, pumpwoodBadgeVariants, useSidebarCollapse };
-export type { ComboboxItem, CreateFKSelectFetcherOptions, DynamicListFn, FKFetcherParams, FKSelectFetcherParams, IAlertWithIconProps, IDatePickerProps, IFKSelectProps, IMarkdownEditorProps, IMultiSelectOption, ISelectFKProps, ISelectProps, IStaticSelectProps, ITableColumn, ITableProps, ITagItem, IUseSidebarCollapseOptions, PopConfirmProps, RetrieveFileFn };
+export { Accordion, AccordionContent, AccordionItem, AccordionTrigger, Alert, AlertDescription, AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, AlertDialogPortal, AlertDialogTitle, AlertDialogTrigger, AlertTitle, AlertWithIcon, Badge, Breadcrumb, BreadcrumbEllipsis, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator, Button, Calendar, Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle, Checkbox, ClearButton, Combobox, Command, CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator, CommandShortcut, ConfirmationDialog, DatePicker, DeleteDialog, Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger, DownloadButton, DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuPortal, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger, PumpwoodDropzone as Dropzone, Empty, EmptyContainer, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle, ErrorBoundary, ErrorMessage, ErrorToastContent, FKSelect, FileDropzone, Input, Label, Loading, MarkdownEditor, MultiSelectDropdown, NoResult, Pagination, PopConfirm, Popover, PopoverContent, PopoverTrigger, PumpwoodBadge, PumpwoodCard, PumpwoodTable, Radio, RangePicker, Select$1 as Select, SelectContent, SelectGroup, SelectItem, SelectLabel, Select as SelectPrimitive, SelectScrollDownButton, SelectScrollUpButton, SelectSeparator, SelectTrigger, SelectValue, Sidebar, Skeleton, Spinner, Stack, Table$1 as Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, Table as TablePrimitive, TableRow, TableSkeleton, Tabs, TabsContent, TabsList, TabsTrigger, TagInput, Textarea, Tooltip, TooltipComponent, TooltipContent, TooltipProvider, TooltipTrigger, Typography, badgeVariants, createFKSelectFetcher, fkSelectFetcher, pumpwoodBadgeVariants, useSidebarCollapse };
+export type { ComboboxItem, CreateFKSelectFetcherOptions, DynamicListFn, FKFetcherParams, FKSelectFetcherParams, IAlertWithIconProps, IDatePickerProps, IFKSelectProps, IMarkdownEditorProps, IMultiSelectOption, IRangePickerProps, ISelectFKProps, ISelectProps, IStaticSelectProps, ITableColumn, ITableProps, ITagItem, IUseSidebarCollapseOptions, PopConfirmProps, RetrieveFileFn };

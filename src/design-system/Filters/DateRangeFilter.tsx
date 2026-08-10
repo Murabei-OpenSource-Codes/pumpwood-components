@@ -1,23 +1,9 @@
 "use client";
 
-import { CalendarIcon } from "lucide-react";
-import { format } from "date-fns";
-import * as React from "react";
-import { Calendar } from "@components/ui/calendar";
-import {
-    Popover,
-    PopoverContent,
-    PopoverTrigger,
-} from "@components/ui/popover";
-import {
-    fieldTriggerClassName,
-    fieldTriggerIconClassName,
-    fieldTriggerPlaceholderClassName,
-} from "@/lib/field-trigger";
+import { RangePicker } from "@components/RangePicker";
 import { cn } from "@/lib/utils";
 
 export interface DateRangeFilterProps {
-
     startDate?: Date;
     endDate?: Date;
     onStartDateChange: (date: Date | undefined) => void;
@@ -26,6 +12,28 @@ export interface DateRangeFilterProps {
     endLabel?: string;
     className?: string;
 }
+
+const dateToIso = (date: Date | undefined): string => {
+    if (!date) {
+        return "";
+    }
+
+    return date.toISOString();
+};
+
+const isoToDate = (value: string): Date | undefined => {
+    if (!value.trim()) {
+        return undefined;
+    }
+
+    const parsedDate = new Date(value);
+
+    if (Number.isNaN(parsedDate.getTime())) {
+        return undefined;
+    }
+
+    return parsedDate;
+};
 
 /**
  * A date range picker filter component.
@@ -49,72 +57,22 @@ export const DateRangeFilter = ({
     endLabel = "End date",
     className,
 }: DateRangeFilterProps) => {
+    const placeholder = "{start} - {end}"
+        .replace("{start}", startLabel)
+        .replace("{end}", endLabel);
 
     return (
         <div className={cn("flex flex-col gap-2", className)}>
-            <div className="flex flex-row gap-2 items-center">
-                <Popover>
-                    <PopoverTrigger asChild>
-                        <button
-                            type="button"
-                            className={cn(
-                                fieldTriggerClassName,
-                                "justify-start text-left w-[240px]",
-                                !startDate && fieldTriggerPlaceholderClassName,
-                            )}
-                        >
-                            <CalendarIcon
-                                className={cn(
-                                    "mr-2",
-                                    fieldTriggerIconClassName,
-                                )}
-                            />
-                            {startDate
-                                ? format(startDate, "PPP")
-                                : startLabel}
-                        </button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-fit p-0" align="start">
-                        <Calendar
-                            mode="single"
-                            selected={startDate}
-                            onSelect={onStartDateChange}
-                            initialFocus
-                        />
-                    </PopoverContent>
-                </Popover>
-
-                <Popover>
-                    <PopoverTrigger asChild>
-                        <button
-                            type="button"
-                            className={cn(
-                                fieldTriggerClassName,
-                                "justify-start text-left w-[240px]",
-                                !endDate && fieldTriggerPlaceholderClassName,
-                            )}
-                        >
-                            <CalendarIcon
-                                className={cn(
-                                    "mr-2",
-                                    fieldTriggerIconClassName,
-                                )}
-                            />
-                            {endDate
-                                ? format(endDate, "PPP")
-                                : endLabel}
-                        </button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-fit p-0" align="start">
-                        <Calendar
-                            mode="single"
-                            selected={endDate}
-                            onSelect={onEndDateChange}
-                            initialFocus
-                        />
-                    </PopoverContent>
-                </Popover>
-            </div>
+            <RangePicker
+                className="w-[280px]"
+                placeholder={placeholder}
+                fromValue={dateToIso(startDate)}
+                toValue={dateToIso(endDate)}
+                onFromChange={(value) =>
+                    onStartDateChange(isoToDate(value))
+                }
+                onToChange={(value) => onEndDateChange(isoToDate(value))}
+            />
         </div>
     );
 };

@@ -52,6 +52,7 @@ export {
 	type ISelectFKProps,
 } from "./Select";
 export { DatePicker, type IDatePickerProps } from "./DatePicker";
+export { RangePicker, type IRangePickerProps } from "./RangePicker";
 export { Calendar } from "./ui/calendar";
 export {
 	Popover,

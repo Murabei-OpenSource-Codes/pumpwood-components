@@ -20,6 +20,7 @@ export { EmptyContainer } from "./EmptyContainer";
 export { FKSelect, type IFKSelectProps, type FKFetcherParams, } from "./FKSelect";
 export { Select, type ISelectProps, type IStaticSelectProps, type ISelectFKProps, } from "./Select";
 export { DatePicker, type IDatePickerProps } from "./DatePicker";
+export { RangePicker, type IRangePickerProps } from "./RangePicker";
 export { Calendar } from "./ui/calendar";
 export { Popover, PopoverContent, PopoverTrigger, } from "./ui/popover";
 export { Combobox, type ComboboxItem } from "./ui/combobox";

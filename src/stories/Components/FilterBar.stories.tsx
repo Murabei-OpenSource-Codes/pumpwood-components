@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Search } from 'lucide-react';
 import { useState } from 'react';
-import { DatePicker } from '../../components/DatePicker';
+import { RangePicker } from '../../components/RangePicker';
 import { Select } from '../../components/Select';
 import { Input } from '../../components/ui/input';
 
@@ -34,8 +34,8 @@ const mockUserFetcher = async ({
 const FilterBar = () => {
     const [search, setSearch] = useState('');
     const [status, setStatus] = useState<string | undefined>(undefined);
-    const [startDate, setStartDate] = useState<string | undefined>(undefined);
-    const [endDate, setEndDate] = useState<string | undefined>(undefined);
+    const [startDate, setStartDate] = useState<string>("");
+    const [endDate, setEndDate] = useState<string>("");
     const [userId, setUserId] = useState<string | number | null>(null);
 
     return (
@@ -54,19 +54,13 @@ const FilterBar = () => {
                 value={status}
                 onValueChange={setStatus}
             />
-            <DatePicker
-                className="w-[160px]"
-                placeholder="Data inicial"
-                boundary="start"
-                value={startDate}
-                onValueChange={setStartDate}
-            />
-            <DatePicker
-                className="w-[160px]"
-                placeholder="Data final"
-                boundary="end"
-                value={endDate}
-                onValueChange={setEndDate}
+            <RangePicker
+                className="w-[280px]"
+                placeholder="Data inicial - Data final"
+                fromValue={startDate}
+                toValue={endDate}
+                onFromChange={setStartDate}
+                onToChange={setEndDate}
             />
             <Select
                 variant="fk"
