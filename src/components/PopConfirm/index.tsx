@@ -93,7 +93,7 @@ export function PopConfirm({
 			<PopoverContent
 				side={side}
 				align={align}
-				className="w-80 bg-white p-4"
+				className="w-80 p-4"
 				onOpenAutoFocus={(event) => event.preventDefault()}
 			>
 				<Stack gap={3}>
