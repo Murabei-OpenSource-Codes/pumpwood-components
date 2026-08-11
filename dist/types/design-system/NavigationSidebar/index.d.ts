@@ -27,6 +27,7 @@ export interface INavigationSidebarProps {
     onLogout: () => void | Promise<void>;
     logoutIcon?: LucideIcon;
     logoutLabel?: string;
+    footerActions?: ReactNode;
     LinkComponent?: ComponentType<{
         href: any;
         className?: string;
@@ -44,4 +45,4 @@ export interface INavigationSidebarProps {
 /**
  * Configurable navigation sidebar with collapse, groups and logout.
  */
-export declare function NavigationSidebar({ links, iconMap, pathname, isSidebarCollapsedFromQuery, logo, onLogout, logoutIcon, logoutLabel, LinkComponent, ImageComponent, }: INavigationSidebarProps): import("react/jsx-runtime").JSX.Element;
+export declare function NavigationSidebar({ links, iconMap, pathname, isSidebarCollapsedFromQuery, logo, onLogout, logoutIcon, logoutLabel, footerActions, LinkComponent, ImageComponent, }: INavigationSidebarProps): import("react/jsx-runtime").JSX.Element;

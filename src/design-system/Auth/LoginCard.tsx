@@ -109,7 +109,7 @@ export function LoginCard({
             <Card
                 className={
                     className ??
-                    "bg-white w-[400px] h-[457px] rounded-[30px] shadow-lg"
+                    "w-[400px] h-[457px] rounded-[30px] shadow-lg bg-card text-card-foreground border-border"
                 }
             >
                 <CardHeader className="items-center" />
@@ -117,7 +117,10 @@ export function LoginCard({
                     <form onSubmit={(e) => e.preventDefault()}>
                         <div className="grid w-full items-center gap-4 mt-6">
                             <Stack gap={4}>
-                                <Label className="text-primary" htmlFor="username">
+                                <Label
+                                    className="text-foreground"
+                                    htmlFor="username"
+                                >
                                     {usernameLabel}
                                 </Label>
                                 <Input
@@ -129,7 +132,10 @@ export function LoginCard({
                                 />
                             </Stack>
                             <Stack gap={4}>
-                                <Label className="text-primary" htmlFor="password">
+                                <Label
+                                    className="text-foreground"
+                                    htmlFor="password"
+                                >
                                     {passwordLabel}
                                 </Label>
                                 <Input
@@ -154,7 +160,7 @@ export function LoginCard({
                         </Button>
                         <LinkComponent
                             href={forgotPasswordHref}
-                            className="text-primary text-xs"
+                            className="text-muted-foreground hover:text-foreground text-xs"
                         >
                             {forgotPasswordLabel}
                         </LinkComponent>

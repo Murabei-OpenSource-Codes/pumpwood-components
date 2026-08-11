@@ -10,3 +10,22 @@
     background-color: transparent;
     color: hsl(var(--muted-foreground));
 }
+
+.dark .markdown-editor .toastui-editor-defaultUI {
+    border-color: hsl(var(--border));
+}
+
+.dark .markdown-editor .toastui-editor-defaultUI-toolbar {
+    background-color: hsl(var(--muted));
+    border-bottom-color: hsl(var(--border));
+}
+
+.dark .markdown-editor .toastui-editor-ww-container,
+.dark .markdown-editor .toastui-editor-contents,
+.dark .markdown-editor .toastui-editor-main {
+    background-color: hsl(var(--card));
+}
+
+.dark .markdown-editor .toastui-editor-contents {
+    color: hsl(var(--foreground));
+}

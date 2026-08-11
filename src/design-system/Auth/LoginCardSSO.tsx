@@ -113,7 +113,7 @@ export function LoginCardSSO({
             <Card
                 className={
                     className ??
-                    "bg-white w-[400px] h-[457px] rounded-[30px] shadow-lg"
+                    "w-[400px] h-[457px] rounded-[30px] shadow-lg bg-card text-card-foreground border-border"
                 }
             >
                 <CardHeader className="items-center mt-4" />
@@ -121,7 +121,7 @@ export function LoginCardSSO({
                     <form onSubmit={handleLogin}>
                         <div className="grid w-full items-center gap-4 mt-6">
                             <Stack gap={4}>
-                                <Label className="text-primary" htmlFor="email">
+                                <Label className="text-foreground" htmlFor="email">
                                     {emailLabel}
                                 </Label>
                                 <Input
@@ -148,7 +148,7 @@ export function LoginCardSSO({
                     <Stack gap={4} className="justify-start items-center mb-7">
                         <LinkComponent
                             href={forgotPasswordHref}
-                            className="text-primary text-xs"
+                            className="text-muted-foreground hover:text-foreground text-xs"
                         >
                             {forgotPasswordLabel}
                         </LinkComponent>

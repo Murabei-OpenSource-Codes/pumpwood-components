@@ -40,6 +40,7 @@ export interface INavigationSidebarProps {
     onLogout: () => void | Promise<void>;
     logoutIcon?: LucideIcon;
     logoutLabel?: string;
+    footerActions?: ReactNode;
     LinkComponent?: ComponentType<{
         href: any;
         className?: string;
@@ -67,6 +68,7 @@ export function NavigationSidebar({
     onLogout,
     logoutIcon = LogOut,
     logoutLabel = "Logout",
+    footerActions,
     LinkComponent,
     ImageComponent,
 }: INavigationSidebarProps) {
@@ -214,6 +216,7 @@ export function NavigationSidebar({
             </Sidebar.Content>
 
             <Sidebar.Footer>
+                {footerActions}
                 <Sidebar.Action
                     icon={logoutIcon}
                     label={logoutLabel}

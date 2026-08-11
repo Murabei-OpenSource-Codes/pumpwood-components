@@ -15,6 +15,8 @@ export interface IMarkdownEditorProps {
     error?: string;
     disabled?: boolean;
     className?: string;
+    /** Toast UI theme. Defaults to following the document `.dark` class. */
+    theme?: "light" | "dark";
 }
 
 type ToastEditorInstance = {
@@ -32,6 +34,7 @@ type ToastEditorComponent = ComponentType<{
     initialEditType: string;
     hideModeSwitch?: boolean;
     useCommandShortcut: boolean;
+    theme?: string;
     onChange: () => void;
     onLoad: () => void;
     ref: Ref<ToastEditorInstance>;
@@ -55,6 +58,30 @@ function getInitialEditorValue(value: string, placeholder?: string): string {
     return sanitizedValue;
 }
 
+function useDocumentDarkClass(): boolean {
+    const [isDark, setIsDark] = useState(false);
+
+    useEffect(() => {
+        const root = document.documentElement;
+        const sync = () => {
+            setIsDark(root.classList.contains("dark"));
+        };
+
+        sync();
+        const observer = new MutationObserver(sync);
+        observer.observe(root, {
+            attributes: true,
+            attributeFilter: ["class"],
+        });
+
+        return () => {
+            observer.disconnect();
+        };
+    }, []);
+
+    return isDark;
+}
+
 /**
  * WYSIWYG markdown editor wrapper around Toast UI Editor.
  */
@@ -65,12 +92,15 @@ export function MarkdownEditor({
     error,
     disabled,
     className,
+    theme,
 }: IMarkdownEditorProps) {
     const editorRef = useRef<ToastEditorInstance>(null);
     const isReadyRef = useRef(false);
     const [EditorComponent, setEditorComponent] =
         useState<ToastEditorComponent | null>(null);
     const chromeLines = getEditorChromeLines(placeholder);
+    const documentIsDark = useDocumentDarkClass();
+    const editorTheme = theme ?? (documentIsDark ? "dark" : "light");
 
     useEffect(() => {
         let active = true;
@@ -78,6 +108,7 @@ export function MarkdownEditor({
         Promise.all([
             import("@toast-ui/react-editor"),
             import("@toast-ui/editor/dist/toastui-editor.css"),
+            import("@toast-ui/editor/dist/theme/toastui-editor-dark.css"),
         ]).then(([editorModule]) => {
             if (active) {
                 setEditorComponent(
@@ -91,6 +122,10 @@ export function MarkdownEditor({
             active = false;
         };
     }, []);
+
+    useEffect(() => {
+        isReadyRef.current = false;
+    }, [editorTheme]);
 
     const handleChange = () => {
         if (!isReadyRef.current) {
@@ -138,12 +173,14 @@ export function MarkdownEditor({
             className={`markdown-editor ${className ?? "w-full"}`}
         >
             <EditorComponent
+                key={editorTheme}
                 initialValue={getInitialEditorValue(value, placeholder)}
                 usageStatistics={false}
                 autofocus={false}
                 initialEditType="wysiwyg"
                 hideModeSwitch={true}
                 useCommandShortcut={!disabled}
+                theme={editorTheme}
                 onChange={handleChange}
                 onLoad={handleLoad}
                 ref={editorRef}

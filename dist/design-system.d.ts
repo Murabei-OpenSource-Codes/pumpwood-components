@@ -340,6 +340,7 @@ interface INavigationSidebarProps {
     onLogout: () => void | Promise<void>;
     logoutIcon?: LucideIcon;
     logoutLabel?: string;
+    footerActions?: ReactNode;
     LinkComponent?: ComponentType<{
         href: any;
         className?: string;
@@ -357,7 +358,7 @@ interface INavigationSidebarProps {
 /**
  * Configurable navigation sidebar with collapse, groups and logout.
  */
-declare function NavigationSidebar({ links, iconMap, pathname, isSidebarCollapsedFromQuery, logo, onLogout, logoutIcon, logoutLabel, LinkComponent, ImageComponent, }: INavigationSidebarProps): react_jsx_runtime.JSX.Element;
+declare function NavigationSidebar({ links, iconMap, pathname, isSidebarCollapsedFromQuery, logo, onLogout, logoutIcon, logoutLabel, footerActions, LinkComponent, ImageComponent, }: INavigationSidebarProps): react_jsx_runtime.JSX.Element;
 
 export { AuthenticatedView, AutoDetailContent, AutoFormContent, CombinedFilterTable, CreatedByUserFilter, CustomBreadcrumb, DateRangeFilter, DetailPage, FULL_WIDTH_DETAIL_FIELDS, FilePreview, KeyValueContent, LoginCard, LoginCardSSO, NavigationSidebar, NotAuthenticatedView, formatDetailLabel, formatDetailValue, getDetailFieldValue };
 export type { FileTypeCategory, IAuthenticatedViewProps, IAutoDetailContentProps, IAutoFormContentProps, IDetailFieldConfig, IDetailPageProps, IDetailPageSection, IDetailSection, IFormField, IFormSection, IFormatDetailValueOptions, ILoginCardProps, ILoginCardSSOProps, INavigationSidebarLink, INavigationSidebarLogo, INavigationSidebarProps, INavigationSidebarSubLink, INotAuthenticatedViewProps };
