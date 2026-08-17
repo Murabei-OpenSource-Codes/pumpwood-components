@@ -195,6 +195,16 @@ export {
 export { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 export { Textarea } from "./ui/textarea";
 export {
+	Timeline,
+	TimelineContent,
+	TimelineDate,
+	TimelineHeader,
+	TimelineIndicator,
+	TimelineItem,
+	TimelineSeparator,
+	TimelineTitle,
+} from "./ui/timeline";
+export {
 	Tooltip,
 	TooltipContent,
 	TooltipProvider,

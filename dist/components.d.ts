@@ -1,6 +1,6 @@
 import * as react_jsx_runtime from 'react/jsx-runtime';
 import * as React$1 from 'react';
-import { ReactNode, ReactElement, ComponentType, HTMLAttributes, InputHTMLAttributes } from 'react';
+import { ReactNode, ReactElement, ComponentType, HTMLAttributes, InputHTMLAttributes, TimeHTMLAttributes } from 'react';
 import * as class_variance_authority_types from 'class-variance-authority/types';
 import { VariantProps } from 'class-variance-authority';
 import { FileWithPath, Accept } from 'react-dropzone';
@@ -1316,10 +1316,34 @@ declare const TabsContent: React$1.ForwardRefExoticComponent<Omit<TabsPrimitive.
 
 declare const Textarea: React$1.ForwardRefExoticComponent<Omit<React$1.DetailedHTMLProps<React$1.TextareaHTMLAttributes<HTMLTextAreaElement>, HTMLTextAreaElement>, "ref"> & React$1.RefAttributes<HTMLTextAreaElement>>;
 
+interface TimelineProps extends HTMLAttributes<HTMLDivElement> {
+    defaultValue?: number;
+    value?: number;
+    onValueChange?: (value: number) => void;
+    orientation?: "horizontal" | "vertical";
+    variant?: "steps" | "events";
+}
+declare function Timeline({ defaultValue, value, onValueChange, orientation, variant, className, children, ...props }: TimelineProps): React.JSX.Element;
+declare function TimelineContent({ className, ...props }: HTMLAttributes<HTMLDivElement>): React.JSX.Element;
+interface TimelineDateProps extends TimeHTMLAttributes<HTMLTimeElement> {
+    asChild?: boolean;
+}
+declare function TimelineDate({ asChild, className, ...props }: TimelineDateProps): React.JSX.Element;
+declare function TimelineHeader({ className, ...props }: HTMLAttributes<HTMLDivElement>): React.JSX.Element;
+/** @deprecated Vertical timelines render the rail inside TimelineItem. */
+declare function TimelineIndicator(_props: HTMLAttributes<HTMLDivElement>): null;
+interface TimelineItemProps extends HTMLAttributes<HTMLDivElement> {
+    step: number;
+}
+declare function TimelineItem({ step, className, children, ...props }: TimelineItemProps): React.JSX.Element;
+/** @deprecated Vertical timelines render the rail inside TimelineItem. */
+declare function TimelineSeparator(_props: HTMLAttributes<HTMLDivElement>): null;
+declare function TimelineTitle({ className, ...props }: HTMLAttributes<HTMLHeadingElement>): React.JSX.Element;
+
 declare const TooltipProvider: React$1.FC<TooltipPrimitive.TooltipProviderProps>;
 declare const Tooltip: React$1.FC<TooltipPrimitive.TooltipProps>;
 declare const TooltipTrigger: React$1.ForwardRefExoticComponent<TooltipPrimitive.TooltipTriggerProps & React$1.RefAttributes<HTMLButtonElement>>;
 declare const TooltipContent: React$1.ForwardRefExoticComponent<Omit<TooltipPrimitive.TooltipContentProps & React$1.RefAttributes<HTMLDivElement>, "ref"> & React$1.RefAttributes<HTMLDivElement>>;
 
-export { Accordion, AccordionContent, AccordionItem, AccordionTrigger, Alert, AlertDescription, AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, AlertDialogPortal, AlertDialogTitle, AlertDialogTrigger, AlertTitle, AlertWithIcon, Badge, Breadcrumb, BreadcrumbEllipsis, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator, Button, Calendar, Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle, Checkbox, ClearButton, Combobox, Command, CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator, CommandShortcut, ConfirmationDialog, DatePicker, DeleteDialog, Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger, DownloadButton, DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuPortal, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger, PumpwoodDropzone as Dropzone, Empty, EmptyContainer, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle, ErrorBoundary, ErrorMessage, ErrorToastContent, FKSelect, FileDropzone, Input, Label, Loading, MarkdownEditor, MultiSelectDropdown, NoResult, Pagination, PopConfirm, Popover, PopoverContent, PopoverTrigger, PumpwoodBadge, PumpwoodCard, PumpwoodTable, Radio, RangePicker, Select$1 as Select, SelectContent, SelectGroup, SelectItem, SelectLabel, Select as SelectPrimitive, SelectScrollDownButton, SelectScrollUpButton, SelectSeparator, SelectTrigger, SelectValue, Sidebar, Skeleton, Spinner, Stack, Table$1 as Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, Table as TablePrimitive, TableRow, TableSkeleton, Tabs, TabsContent, TabsList, TabsTrigger, TagInput, Textarea, Tooltip, TooltipComponent, TooltipContent, TooltipProvider, TooltipTrigger, Typography, badgeVariants, createFKSelectFetcher, fkSelectFetcher, pumpwoodBadgeVariants, useSidebarCollapse };
+export { Accordion, AccordionContent, AccordionItem, AccordionTrigger, Alert, AlertDescription, AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, AlertDialogPortal, AlertDialogTitle, AlertDialogTrigger, AlertTitle, AlertWithIcon, Badge, Breadcrumb, BreadcrumbEllipsis, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator, Button, Calendar, Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle, Checkbox, ClearButton, Combobox, Command, CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator, CommandShortcut, ConfirmationDialog, DatePicker, DeleteDialog, Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger, DownloadButton, DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuPortal, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger, PumpwoodDropzone as Dropzone, Empty, EmptyContainer, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle, ErrorBoundary, ErrorMessage, ErrorToastContent, FKSelect, FileDropzone, Input, Label, Loading, MarkdownEditor, MultiSelectDropdown, NoResult, Pagination, PopConfirm, Popover, PopoverContent, PopoverTrigger, PumpwoodBadge, PumpwoodCard, PumpwoodTable, Radio, RangePicker, Select$1 as Select, SelectContent, SelectGroup, SelectItem, SelectLabel, Select as SelectPrimitive, SelectScrollDownButton, SelectScrollUpButton, SelectSeparator, SelectTrigger, SelectValue, Sidebar, Skeleton, Spinner, Stack, Table$1 as Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, Table as TablePrimitive, TableRow, TableSkeleton, Tabs, TabsContent, TabsList, TabsTrigger, TagInput, Textarea, Timeline, TimelineContent, TimelineDate, TimelineHeader, TimelineIndicator, TimelineItem, TimelineSeparator, TimelineTitle, Tooltip, TooltipComponent, TooltipContent, TooltipProvider, TooltipTrigger, Typography, badgeVariants, createFKSelectFetcher, fkSelectFetcher, pumpwoodBadgeVariants, useSidebarCollapse };
 export type { ComboboxItem, CreateFKSelectFetcherOptions, DynamicListFn, DynamicListPagination, FKFetcherPageResult, FKFetcherParams, FKFetcherReturn, FKSelectFetcherParams, IAlertWithIconProps, IDatePickerProps, IFKSelectProps, IMarkdownEditorProps, IMultiSelectOption, IRangePickerProps, ISelectFKProps, ISelectProps, IStaticSelectProps, ITableColumn, ITableProps, ITagItem, IUseSidebarCollapseOptions, PopConfirmProps, RetrieveFileFn };

@@ -55,4 +55,5 @@ export { Spinner } from "./ui/spinner";
 export { Table as TablePrimitive, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow, } from "./ui/table";
 export { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 export { Textarea } from "./ui/textarea";
+export { Timeline, TimelineContent, TimelineDate, TimelineHeader, TimelineIndicator, TimelineItem, TimelineSeparator, TimelineTitle, } from "./ui/timeline";
 export { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger, } from "./ui/tooltip";
