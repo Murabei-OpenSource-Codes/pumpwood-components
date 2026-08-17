@@ -14,6 +14,10 @@ interface GenericComboboxProps extends Omit<React.ComponentPropsWithoutRef<"div"
     onSearchChange?: (search: string) => void;
     filterLocally?: boolean;
     loading?: boolean;
+    loadingMore?: boolean;
+    hasMore?: boolean;
+    onEndReached?: () => void;
+    onOpenChange?: (open: boolean) => void;
     displayLabel?: string;
     disabled?: boolean;
 }
@@ -29,5 +33,5 @@ interface GenericComboboxProps extends Omit<React.ComponentPropsWithoutRef<"div"
  * />
  * ```
  */
-export declare function Combobox({ items, value, onChange, placeholder, emptyMessage, className, searchPlaceholder, onSearchChange, filterLocally, loading, displayLabel, disabled, }: GenericComboboxProps): import("react/jsx-runtime").JSX.Element;
+export declare function Combobox({ items, value, onChange, placeholder, emptyMessage, className, searchPlaceholder, onSearchChange, filterLocally, loading, loadingMore, hasMore, onEndReached, onOpenChange, displayLabel, disabled, }: GenericComboboxProps): import("react/jsx-runtime").JSX.Element;
 export {};

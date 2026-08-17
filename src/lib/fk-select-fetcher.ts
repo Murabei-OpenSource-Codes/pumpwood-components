@@ -1,71 +1,78 @@
 import type { FKFetcherParams } from "../components/FKSelect";
 
+export type DynamicListPagination = {
+	limit?: number;
+	offset?: number;
+};
+
 export type DynamicListFn = (
-    modelClass: string,
-    filterDict: Record<string, unknown>,
-    searchFields?: string[],
-) => Promise<
-    [Record<string, unknown>[] | null, { message: string } | null]
->;
+	modelClass: string,
+	filterDict: Record<string, unknown>,
+	searchFields?: string[],
+	pagination?: DynamicListPagination,
+) => Promise<[Record<string, unknown>[] | null, { message: string } | null]>;
 
 export type FKSelectFetcherParams = {
-    search: string;
-    modelClass: string;
-    labelName: string;
-    additionalFilters?: Record<string, unknown>;
-    fields?: string[];
+	search: string;
+	modelClass: string;
+	labelName: string;
+	additionalFilters?: Record<string, unknown>;
+	fields?: string[];
+	limit?: number;
+	offset?: number;
 };
 
 export type CreateFKSelectFetcherOptions = {
-    additionalFilters?: Record<string, unknown>;
-    fields?: string[];
+	additionalFilters?: Record<string, unknown>;
+	fields?: string[];
 };
 
 /**
  * Fetches FK select options via an injected dynamicList function.
  */
 export const fkSelectFetcher = async (
-    dynamicList: DynamicListFn,
-    {
-        search,
-        modelClass,
-        labelName,
-        additionalFilters = {},
-        fields,
-    }: FKSelectFetcherParams,
+	dynamicList: DynamicListFn,
+	{
+		search,
+		modelClass,
+		labelName,
+		additionalFilters = {},
+		fields,
+		limit,
+		offset,
+	}: FKSelectFetcherParams,
 ): Promise<Record<string, unknown>[]> => {
-    const searchFilter = search
-        ? { [`${labelName}__icontains`]: search }
-        : {};
-    const combinedFilters = { ...searchFilter, ...additionalFilters };
-    const searchFields = !fields?.length ? [] : [labelName, ...fields];
+	const searchFilter = search ? { [`${labelName}__icontains`]: search } : {};
+	const combinedFilters = { ...searchFilter, ...additionalFilters };
+	const searchFields = !fields?.length ? [] : [labelName, ...fields];
 
-    const [result, error] = await dynamicList(
-        modelClass,
-        combinedFilters,
-        searchFields,
-    );
+	const [result, error] = await dynamicList(
+		modelClass,
+		combinedFilters,
+		searchFields,
+		{ limit, offset },
+	);
 
-    if (error) {
-        throw new Error(error.message);
-    }
+	if (error) {
+		throw new Error(error.message);
+	}
 
-    return result ?? [];
+	return result ?? [];
 };
 
 /**
  * Creates a stable fetcher function for FKSelect.
  */
 export const createFKSelectFetcher = (
-    dynamicList: DynamicListFn,
-    labelName: string,
-    options: CreateFKSelectFetcherOptions = {},
+	dynamicList: DynamicListFn,
+	labelName: string,
+	options: CreateFKSelectFetcherOptions = {},
 ) => {
-    return (params: FKFetcherParams) =>
-        fkSelectFetcher(dynamicList, {
-            ...params,
-            labelName,
-            additionalFilters: options.additionalFilters,
-            fields: options.fields,
-        });
+	return (params: FKFetcherParams) =>
+		fkSelectFetcher(dynamicList, {
+			...params,
+			labelName,
+			additionalFilters: options.additionalFilters,
+			fields: options.fields,
+		});
 };

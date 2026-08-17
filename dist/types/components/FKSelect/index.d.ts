@@ -10,6 +10,11 @@ export type FKFetcherParams = {
     limit?: number;
     offset?: number;
 };
+export type FKFetcherPageResult<T = unknown> = {
+    items: T[];
+    hasMore: boolean;
+};
+export type FKFetcherReturn<T = unknown> = T[] | FKFetcherPageResult<T>;
 /**
  * Props for the FKSelect component.
  */
@@ -17,7 +22,7 @@ export interface IFKSelectProps {
     /** Optional id used as data-testid on the trigger. */
     id?: string;
     /** Function to fetch data from the API. */
-    fetcher: (params: FKFetcherParams) => Promise<any[]>;
+    fetcher: (params: FKFetcherParams) => Promise<FKFetcherReturn>;
     /** Optional function to resolve a value not present in the list. */
     resolveValue?: (params: {
         modelClass: string;
@@ -45,6 +50,8 @@ export interface IFKSelectProps {
     className?: string;
     /** Debounce time in ms. Defaults to 300. */
     debounceWait?: number;
+    /** Page size for list requests. Defaults to 50. */
+    pageSize?: number;
 }
 /**
  * A foreign key select component (async combobox).
@@ -60,4 +67,4 @@ export interface IFKSelectProps {
  * />
  * ```
  */
-export declare const FKSelect: ({ id, fetcher, resolveValue, modelClass, labelName, valueField, placeholder, emptyMessage, value, onChange, additionalFilters, fields, className, debounceWait, }: IFKSelectProps) => import("react/jsx-runtime").JSX.Element;
+export declare const FKSelect: ({ id, fetcher, resolveValue, modelClass, labelName, valueField, placeholder, emptyMessage, value, onChange, additionalFilters, fields, className, debounceWait, pageSize, }: IFKSelectProps) => import("react/jsx-runtime").JSX.Element;

@@ -1,118 +1,183 @@
-import * as class_variance_authority_types from 'class-variance-authority/types';
-import * as React$1 from 'react';
-import { InputHTMLAttributes, ReactNode, HTMLAttributes, ReactElement, ComponentType } from 'react';
-import { VariantProps } from 'class-variance-authority';
 import * as react_jsx_runtime from 'react/jsx-runtime';
+import * as React$1 from 'react';
+import { ReactNode, ReactElement, ComponentType, HTMLAttributes, InputHTMLAttributes } from 'react';
+import * as class_variance_authority_types from 'class-variance-authority/types';
+import { VariantProps } from 'class-variance-authority';
 import { FileWithPath, Accept } from 'react-dropzone';
-import { LucideIcon } from 'lucide-react';
-import * as TabsPrimitive from '@radix-ui/react-tabs';
-import * as AccordionPrimitive from '@radix-ui/react-accordion';
+import { FieldError } from 'react-hook-form';
 import { IFKSelectProps as IFKSelectProps$1 } from '@/components/FKSelect';
+import { LucideIcon } from 'lucide-react';
+import * as AccordionPrimitive from '@radix-ui/react-accordion';
+import * as AlertDialogPrimitive from '@radix-ui/react-alert-dialog';
 import { DayPicker } from 'react-day-picker';
 import { Button as Button$1 } from '@/components/ui/button';
-import * as PopoverPrimitive from '@radix-ui/react-popover';
-import * as DialogPrimitive from '@radix-ui/react-dialog';
-import * as AlertDialogPrimitive from '@radix-ui/react-alert-dialog';
+import * as CheckboxPrimitive from '@radix-ui/react-checkbox';
 import { Command as Command$1 } from 'cmdk';
 import { Dialog as Dialog$1 } from '@/components/ui/dialog';
-import * as CheckboxPrimitive from '@radix-ui/react-checkbox';
-import * as LabelPrimitive from '@radix-ui/react-label';
-import * as TooltipPrimitive from '@radix-ui/react-tooltip';
+import * as DialogPrimitive from '@radix-ui/react-dialog';
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu';
-import { FieldError } from 'react-hook-form';
+import * as LabelPrimitive from '@radix-ui/react-label';
+import * as PopoverPrimitive from '@radix-ui/react-popover';
 import * as SelectPrimitive from '@radix-ui/react-select';
+import * as TabsPrimitive from '@radix-ui/react-tabs';
+import * as TooltipPrimitive from '@radix-ui/react-tooltip';
 
-declare const buttonVariants: (props?: ({
-    variant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link" | null | undefined;
-    size?: "default" | "sm" | "lg" | "icon" | "icon-sm" | "icon-lg" | null | undefined;
-} & class_variance_authority_types.ClassProp) | undefined) => string;
-interface ButtonProps extends React$1.ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof buttonVariants> {
-    asChild?: boolean;
-    icon?: React$1.ReactNode;
-    label?: React$1.ReactNode;
-    iconPosition?: "start" | "end";
-    /** Button height in pixels or any valid CSS length. */
-    height?: number | string;
-    /** Button width in pixels or any valid CSS length. */
-    width?: number | string;
+/**
+ * Parameters passed to the FK fetcher function.
+ */
+type FKFetcherParams = {
+    search: string;
+    modelClass: string;
+    labelName: string;
+    additionalFilters?: Record<string, any>;
+    fields?: string[];
+    limit?: number;
+    offset?: number;
+};
+type FKFetcherPageResult<T = unknown> = {
+    items: T[];
+    hasMore: boolean;
+};
+type FKFetcherReturn<T = unknown> = T[] | FKFetcherPageResult<T>;
+/**
+ * Props for the FKSelect component.
+ */
+interface IFKSelectProps {
+    /** Optional id used as data-testid on the trigger. */
+    id?: string;
+    /** Function to fetch data from the API. */
+    fetcher: (params: FKFetcherParams) => Promise<FKFetcherReturn>;
+    /** Optional function to resolve a value not present in the list. */
+    resolveValue?: (params: {
+        modelClass: string;
+        value: string | number;
+    }) => Promise<any>;
+    /** The model class name to identify the resource. */
+    modelClass: string;
+    /** The field name to use as the display label. */
+    labelName: string;
+    /** The field name to use as the value (ID). Defaults to 'pk'. */
+    valueField?: string;
+    /** Placeholder text for the search input. */
+    placeholder?: string;
+    /** Message to show when no items are found. */
+    emptyMessage?: string;
+    /** The currently selected value. */
+    value: string | number | null;
+    /** Callback when an item is selected. */
+    onChange: (value: string | number, item?: any) => void;
+    /** Additional filters to apply to the API request. */
+    additionalFilters?: Record<string, any>;
+    /** Extra fields to include in search. */
+    fields?: string[];
+    /** Optional class names for the wrapper (e.g. width overrides). */
+    className?: string;
+    /** Debounce time in ms. Defaults to 300. */
+    debounceWait?: number;
+    /** Page size for list requests. Defaults to 50. */
+    pageSize?: number;
 }
 /**
- * Displays a button or a component that looks like a button.
+ * A foreign key select component (async combobox).
  *
  * @example
  * ```tsx
- * <Button variant="default">Click me</Button>
- * <Button variant="outline" size="sm">Action</Button>
- * <Button
- *   label="Criar novo lote"
- *   icon={<SquarePlus size={16} />}
- *   width={200}
+ * <FKSelect
+ *   fetcher={fetchData}
+ *   modelClass="User"
+ *   labelName="username"
+ *   value={userId}
+ *   onChange={setUserId}
  * />
  * ```
  */
-declare const Button: React$1.ForwardRefExoticComponent<ButtonProps & React$1.RefAttributes<HTMLButtonElement>>;
+declare const FKSelect: ({ id, fetcher, resolveValue, modelClass, labelName, valueField, placeholder, emptyMessage, value, onChange, additionalFilters, fields, className, debounceWait, pageSize, }: IFKSelectProps) => react_jsx_runtime.JSX.Element;
 
-interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
-    icon?: ReactNode;
+type DynamicListPagination = {
+    limit?: number;
+    offset?: number;
+};
+type DynamicListFn = (modelClass: string, filterDict: Record<string, unknown>, searchFields?: string[], pagination?: DynamicListPagination) => Promise<[Record<string, unknown>[] | null, {
+    message: string;
+} | null]>;
+type FKSelectFetcherParams = {
+    search: string;
+    modelClass: string;
+    labelName: string;
+    additionalFilters?: Record<string, unknown>;
+    fields?: string[];
+    limit?: number;
+    offset?: number;
+};
+type CreateFKSelectFetcherOptions = {
+    additionalFilters?: Record<string, unknown>;
+    fields?: string[];
+};
+/**
+ * Fetches FK select options via an injected dynamicList function.
+ */
+declare const fkSelectFetcher: (dynamicList: DynamicListFn, { search, modelClass, labelName, additionalFilters, fields, limit, offset, }: FKSelectFetcherParams) => Promise<Record<string, unknown>[]>;
+/**
+ * Creates a stable fetcher function for FKSelect.
+ */
+declare const createFKSelectFetcher: (dynamicList: DynamicListFn, labelName: string, options?: CreateFKSelectFetcherOptions) => (params: FKFetcherParams) => Promise<Record<string, unknown>[]>;
+
+interface IAlertWithIconProps {
+    icon: ReactNode;
+    title: string;
+    description: string;
+    variant?: "default" | "destructive";
+    className?: string;
 }
 /**
- * Displays a styled input field with optional leading icon.
- *
- * @example
- * ```tsx
- * <Input placeholder="Enter text..." />
- * <Input icon={<Search className="h-4 w-4" />} placeholder="Search..." />
- * ```
+ * Alert with icon, title and description.
  */
-declare const Input: React$1.ForwardRefExoticComponent<InputProps & React$1.RefAttributes<HTMLInputElement>>;
+declare function AlertWithIcon({ icon, title, description, variant, className, }: IAlertWithIconProps): react_jsx_runtime.JSX.Element;
 
-declare const Textarea: React$1.ForwardRefExoticComponent<Omit<React$1.DetailedHTMLProps<React$1.TextareaHTMLAttributes<HTMLTextAreaElement>, HTMLTextAreaElement>, "ref"> & React$1.RefAttributes<HTMLTextAreaElement>>;
-
-type StackProps = HTMLAttributes<HTMLDivElement> & {
-    children: ReactNode;
-    /** The direction of the stack. Defaults to 'col'. */
-    direction?: "row" | "col";
-    /** The gap between elements. Maps to Tailwind gap utility (e.g. 4 -> gap-4). */
-    gap?: number;
-    /** Click handler. When set, the stack becomes keyboard-accessible (role="button"). */
-    onClick?: () => void;
-    className?: string;
-};
+declare const pumpwoodBadgeVariants: (props?: ({
+    variant?: "destructive" | "primary" | "secondary" | "warning" | "muted" | null | undefined;
+    size?: "default" | "sm" | "lg" | null | undefined;
+} & class_variance_authority_types.ClassProp) | undefined) => string;
+interface PumpwoodBadgeProps extends React.HTMLAttributes<HTMLDivElement>, VariantProps<typeof pumpwoodBadgeVariants> {
+}
 /**
- * A layout component that arranges children in a stack (vertical or horizontal).
- *
- * When `onClick` is provided, the stack receives `role="button"`, `tabIndex={0}`,
- * and responds to Enter and Space keys. Provide visible text or pass `aria-label`
- * via props for accessibility.
+ * A Badge component for status indicators and labels.
  *
  * @example
  * ```tsx
- * <Stack direction="row" gap={4}>
- *   <Button>Btn 1</Button>
- *   <Button>Btn 2</Button>
- * </Stack>
+ * <Badge variant="primary">New</Badge>
+ * <Badge variant="destructive" size="sm">Error</Badge>
  * ```
  */
-declare function Stack({ children, onClick, direction, gap, className, ...props }: StackProps): react_jsx_runtime.JSX.Element;
+declare function PumpwoodBadge({ className, variant, size, ...props }: PumpwoodBadgeProps): React.JSX.Element;
 
-type DropzoneProps = {
-    children: ReactNode;
-    maxFiles?: number;
-    maxSize?: number;
-    accept?: Record<string, string[]>;
-    onFilesAccepted: (files: FileWithPath[]) => void;
-};
 /**
- * A drag-and-drop zone for file uploads.
+ * A Card component system for displaying content in boxes.
  *
  * @example
  * ```tsx
- * <Dropzone onFilesAccepted={(files) => console.log(files)}>
- *   <Button>Upload</Button>
- * </Dropzone>
+ * <Card.Root>
+ *   <Card.Header>
+ *     <Card.Title>Card Title</Card.Title>
+ *     <Card.Description>Card Description</Card.Description>
+ *   </Card.Header>
+ *   <Card.Content>
+ *     <p>Card Content</p>
+ *   </Card.Content>
+ * </Card.Root>
  * ```
  */
-declare function PumpwoodDropzone({ children, maxFiles, maxSize, accept, onFilesAccepted, }: DropzoneProps): react_jsx_runtime.JSX.Element;
+declare const PumpwoodCard: {
+    Root: React$1.ForwardRefExoticComponent<React$1.HTMLAttributes<HTMLDivElement> & React$1.RefAttributes<HTMLDivElement>>;
+    Content: React$1.ForwardRefExoticComponent<React$1.HTMLAttributes<HTMLDivElement> & React$1.RefAttributes<HTMLDivElement>>;
+    Header: React$1.ForwardRefExoticComponent<React$1.HTMLAttributes<HTMLDivElement> & React$1.RefAttributes<HTMLDivElement>>;
+    Title: React$1.ForwardRefExoticComponent<React$1.HTMLAttributes<HTMLDivElement> & React$1.RefAttributes<HTMLDivElement>>;
+    Description: React$1.ForwardRefExoticComponent<React$1.HTMLAttributes<HTMLDivElement> & React$1.RefAttributes<HTMLDivElement>>;
+};
+
+declare const ClearButton: ({ handleClear }: {
+    handleClear: () => void;
+}) => react_jsx_runtime.JSX.Element;
 
 interface RootProps {
     open: boolean;
@@ -184,6 +249,205 @@ declare const ConfirmationDialog: {
     Cancel: typeof Cancel;
 };
 
+/**
+ * Props for the DatePicker component.
+ */
+interface IDatePickerProps {
+    /** Optional id used as data-testid on the trigger button. */
+    id?: string;
+    /** Placeholder text when no date is selected. */
+    placeholder: string;
+    /** Controlled ISO date string (empty = no selection). */
+    value?: string;
+    /** Callback when the selected date changes (ISO string or empty). */
+    onValueChange?: (value: string) => void;
+    /** Optional class names for the wrapper (width, layout). */
+    className?: string;
+    /** Day boundary when serializing to ISO. */
+    boundary?: "start" | "end";
+    /** Display format for the selected date. */
+    dateFormat?: string;
+}
+/**
+ * A reusable date picker built with shadcn/ui.
+ *
+ * @example
+ * ```tsx
+ * <DatePicker
+ *   placeholder="Data inicial"
+ *   boundary="start"
+ *   value={filters.created_at__gte}
+ *   onValueChange={(value) =>
+ *     onFiltersChange({ target: "created_at__gte", value })
+ *   }
+ * />
+ * ```
+ */
+declare const DatePicker: ({ id, placeholder, value, onValueChange, className, boundary, dateFormat, }: IDatePickerProps) => react_jsx_runtime.JSX.Element;
+
+/**
+ * DeleteDialog - Confirmation dialog component for delete documents.
+ */
+declare const DeleteDialog: ({ openDialog, setOpenDialog, handleDelete, count, }: {
+    openDialog: boolean;
+    setOpenDialog: (value: boolean) => void;
+    handleDelete: () => void;
+    count?: number;
+}) => react_jsx_runtime.JSX.Element;
+
+type ExpectedFile = {
+    file: string;
+};
+type RetrieveFileFn = (modelClass: string, fileId: number) => Promise<[
+    {
+        data: number[];
+        contentType: string;
+    } | null,
+    {
+        message: string;
+    } | null
+]>;
+interface IDownloadButtonProps<T extends ExpectedFile> {
+    item: T;
+    propertyName: keyof T;
+    modelClass: string;
+    retrieveFile?: RetrieveFileFn;
+}
+declare const DownloadButton: <T extends ExpectedFile>({ item, modelClass, propertyName, retrieveFile, }: IDownloadButtonProps<T>) => react_jsx_runtime.JSX.Element;
+
+type DropzoneProps = {
+    children: ReactNode;
+    maxFiles?: number;
+    maxSize?: number;
+    accept?: Record<string, string[]>;
+    onFilesAccepted: (files: FileWithPath[]) => void;
+};
+/**
+ * A drag-and-drop zone for file uploads.
+ *
+ * @example
+ * ```tsx
+ * <Dropzone onFilesAccepted={(files) => console.log(files)}>
+ *   <Button>Upload</Button>
+ * </Dropzone>
+ * ```
+ */
+declare function PumpwoodDropzone({ children, maxFiles, maxSize, accept, onFilesAccepted, }: DropzoneProps): react_jsx_runtime.JSX.Element;
+
+interface EmptyContainerProps {
+    title: string;
+    description: string;
+}
+/**
+ * A container to display an empty state.
+ *
+ * @example
+ * ```tsx
+ * <EmptyContainer
+ *   title="No Data"
+ *   description="There are no items to display at this time."
+ * />
+ * ```
+ */
+declare function EmptyContainer({ title, description }: EmptyContainerProps): react_jsx_runtime.JSX.Element;
+
+interface ErrorBoundaryProps {
+    children: ReactNode;
+    hasError: boolean;
+    message?: string;
+    className?: string;
+}
+declare const ErrorBoundary: ({ children, hasError, message, }: ErrorBoundaryProps) => react_jsx_runtime.JSX.Element;
+
+declare const ErrorMessage: ({ error }: {
+    error: FieldError | undefined;
+}) => react_jsx_runtime.JSX.Element;
+
+declare const ErrorToastContent: ({ message, error, }: {
+    message: string;
+    error: string;
+}) => react_jsx_runtime.JSX.Element;
+
+interface FileDropzoneProps {
+    onFileSelected: (file: File) => void;
+    onFileDeleted?: () => void;
+    acceptExtensions?: string[];
+    accept?: Accept;
+    maxSizeMB?: number;
+}
+/**
+ * A specialized file dropzone with built-in preview and validation.
+ *
+ * @example
+ * ```tsx
+ * <FileDropzone
+ *   onFileSelected={(file) => console.log(file)}
+ *   maxSizeMB={5}
+ *   acceptExtensions={['.pdf', '.docx']}
+ * />
+ * ```
+ */
+declare function FileDropzone({ onFileSelected, onFileDeleted, acceptExtensions, accept, maxSizeMB, }: FileDropzoneProps): react_jsx_runtime.JSX.Element;
+
+declare function Loading(): react_jsx_runtime.JSX.Element;
+
+interface IMarkdownEditorProps {
+    value: string;
+    onChange: (value: string) => void;
+    placeholder?: string;
+    error?: string;
+    disabled?: boolean;
+    className?: string;
+    /** Toast UI theme. Defaults to following the document `.dark` class. */
+    theme?: "light" | "dark";
+}
+/**
+ * WYSIWYG markdown editor wrapper around Toast UI Editor.
+ */
+declare function MarkdownEditor({ value, onChange, placeholder, error, disabled, className, theme, }: IMarkdownEditorProps): react_jsx_runtime.JSX.Element;
+
+interface IMultiSelectOption {
+    label: string;
+    value: string;
+}
+interface IMultiSelectDropdownProps {
+    options: IMultiSelectOption[];
+    selected: string[];
+    onChange: (selected: string[]) => void;
+    placeholder?: string;
+    className?: string;
+    maxDisplay?: number;
+}
+declare function MultiSelectDropdown({ options, selected, onChange, placeholder, className, maxDisplay, }: IMultiSelectDropdownProps): react_jsx_runtime.JSX.Element;
+
+interface INoResultProps {
+    /** Title shown in the empty state. */
+    title?: string;
+    /** Description shown in the empty state. */
+    description?: string;
+}
+/**
+ * Default empty state for tables and lists with no data.
+ *
+ * @example
+ * ```tsx
+ * <NoResult />
+ * ```
+ */
+declare function NoResult({ title, description, }: INoResultProps): react_jsx_runtime.JSX.Element;
+
+type PaginationProps = {
+    startRecord: number;
+    endRecord: number;
+    hasValidSearchValues: boolean;
+    tabCount: number;
+    disabledLoadBackButton: boolean;
+    disabledLoadMoreButton: boolean;
+    loadBack: () => void;
+    loadMore: () => void;
+};
+declare const Pagination: ({ startRecord, endRecord, hasValidSearchValues, tabCount, disabledLoadBackButton, disabledLoadMoreButton, loadBack, loadMore, }: PaginationProps) => react_jsx_runtime.JSX.Element;
+
 interface PopConfirmProps {
     title: string;
     description?: string;
@@ -214,123 +478,111 @@ interface PopConfirmProps {
  */
 declare function PopConfirm({ title, description, children, onConfirm, onCancel, confirmText, cancelText, disabled, confirmVariant, confirmTestId, cancelTestId, side, align, }: PopConfirmProps): react_jsx_runtime.JSX.Element;
 
-type TypographyProps = HTMLAttributes<HTMLParagraphElement> & {
-    children: ReactNode;
+/**
+ * Props for the RangePicker component.
+ */
+interface IRangePickerProps {
+    /** Optional id used as data-testid on the trigger button. */
+    id?: string;
+    /** Placeholder text when no range is selected. */
+    placeholder: string;
+    /** Controlled ISO date string for range start (empty = no selection). */
+    fromValue?: string;
+    /** Controlled ISO date string for range end (empty = no selection). */
+    toValue?: string;
+    /** Callback when the range start changes (ISO string or empty). */
+    onFromChange?: (value: string) => void;
+    /** Callback when the range end changes (ISO string or empty). */
+    onToChange?: (value: string) => void;
+    /** Optional class names for the wrapper (width, layout). */
     className?: string;
-};
-declare function H1({ children, className, ...props }: TypographyProps): react_jsx_runtime.JSX.Element;
-declare function Muted({ children, className, ...props }: TypographyProps): react_jsx_runtime.JSX.Element;
-/**
- * Typography components for consistent text styling.
- *
- * @example
- * ```tsx
- * <Typography.H1>Main Title</Typography.H1>
- * <Typography.Muted>Subtitle text</Typography.Muted>
- * ```
- */
-declare const Typography: {
-    H1: typeof H1;
-    Muted: typeof Muted;
-};
-
-/**
- * A container for grouping related content.
- *
- * @example
- * ```tsx
- * <Card>
- *   <CardHeader>
- *     <CardTitle>Title</CardTitle>
- *   </CardHeader>
- *   <CardContent>Content</CardContent>
- * </Card>
- * ```
- */
-declare const Card: React$1.ForwardRefExoticComponent<React$1.HTMLAttributes<HTMLDivElement> & React$1.RefAttributes<HTMLDivElement>>;
-declare const CardHeader: React$1.ForwardRefExoticComponent<React$1.HTMLAttributes<HTMLDivElement> & React$1.RefAttributes<HTMLDivElement>>;
-declare const CardTitle: React$1.ForwardRefExoticComponent<React$1.HTMLAttributes<HTMLDivElement> & React$1.RefAttributes<HTMLDivElement>>;
-declare const CardDescription: React$1.ForwardRefExoticComponent<React$1.HTMLAttributes<HTMLDivElement> & React$1.RefAttributes<HTMLDivElement>>;
-declare const CardContent: React$1.ForwardRefExoticComponent<React$1.HTMLAttributes<HTMLDivElement> & React$1.RefAttributes<HTMLDivElement>>;
-declare const CardFooter: React$1.ForwardRefExoticComponent<React$1.HTMLAttributes<HTMLDivElement> & React$1.RefAttributes<HTMLDivElement>>;
-
-/**
- * A Card component system for displaying content in boxes.
- *
- * @example
- * ```tsx
- * <Card.Root>
- *   <Card.Header>
- *     <Card.Title>Card Title</Card.Title>
- *     <Card.Description>Card Description</Card.Description>
- *   </Card.Header>
- *   <Card.Content>
- *     <p>Card Content</p>
- *   </Card.Content>
- * </Card.Root>
- * ```
- */
-declare const PumpwoodCard: {
-    Root: React$1.ForwardRefExoticComponent<React$1.HTMLAttributes<HTMLDivElement> & React$1.RefAttributes<HTMLDivElement>>;
-    Content: React$1.ForwardRefExoticComponent<React$1.HTMLAttributes<HTMLDivElement> & React$1.RefAttributes<HTMLDivElement>>;
-    Header: React$1.ForwardRefExoticComponent<React$1.HTMLAttributes<HTMLDivElement> & React$1.RefAttributes<HTMLDivElement>>;
-    Title: React$1.ForwardRefExoticComponent<React$1.HTMLAttributes<HTMLDivElement> & React$1.RefAttributes<HTMLDivElement>>;
-    Description: React$1.ForwardRefExoticComponent<React$1.HTMLAttributes<HTMLDivElement> & React$1.RefAttributes<HTMLDivElement>>;
-};
-
-declare const badgeVariants: (props?: ({
-    variant?: "default" | "destructive" | "outline" | "secondary" | "success" | "warning" | "info" | null | undefined;
-} & class_variance_authority_types.ClassProp) | undefined) => string;
-interface BadgeProps extends React$1.HTMLAttributes<HTMLDivElement>, VariantProps<typeof badgeVariants> {
+    /** Display format for selected dates. */
+    dateFormat?: string;
 }
 /**
- * Displays a badge or a component that looks like a badge.
+ * A date range picker with a single calendar for selecting start and end dates.
  *
  * @example
  * ```tsx
- * <Badge>Default</Badge>
- * <Badge variant="secondary">Secondary</Badge>
- * ```
- */
-declare function Badge({ className, variant, ...props }: BadgeProps): react_jsx_runtime.JSX.Element;
-
-declare const pumpwoodBadgeVariants: (props?: ({
-    variant?: "destructive" | "secondary" | "warning" | "primary" | "muted" | null | undefined;
-    size?: "default" | "sm" | "lg" | null | undefined;
-} & class_variance_authority_types.ClassProp) | undefined) => string;
-interface PumpwoodBadgeProps extends React.HTMLAttributes<HTMLDivElement>, VariantProps<typeof pumpwoodBadgeVariants> {
-}
-/**
- * A Badge component for status indicators and labels.
- *
- * @example
- * ```tsx
- * <Badge variant="primary">New</Badge>
- * <Badge variant="destructive" size="sm">Error</Badge>
- * ```
- */
-declare function PumpwoodBadge({ className, variant, size, ...props }: PumpwoodBadgeProps): React.JSX.Element;
-
-interface FileDropzoneProps {
-    onFileSelected: (file: File) => void;
-    onFileDeleted?: () => void;
-    acceptExtensions?: string[];
-    accept?: Accept;
-    maxSizeMB?: number;
-}
-/**
- * A specialized file dropzone with built-in preview and validation.
- *
- * @example
- * ```tsx
- * <FileDropzone
- *   onFileSelected={(file) => console.log(file)}
- *   maxSizeMB={5}
- *   acceptExtensions={['.pdf', '.docx']}
+ * <RangePicker
+ *   placeholder="Selecione o período"
+ *   fromValue={filters.lastUpdateAtFrom}
+ *   toValue={filters.lastUpdateAtTo}
+ *   onFromChange={(value) => onFilterChange("lastUpdateAtFrom", value)}
+ *   onToChange={(value) => onFilterChange("lastUpdateAtTo", value)}
  * />
  * ```
  */
-declare function FileDropzone({ onFileSelected, onFileDeleted, acceptExtensions, accept, maxSizeMB, }: FileDropzoneProps): react_jsx_runtime.JSX.Element;
+declare const RangePicker: ({ id, placeholder, fromValue, toValue, onFromChange, onToChange, className, dateFormat, }: IRangePickerProps) => react_jsx_runtime.JSX.Element;
+
+type Option = {
+    value: string;
+    label: string;
+};
+type SharedSelectProps = {
+    /** Optional id used as data-testid on the trigger. */
+    id?: string;
+    /** Optional class names for the select wrapper (width, layout). */
+    className?: string;
+};
+/**
+ * Props for the static (default) Select variant.
+ */
+interface IStaticSelectProps extends SharedSelectProps {
+    variant?: "static";
+    /** Placeholder text when no value is selected. */
+    placeholder: string;
+    /** Static options with value and label. */
+    options: Option[];
+    /** Controlled selected value. */
+    value?: string;
+    /** Callback when the selected value changes. */
+    onValueChange?: (value: string) => void;
+    /** Marks the field as required in HTML forms. */
+    required?: boolean;
+    /** Name attribute for HTML form submission. */
+    name?: string;
+}
+/**
+ * Props for the FK variant of Select.
+ */
+interface ISelectFKProps extends IFKSelectProps$1 {
+    variant: "fk";
+}
+/**
+ * Props for the Select component (static or FK variant).
+ */
+type ISelectProps = IStaticSelectProps | ISelectFKProps;
+/**
+ * A reusable dropdown component built with shadcn/ui.
+ *
+ * Supports a static variant (Radix Select) and an FK variant (async
+ * Combobox) for foreign-key fields.
+ *
+ * @example
+ * ```tsx
+ * <Select
+ *   placeholder="Choose an option"
+ *   options={[
+ *     { value: "a", label: "Option A" },
+ *     { value: "b", label: "Option B" },
+ *   ]}
+ *   value={selected}
+ *   onValueChange={setSelected}
+ * />
+ *
+ * <Select
+ *   variant="fk"
+ *   fetcher={fetchUsers}
+ *   modelClass="user"
+ *   labelName="username"
+ *   placeholder="Select user"
+ *   value={userId}
+ *   onChange={(id, item) => setUserId(id)}
+ * />
+ * ```
+ */
+declare const Select$1: (props: ISelectProps) => react_jsx_runtime.JSX.Element;
 
 interface IUseSidebarCollapseOptions {
     initialCollapsed?: boolean;
@@ -505,337 +757,32 @@ declare const Sidebar: {
     Action: typeof Action;
 };
 
-/**
- * A set of layered sections of content—known as tab panels—that are displayed one at a time.
- *
- * @example
- * ```tsx
- * <Tabs defaultValue="account">
- *   <TabsList>
- *     <TabsTrigger value="account">Account</TabsTrigger>
- *   </TabsList>
- *   <TabsContent value="account">Content</TabsContent>
- * </Tabs>
- * ```
- */
-declare const Tabs: React$1.ForwardRefExoticComponent<TabsPrimitive.TabsProps & React$1.RefAttributes<HTMLDivElement>>;
-declare const TabsList: React$1.ForwardRefExoticComponent<Omit<TabsPrimitive.TabsListProps & React$1.RefAttributes<HTMLDivElement>, "ref"> & React$1.RefAttributes<HTMLDivElement>>;
-declare const TabsTrigger: React$1.ForwardRefExoticComponent<Omit<TabsPrimitive.TabsTriggerProps & React$1.RefAttributes<HTMLButtonElement>, "ref"> & React$1.RefAttributes<HTMLButtonElement>>;
-declare const TabsContent: React$1.ForwardRefExoticComponent<Omit<TabsPrimitive.TabsContentProps & React$1.RefAttributes<HTMLDivElement>, "ref"> & React$1.RefAttributes<HTMLDivElement>>;
-
-declare const Accordion: React$1.ForwardRefExoticComponent<(AccordionPrimitive.AccordionSingleProps | AccordionPrimitive.AccordionMultipleProps) & React$1.RefAttributes<HTMLDivElement>>;
-declare const AccordionItem: React$1.ForwardRefExoticComponent<Omit<AccordionPrimitive.AccordionItemProps & React$1.RefAttributes<HTMLDivElement>, "ref"> & React$1.RefAttributes<HTMLDivElement>>;
-declare const AccordionTrigger: React$1.ForwardRefExoticComponent<Omit<AccordionPrimitive.AccordionTriggerProps & React$1.RefAttributes<HTMLButtonElement>, "ref"> & React$1.RefAttributes<HTMLButtonElement>>;
-declare const AccordionContent: React$1.ForwardRefExoticComponent<Omit<AccordionPrimitive.AccordionContentProps & React$1.RefAttributes<HTMLDivElement>, "ref"> & React$1.RefAttributes<HTMLDivElement>>;
-
-/**
- * A placeholder component for empty states.
- *
- * @example
- * ```tsx
- * <Empty>
- *   <EmptyHeader>
- *     <EmptyTitle>No data</EmptyTitle>
- *   </EmptyHeader>
- * </Empty>
- * ```
- */
-declare function Empty({ className, ...props }: React.ComponentProps<"div">): react_jsx_runtime.JSX.Element;
-declare function EmptyHeader({ className, ...props }: React.ComponentProps<"div">): react_jsx_runtime.JSX.Element;
-declare const emptyMediaVariants: (props?: ({
-    variant?: "default" | "icon" | null | undefined;
-} & class_variance_authority_types.ClassProp) | undefined) => string;
-declare function EmptyMedia({ className, variant, ...props }: React.ComponentProps<"div"> & VariantProps<typeof emptyMediaVariants>): react_jsx_runtime.JSX.Element;
-declare function EmptyTitle({ className, ...props }: React.ComponentProps<"div">): react_jsx_runtime.JSX.Element;
-declare function EmptyDescription({ className, ...props }: React.ComponentProps<"p">): react_jsx_runtime.JSX.Element;
-declare function EmptyContent({ className, ...props }: React.ComponentProps<"div">): react_jsx_runtime.JSX.Element;
-
-interface EmptyContainerProps {
-    title: string;
-    description: string;
-}
-/**
- * A container to display an empty state.
- *
- * @example
- * ```tsx
- * <EmptyContainer
- *   title="No Data"
- *   description="There are no items to display at this time."
- * />
- * ```
- */
-declare function EmptyContainer({ title, description }: EmptyContainerProps): react_jsx_runtime.JSX.Element;
-
-/**
- * Parameters passed to the FK fetcher function.
- */
-type FKFetcherParams = {
-    search: string;
-    modelClass: string;
-    labelName: string;
-    additionalFilters?: Record<string, any>;
-    fields?: string[];
-    limit?: number;
-    offset?: number;
-};
-/**
- * Props for the FKSelect component.
- */
-interface IFKSelectProps {
-    /** Optional id used as data-testid on the trigger. */
-    id?: string;
-    /** Function to fetch data from the API. */
-    fetcher: (params: FKFetcherParams) => Promise<any[]>;
-    /** Optional function to resolve a value not present in the list. */
-    resolveValue?: (params: {
-        modelClass: string;
-        value: string | number;
-    }) => Promise<any>;
-    /** The model class name to identify the resource. */
-    modelClass: string;
-    /** The field name to use as the display label. */
-    labelName: string;
-    /** The field name to use as the value (ID). Defaults to 'pk'. */
-    valueField?: string;
-    /** Placeholder text for the search input. */
-    placeholder?: string;
-    /** Message to show when no items are found. */
-    emptyMessage?: string;
-    /** The currently selected value. */
-    value: string | number | null;
-    /** Callback when an item is selected. */
-    onChange: (value: string | number, item?: any) => void;
-    /** Additional filters to apply to the API request. */
-    additionalFilters?: Record<string, any>;
-    /** Extra fields to include in search. */
-    fields?: string[];
-    /** Optional class names for the wrapper (e.g. width overrides). */
-    className?: string;
-    /** Debounce time in ms. Defaults to 300. */
-    debounceWait?: number;
-}
-/**
- * A foreign key select component (async combobox).
- *
- * @example
- * ```tsx
- * <FKSelect
- *   fetcher={fetchData}
- *   modelClass="User"
- *   labelName="username"
- *   value={userId}
- *   onChange={setUserId}
- * />
- * ```
- */
-declare const FKSelect: ({ id, fetcher, resolveValue, modelClass, labelName, valueField, placeholder, emptyMessage, value, onChange, additionalFilters, fields, className, debounceWait, }: IFKSelectProps) => react_jsx_runtime.JSX.Element;
-
-type Option = {
-    value: string;
-    label: string;
-};
-type SharedSelectProps = {
-    /** Optional id used as data-testid on the trigger. */
-    id?: string;
-    /** Optional class names for the select wrapper (width, layout). */
+type StackProps = HTMLAttributes<HTMLDivElement> & {
+    children: ReactNode;
+    /** The direction of the stack. Defaults to 'col'. */
+    direction?: "row" | "col";
+    /** The gap between elements. Maps to Tailwind gap utility (e.g. 4 -> gap-4). */
+    gap?: number;
+    /** Click handler. When set, the stack becomes keyboard-accessible (role="button"). */
+    onClick?: () => void;
     className?: string;
 };
 /**
- * Props for the static (default) Select variant.
- */
-interface IStaticSelectProps extends SharedSelectProps {
-    variant?: "static";
-    /** Placeholder text when no value is selected. */
-    placeholder: string;
-    /** Static options with value and label. */
-    options: Option[];
-    /** Controlled selected value. */
-    value?: string;
-    /** Callback when the selected value changes. */
-    onValueChange?: (value: string) => void;
-    /** Marks the field as required in HTML forms. */
-    required?: boolean;
-    /** Name attribute for HTML form submission. */
-    name?: string;
-}
-/**
- * Props for the FK variant of Select.
- */
-interface ISelectFKProps extends IFKSelectProps$1 {
-    variant: "fk";
-}
-/**
- * Props for the Select component (static or FK variant).
- */
-type ISelectProps = IStaticSelectProps | ISelectFKProps;
-/**
- * A reusable dropdown component built with shadcn/ui.
+ * A layout component that arranges children in a stack (vertical or horizontal).
  *
- * Supports a static variant (Radix Select) and an FK variant (async
- * Combobox) for foreign-key fields.
+ * When `onClick` is provided, the stack receives `role="button"`, `tabIndex={0}`,
+ * and responds to Enter and Space keys. Provide visible text or pass `aria-label`
+ * via props for accessibility.
  *
  * @example
  * ```tsx
- * <Select
- *   placeholder="Choose an option"
- *   options={[
- *     { value: "a", label: "Option A" },
- *     { value: "b", label: "Option B" },
- *   ]}
- *   value={selected}
- *   onValueChange={setSelected}
- * />
- *
- * <Select
- *   variant="fk"
- *   fetcher={fetchUsers}
- *   modelClass="user"
- *   labelName="username"
- *   placeholder="Select user"
- *   value={userId}
- *   onChange={(id, item) => setUserId(id)}
- * />
+ * <Stack direction="row" gap={4}>
+ *   <Button>Btn 1</Button>
+ *   <Button>Btn 2</Button>
+ * </Stack>
  * ```
  */
-declare const Select$1: (props: ISelectProps) => react_jsx_runtime.JSX.Element;
-
-/**
- * Props for the DatePicker component.
- */
-interface IDatePickerProps {
-    /** Optional id used as data-testid on the trigger button. */
-    id?: string;
-    /** Placeholder text when no date is selected. */
-    placeholder: string;
-    /** Controlled ISO date string (empty = no selection). */
-    value?: string;
-    /** Callback when the selected date changes (ISO string or empty). */
-    onValueChange?: (value: string) => void;
-    /** Optional class names for the wrapper (width, layout). */
-    className?: string;
-    /** Day boundary when serializing to ISO. */
-    boundary?: "start" | "end";
-    /** Display format for the selected date. */
-    dateFormat?: string;
-}
-/**
- * A reusable date picker built with shadcn/ui.
- *
- * @example
- * ```tsx
- * <DatePicker
- *   placeholder="Data inicial"
- *   boundary="start"
- *   value={filters.created_at__gte}
- *   onValueChange={(value) =>
- *     onFiltersChange({ target: "created_at__gte", value })
- *   }
- * />
- * ```
- */
-declare const DatePicker: ({ id, placeholder, value, onValueChange, className, boundary, dateFormat, }: IDatePickerProps) => react_jsx_runtime.JSX.Element;
-
-/**
- * Props for the RangePicker component.
- */
-interface IRangePickerProps {
-    /** Optional id used as data-testid on the trigger button. */
-    id?: string;
-    /** Placeholder text when no range is selected. */
-    placeholder: string;
-    /** Controlled ISO date string for range start (empty = no selection). */
-    fromValue?: string;
-    /** Controlled ISO date string for range end (empty = no selection). */
-    toValue?: string;
-    /** Callback when the range start changes (ISO string or empty). */
-    onFromChange?: (value: string) => void;
-    /** Callback when the range end changes (ISO string or empty). */
-    onToChange?: (value: string) => void;
-    /** Optional class names for the wrapper (width, layout). */
-    className?: string;
-    /** Display format for selected dates. */
-    dateFormat?: string;
-}
-/**
- * A date range picker with a single calendar for selecting start and end dates.
- *
- * @example
- * ```tsx
- * <RangePicker
- *   placeholder="Selecione o período"
- *   fromValue={filters.lastUpdateAtFrom}
- *   toValue={filters.lastUpdateAtTo}
- *   onFromChange={(value) => onFilterChange("lastUpdateAtFrom", value)}
- *   onToChange={(value) => onFilterChange("lastUpdateAtTo", value)}
- * />
- * ```
- */
-declare const RangePicker: ({ id, placeholder, fromValue, toValue, onFromChange, onToChange, className, dateFormat, }: IRangePickerProps) => react_jsx_runtime.JSX.Element;
-
-/**
- * A calendar component for date selection.
- *
- * @example
- * ```tsx
- * <Calendar
- *   mode="single"
- *   selected={date}
- *   onSelect={setDate}
- *   className="rounded-md border"
- * />
- * ```
- */
-declare function Calendar({ className, classNames, showOutsideDays, captionLayout, buttonVariant, formatters, components, ...props }: React$1.ComponentProps<typeof DayPicker> & {
-    buttonVariant?: React$1.ComponentProps<typeof Button$1>["variant"];
-}): react_jsx_runtime.JSX.Element;
-
-/**
- * A popover component for displaying rich content in a portal.
- *
- * @example
- * ```tsx
- * <Popover>
- *   <PopoverTrigger>Open</PopoverTrigger>
- *   <PopoverContent>Content</PopoverContent>
- * </Popover>
- * ```
- */
-declare const Popover: React$1.FC<PopoverPrimitive.PopoverProps>;
-declare const PopoverTrigger: React$1.ForwardRefExoticComponent<PopoverPrimitive.PopoverTriggerProps & React$1.RefAttributes<HTMLButtonElement>>;
-declare const PopoverContent: React$1.ForwardRefExoticComponent<Omit<PopoverPrimitive.PopoverContentProps & React$1.RefAttributes<HTMLDivElement>, "ref"> & React$1.RefAttributes<HTMLDivElement>>;
-
-interface ComboboxItem {
-    value: any;
-    label: string;
-}
-interface GenericComboboxProps extends Omit<React$1.ComponentPropsWithoutRef<"div">, "onChange"> {
-    items: ComboboxItem[];
-    value: string | null;
-    onChange: (value: string, item: ComboboxItem | null) => void;
-    placeholder?: string;
-    emptyMessage?: string;
-    className?: string;
-    searchPlaceholder?: string;
-    onSearchChange?: (search: string) => void;
-    filterLocally?: boolean;
-    loading?: boolean;
-    displayLabel?: string;
-    disabled?: boolean;
-}
-/**
- * A searchable select component (Combobox).
- *
- * @example
- * ```tsx
- * <Combobox
- *   items={[{ value: '1', label: 'Option 1' }]}
- *   value={selectedValue}
- *   onChange={setSelectedValue}
- * />
- * ```
- */
-declare function Combobox({ items, value, onChange, placeholder, emptyMessage, className, searchPlaceholder, onSearchChange, filterLocally, loading, displayLabel, disabled, }: GenericComboboxProps): react_jsx_runtime.JSX.Element;
+declare function Stack({ children, onClick, direction, gap, className, ...props }: StackProps): react_jsx_runtime.JSX.Element;
 
 /**
  * Column definition for Table.
@@ -955,61 +902,57 @@ interface ITableSkeletonProps {
  */
 declare function TableSkeleton({ columns, rows, }: ITableSkeletonProps): react_jsx_runtime.JSX.Element;
 
-interface INoResultProps {
-    /** Title shown in the empty state. */
-    title?: string;
-    /** Description shown in the empty state. */
-    description?: string;
+interface ITagItem {
+    key: string;
+    value: string;
 }
-/**
- * Default empty state for tables and lists with no data.
- *
- * @example
- * ```tsx
- * <NoResult />
- * ```
- */
-declare function NoResult({ title, description, }: INoResultProps): react_jsx_runtime.JSX.Element;
+interface ITagInputProps {
+    value: ITagItem[];
+    onChange: (tags: ITagItem[]) => void;
+    keyPlaceholder?: string;
+    valuePlaceholder?: string;
+    disabled?: boolean;
+}
+declare function TagInput({ value, onChange, keyPlaceholder, valuePlaceholder, disabled, }: ITagInputProps): react_jsx_runtime.JSX.Element;
 
+type TypographyProps = HTMLAttributes<HTMLParagraphElement> & {
+    children: ReactNode;
+    className?: string;
+};
+declare function H1({ children, className, ...props }: TypographyProps): react_jsx_runtime.JSX.Element;
+declare function Muted({ children, className, ...props }: TypographyProps): react_jsx_runtime.JSX.Element;
 /**
- * A placeholder skeleton with pulse animation.
+ * Typography components for consistent text styling.
  *
  * @example
  * ```tsx
- * <Skeleton className="h-4 w-[200px]" />
+ * <Typography.H1>Main Title</Typography.H1>
+ * <Typography.Muted>Subtitle text</Typography.Muted>
  * ```
  */
-declare function Skeleton({ className, ...props }: React$1.HTMLAttributes<HTMLDivElement>): react_jsx_runtime.JSX.Element;
+declare const Typography: {
+    H1: typeof H1;
+    Muted: typeof Muted;
+};
 
-/**
- * A modal dialog component.
- *
- * @example
- * ```tsx
- * <Dialog>
- *   <DialogTrigger>Open</DialogTrigger>
- *   <DialogContent>
- *     <DialogTitle>Title</DialogTitle>
- *     <DialogDescription>Desc</DialogDescription>
- *   </DialogContent>
- * </Dialog>
- * ```
- */
-declare const Dialog: React$1.FC<DialogPrimitive.DialogProps>;
-declare const DialogTrigger: React$1.ForwardRefExoticComponent<DialogPrimitive.DialogTriggerProps & React$1.RefAttributes<HTMLButtonElement>>;
-declare const DialogContent: React$1.ForwardRefExoticComponent<Omit<DialogPrimitive.DialogContentProps & React$1.RefAttributes<HTMLDivElement>, "ref"> & {
-    showCloseButton?: boolean;
-} & React$1.RefAttributes<HTMLDivElement>>;
-declare const DialogHeader: {
-    ({ className, ...props }: React$1.HTMLAttributes<HTMLDivElement>): react_jsx_runtime.JSX.Element;
-    displayName: string;
+type TooltipComponentProps = {
+    trigger: React.ReactNode;
+    children: React.ReactNode;
+    className?: string;
+    triggerClassName?: string;
 };
-declare const DialogFooter: {
-    ({ className, ...props }: React$1.HTMLAttributes<HTMLDivElement>): react_jsx_runtime.JSX.Element;
-    displayName: string;
-};
-declare const DialogTitle: React$1.ForwardRefExoticComponent<Omit<DialogPrimitive.DialogTitleProps & React$1.RefAttributes<HTMLHeadingElement>, "ref"> & React$1.RefAttributes<HTMLHeadingElement>>;
-declare const DialogDescription: React$1.ForwardRefExoticComponent<Omit<DialogPrimitive.DialogDescriptionProps & React$1.RefAttributes<HTMLParagraphElement>, "ref"> & React$1.RefAttributes<HTMLParagraphElement>>;
+declare const TooltipComponent: ({ triggerClassName, className, trigger, children, }: TooltipComponentProps) => react_jsx_runtime.JSX.Element;
+
+declare const Accordion: React$1.ForwardRefExoticComponent<(AccordionPrimitive.AccordionSingleProps | AccordionPrimitive.AccordionMultipleProps) & React$1.RefAttributes<HTMLDivElement>>;
+declare const AccordionItem: React$1.ForwardRefExoticComponent<Omit<AccordionPrimitive.AccordionItemProps & React$1.RefAttributes<HTMLDivElement>, "ref"> & React$1.RefAttributes<HTMLDivElement>>;
+declare const AccordionTrigger: React$1.ForwardRefExoticComponent<Omit<AccordionPrimitive.AccordionTriggerProps & React$1.RefAttributes<HTMLButtonElement>, "ref"> & React$1.RefAttributes<HTMLButtonElement>>;
+declare const AccordionContent: React$1.ForwardRefExoticComponent<Omit<AccordionPrimitive.AccordionContentProps & React$1.RefAttributes<HTMLDivElement>, "ref"> & React$1.RefAttributes<HTMLDivElement>>;
+
+declare const Alert: React$1.ForwardRefExoticComponent<React$1.HTMLAttributes<HTMLDivElement> & VariantProps<(props?: ({
+    variant?: "default" | "destructive" | null | undefined;
+} & class_variance_authority_types.ClassProp) | undefined) => string> & React$1.RefAttributes<HTMLDivElement>>;
+declare const AlertTitle: React$1.ForwardRefExoticComponent<React$1.HTMLAttributes<HTMLHeadingElement> & React$1.RefAttributes<HTMLParagraphElement>>;
+declare const AlertDescription: React$1.ForwardRefExoticComponent<React$1.HTMLAttributes<HTMLParagraphElement> & React$1.RefAttributes<HTMLParagraphElement>>;
 
 /**
  * A modal dialog that interrupts the user with important content and expects a response.
@@ -1042,6 +985,137 @@ declare function AlertDialogDescription({ className, ...props }: React$1.Compone
 declare function AlertDialogAction({ className, ...props }: React$1.ComponentProps<typeof AlertDialogPrimitive.Action>): react_jsx_runtime.JSX.Element;
 declare function AlertDialogCancel({ className, ...props }: React$1.ComponentProps<typeof AlertDialogPrimitive.Cancel>): react_jsx_runtime.JSX.Element;
 
+declare const badgeVariants: (props?: ({
+    variant?: "default" | "destructive" | "secondary" | "warning" | "outline" | "success" | "info" | null | undefined;
+} & class_variance_authority_types.ClassProp) | undefined) => string;
+interface BadgeProps extends React$1.HTMLAttributes<HTMLDivElement>, VariantProps<typeof badgeVariants> {
+}
+/**
+ * Displays a badge or a component that looks like a badge.
+ *
+ * @example
+ * ```tsx
+ * <Badge>Default</Badge>
+ * <Badge variant="secondary">Secondary</Badge>
+ * ```
+ */
+declare function Badge({ className, variant, ...props }: BadgeProps): react_jsx_runtime.JSX.Element;
+
+declare function Breadcrumb({ ...props }: React$1.ComponentProps<"nav">): react_jsx_runtime.JSX.Element;
+declare function BreadcrumbList({ className, ...props }: React$1.ComponentProps<"ol">): react_jsx_runtime.JSX.Element;
+declare function BreadcrumbItem({ className, ...props }: React$1.ComponentProps<"li">): react_jsx_runtime.JSX.Element;
+declare function BreadcrumbLink({ asChild, className, ...props }: React$1.ComponentProps<"a"> & {
+    asChild?: boolean;
+}): react_jsx_runtime.JSX.Element;
+declare function BreadcrumbPage({ className, ...props }: React$1.ComponentProps<"span">): react_jsx_runtime.JSX.Element;
+declare function BreadcrumbSeparator({ children, className, ...props }: React$1.ComponentProps<"li">): react_jsx_runtime.JSX.Element;
+declare function BreadcrumbEllipsis({ className, ...props }: React$1.ComponentProps<"span">): react_jsx_runtime.JSX.Element;
+
+declare const buttonVariants: (props?: ({
+    variant?: "link" | "default" | "destructive" | "secondary" | "outline" | "ghost" | null | undefined;
+    size?: "default" | "icon" | "sm" | "lg" | "icon-sm" | "icon-lg" | null | undefined;
+} & class_variance_authority_types.ClassProp) | undefined) => string;
+interface ButtonProps extends React$1.ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof buttonVariants> {
+    asChild?: boolean;
+    icon?: React$1.ReactNode;
+    label?: React$1.ReactNode;
+    iconPosition?: "start" | "end";
+    /** Button height in pixels or any valid CSS length. */
+    height?: number | string;
+    /** Button width in pixels or any valid CSS length. */
+    width?: number | string;
+}
+/**
+ * Displays a button or a component that looks like a button.
+ *
+ * @example
+ * ```tsx
+ * <Button variant="default">Click me</Button>
+ * <Button variant="outline" size="sm">Action</Button>
+ * <Button
+ *   label="Criar novo lote"
+ *   icon={<SquarePlus size={16} />}
+ *   width={200}
+ * />
+ * ```
+ */
+declare const Button: React$1.ForwardRefExoticComponent<ButtonProps & React$1.RefAttributes<HTMLButtonElement>>;
+
+/**
+ * A calendar component for date selection.
+ *
+ * @example
+ * ```tsx
+ * <Calendar
+ *   mode="single"
+ *   selected={date}
+ *   onSelect={setDate}
+ *   className="rounded-md border"
+ * />
+ * ```
+ */
+declare function Calendar({ className, classNames, showOutsideDays, captionLayout, buttonVariant, formatters, components, ...props }: React$1.ComponentProps<typeof DayPicker> & {
+    buttonVariant?: React$1.ComponentProps<typeof Button$1>["variant"];
+}): react_jsx_runtime.JSX.Element;
+
+/**
+ * A container for grouping related content.
+ *
+ * @example
+ * ```tsx
+ * <Card>
+ *   <CardHeader>
+ *     <CardTitle>Title</CardTitle>
+ *   </CardHeader>
+ *   <CardContent>Content</CardContent>
+ * </Card>
+ * ```
+ */
+declare const Card: React$1.ForwardRefExoticComponent<React$1.HTMLAttributes<HTMLDivElement> & React$1.RefAttributes<HTMLDivElement>>;
+declare const CardHeader: React$1.ForwardRefExoticComponent<React$1.HTMLAttributes<HTMLDivElement> & React$1.RefAttributes<HTMLDivElement>>;
+declare const CardTitle: React$1.ForwardRefExoticComponent<React$1.HTMLAttributes<HTMLDivElement> & React$1.RefAttributes<HTMLDivElement>>;
+declare const CardDescription: React$1.ForwardRefExoticComponent<React$1.HTMLAttributes<HTMLDivElement> & React$1.RefAttributes<HTMLDivElement>>;
+declare const CardContent: React$1.ForwardRefExoticComponent<React$1.HTMLAttributes<HTMLDivElement> & React$1.RefAttributes<HTMLDivElement>>;
+declare const CardFooter: React$1.ForwardRefExoticComponent<React$1.HTMLAttributes<HTMLDivElement> & React$1.RefAttributes<HTMLDivElement>>;
+
+declare const Checkbox: React$1.ForwardRefExoticComponent<Omit<CheckboxPrimitive.CheckboxProps & React$1.RefAttributes<HTMLButtonElement>, "ref"> & React$1.RefAttributes<HTMLButtonElement>>;
+
+interface ComboboxItem {
+    value: any;
+    label: string;
+}
+interface GenericComboboxProps extends Omit<React$1.ComponentPropsWithoutRef<"div">, "onChange"> {
+    items: ComboboxItem[];
+    value: string | null;
+    onChange: (value: string, item: ComboboxItem | null) => void;
+    placeholder?: string;
+    emptyMessage?: string;
+    className?: string;
+    searchPlaceholder?: string;
+    onSearchChange?: (search: string) => void;
+    filterLocally?: boolean;
+    loading?: boolean;
+    loadingMore?: boolean;
+    hasMore?: boolean;
+    onEndReached?: () => void;
+    onOpenChange?: (open: boolean) => void;
+    displayLabel?: string;
+    disabled?: boolean;
+}
+/**
+ * A searchable select component (Combobox).
+ *
+ * @example
+ * ```tsx
+ * <Combobox
+ *   items={[{ value: '1', label: 'Option 1' }]}
+ *   value={selectedValue}
+ *   onChange={setSelectedValue}
+ * />
+ * ```
+ */
+declare function Combobox({ items, value, onChange, placeholder, emptyMessage, className, searchPlaceholder, onSearchChange, filterLocally, loading, loadingMore, hasMore, onEndReached, onOpenChange, displayLabel, disabled, }: GenericComboboxProps): react_jsx_runtime.JSX.Element;
+
 /**
  * A command palette component.
  *
@@ -1070,30 +1144,35 @@ declare function CommandSeparator({ className, ...props }: React$1.ComponentProp
 declare function CommandItem({ className, ...props }: React$1.ComponentProps<typeof Command$1.Item>): react_jsx_runtime.JSX.Element;
 declare function CommandShortcut({ className, ...props }: React$1.ComponentProps<"span">): react_jsx_runtime.JSX.Element;
 
-declare const Checkbox: React$1.ForwardRefExoticComponent<Omit<CheckboxPrimitive.CheckboxProps & React$1.RefAttributes<HTMLButtonElement>, "ref"> & React$1.RefAttributes<HTMLButtonElement>>;
-
-declare const Label: React$1.ForwardRefExoticComponent<Omit<LabelPrimitive.LabelProps & React$1.RefAttributes<HTMLLabelElement>, "ref"> & VariantProps<(props?: class_variance_authority_types.ClassProp | undefined) => string> & React$1.RefAttributes<HTMLLabelElement>>;
-
-declare const TooltipProvider: React$1.FC<TooltipPrimitive.TooltipProviderProps>;
-declare const Tooltip: React$1.FC<TooltipPrimitive.TooltipProps>;
-declare const TooltipTrigger: React$1.ForwardRefExoticComponent<TooltipPrimitive.TooltipTriggerProps & React$1.RefAttributes<HTMLButtonElement>>;
-declare const TooltipContent: React$1.ForwardRefExoticComponent<Omit<TooltipPrimitive.TooltipContentProps & React$1.RefAttributes<HTMLDivElement>, "ref"> & React$1.RefAttributes<HTMLDivElement>>;
-
-declare const Alert: React$1.ForwardRefExoticComponent<React$1.HTMLAttributes<HTMLDivElement> & VariantProps<(props?: ({
-    variant?: "default" | "destructive" | null | undefined;
-} & class_variance_authority_types.ClassProp) | undefined) => string> & React$1.RefAttributes<HTMLDivElement>>;
-declare const AlertTitle: React$1.ForwardRefExoticComponent<React$1.HTMLAttributes<HTMLHeadingElement> & React$1.RefAttributes<HTMLParagraphElement>>;
-declare const AlertDescription: React$1.ForwardRefExoticComponent<React$1.HTMLAttributes<HTMLParagraphElement> & React$1.RefAttributes<HTMLParagraphElement>>;
-
-declare function Breadcrumb({ ...props }: React$1.ComponentProps<"nav">): react_jsx_runtime.JSX.Element;
-declare function BreadcrumbList({ className, ...props }: React$1.ComponentProps<"ol">): react_jsx_runtime.JSX.Element;
-declare function BreadcrumbItem({ className, ...props }: React$1.ComponentProps<"li">): react_jsx_runtime.JSX.Element;
-declare function BreadcrumbLink({ asChild, className, ...props }: React$1.ComponentProps<"a"> & {
-    asChild?: boolean;
-}): react_jsx_runtime.JSX.Element;
-declare function BreadcrumbPage({ className, ...props }: React$1.ComponentProps<"span">): react_jsx_runtime.JSX.Element;
-declare function BreadcrumbSeparator({ children, className, ...props }: React$1.ComponentProps<"li">): react_jsx_runtime.JSX.Element;
-declare function BreadcrumbEllipsis({ className, ...props }: React$1.ComponentProps<"span">): react_jsx_runtime.JSX.Element;
+/**
+ * A modal dialog component.
+ *
+ * @example
+ * ```tsx
+ * <Dialog>
+ *   <DialogTrigger>Open</DialogTrigger>
+ *   <DialogContent>
+ *     <DialogTitle>Title</DialogTitle>
+ *     <DialogDescription>Desc</DialogDescription>
+ *   </DialogContent>
+ * </Dialog>
+ * ```
+ */
+declare const Dialog: React$1.FC<DialogPrimitive.DialogProps>;
+declare const DialogTrigger: React$1.ForwardRefExoticComponent<DialogPrimitive.DialogTriggerProps & React$1.RefAttributes<HTMLButtonElement>>;
+declare const DialogContent: React$1.ForwardRefExoticComponent<Omit<DialogPrimitive.DialogContentProps & React$1.RefAttributes<HTMLDivElement>, "ref"> & {
+    showCloseButton?: boolean;
+} & React$1.RefAttributes<HTMLDivElement>>;
+declare const DialogHeader: {
+    ({ className, ...props }: React$1.HTMLAttributes<HTMLDivElement>): react_jsx_runtime.JSX.Element;
+    displayName: string;
+};
+declare const DialogFooter: {
+    ({ className, ...props }: React$1.HTMLAttributes<HTMLDivElement>): react_jsx_runtime.JSX.Element;
+    displayName: string;
+};
+declare const DialogTitle: React$1.ForwardRefExoticComponent<Omit<DialogPrimitive.DialogTitleProps & React$1.RefAttributes<HTMLHeadingElement>, "ref"> & React$1.RefAttributes<HTMLHeadingElement>>;
+declare const DialogDescription: React$1.ForwardRefExoticComponent<Omit<DialogPrimitive.DialogDescriptionProps & React$1.RefAttributes<HTMLParagraphElement>, "ref"> & React$1.RefAttributes<HTMLParagraphElement>>;
 
 declare const DropdownMenu: React$1.FC<DropdownMenuPrimitive.DropdownMenuProps>;
 declare const DropdownMenuTrigger: React$1.ForwardRefExoticComponent<DropdownMenuPrimitive.DropdownMenuTriggerProps & React$1.RefAttributes<HTMLButtonElement>>;
@@ -1120,7 +1199,81 @@ declare const DropdownMenuShortcut: {
     displayName: string;
 };
 
+/**
+ * A placeholder component for empty states.
+ *
+ * @example
+ * ```tsx
+ * <Empty>
+ *   <EmptyHeader>
+ *     <EmptyTitle>No data</EmptyTitle>
+ *   </EmptyHeader>
+ * </Empty>
+ * ```
+ */
+declare function Empty({ className, ...props }: React.ComponentProps<"div">): react_jsx_runtime.JSX.Element;
+declare function EmptyHeader({ className, ...props }: React.ComponentProps<"div">): react_jsx_runtime.JSX.Element;
+declare const emptyMediaVariants: (props?: ({
+    variant?: "default" | "icon" | null | undefined;
+} & class_variance_authority_types.ClassProp) | undefined) => string;
+declare function EmptyMedia({ className, variant, ...props }: React.ComponentProps<"div"> & VariantProps<typeof emptyMediaVariants>): react_jsx_runtime.JSX.Element;
+declare function EmptyTitle({ className, ...props }: React.ComponentProps<"div">): react_jsx_runtime.JSX.Element;
+declare function EmptyDescription({ className, ...props }: React.ComponentProps<"p">): react_jsx_runtime.JSX.Element;
+declare function EmptyContent({ className, ...props }: React.ComponentProps<"div">): react_jsx_runtime.JSX.Element;
+
+interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+    icon?: ReactNode;
+}
+/**
+ * Displays a styled input field with optional leading icon.
+ *
+ * @example
+ * ```tsx
+ * <Input placeholder="Enter text..." />
+ * <Input icon={<Search className="h-4 w-4" />} placeholder="Search..." />
+ * ```
+ */
+declare const Input: React$1.ForwardRefExoticComponent<InputProps & React$1.RefAttributes<HTMLInputElement>>;
+
+declare const Label: React$1.ForwardRefExoticComponent<Omit<LabelPrimitive.LabelProps & React$1.RefAttributes<HTMLLabelElement>, "ref"> & VariantProps<(props?: class_variance_authority_types.ClassProp | undefined) => string> & React$1.RefAttributes<HTMLLabelElement>>;
+
+/**
+ * A popover component for displaying rich content in a portal.
+ *
+ * @example
+ * ```tsx
+ * <Popover>
+ *   <PopoverTrigger>Open</PopoverTrigger>
+ *   <PopoverContent>Content</PopoverContent>
+ * </Popover>
+ * ```
+ */
+declare const Popover: React$1.FC<PopoverPrimitive.PopoverProps>;
+declare const PopoverTrigger: React$1.ForwardRefExoticComponent<PopoverPrimitive.PopoverTriggerProps & React$1.RefAttributes<HTMLButtonElement>>;
+declare const PopoverContent: React$1.ForwardRefExoticComponent<Omit<PopoverPrimitive.PopoverContentProps & React$1.RefAttributes<HTMLDivElement>, "ref"> & React$1.RefAttributes<HTMLDivElement>>;
+
 declare const Radio: React$1.ForwardRefExoticComponent<Omit<React$1.DetailedHTMLProps<React$1.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>, "ref"> & React$1.RefAttributes<HTMLInputElement>>;
+
+declare const Select: React$1.FC<SelectPrimitive.SelectProps>;
+declare const SelectGroup: React$1.ForwardRefExoticComponent<SelectPrimitive.SelectGroupProps & React$1.RefAttributes<HTMLDivElement>>;
+declare const SelectValue: React$1.ForwardRefExoticComponent<SelectPrimitive.SelectValueProps & React$1.RefAttributes<HTMLSpanElement>>;
+declare const SelectTrigger: React$1.ForwardRefExoticComponent<Omit<SelectPrimitive.SelectTriggerProps & React$1.RefAttributes<HTMLButtonElement>, "ref"> & React$1.RefAttributes<HTMLButtonElement>>;
+declare const SelectScrollUpButton: React$1.ForwardRefExoticComponent<Omit<SelectPrimitive.SelectScrollUpButtonProps & React$1.RefAttributes<HTMLDivElement>, "ref"> & React$1.RefAttributes<HTMLDivElement>>;
+declare const SelectScrollDownButton: React$1.ForwardRefExoticComponent<Omit<SelectPrimitive.SelectScrollDownButtonProps & React$1.RefAttributes<HTMLDivElement>, "ref"> & React$1.RefAttributes<HTMLDivElement>>;
+declare const SelectContent: React$1.ForwardRefExoticComponent<Omit<SelectPrimitive.SelectContentProps & React$1.RefAttributes<HTMLDivElement>, "ref"> & React$1.RefAttributes<HTMLDivElement>>;
+declare const SelectLabel: React$1.ForwardRefExoticComponent<Omit<SelectPrimitive.SelectLabelProps & React$1.RefAttributes<HTMLDivElement>, "ref"> & React$1.RefAttributes<HTMLDivElement>>;
+declare const SelectItem: React$1.ForwardRefExoticComponent<Omit<SelectPrimitive.SelectItemProps & React$1.RefAttributes<HTMLDivElement>, "ref"> & React$1.RefAttributes<HTMLDivElement>>;
+declare const SelectSeparator: React$1.ForwardRefExoticComponent<Omit<SelectPrimitive.SelectSeparatorProps & React$1.RefAttributes<HTMLDivElement>, "ref"> & React$1.RefAttributes<HTMLDivElement>>;
+
+/**
+ * A placeholder skeleton with pulse animation.
+ *
+ * @example
+ * ```tsx
+ * <Skeleton className="h-4 w-[200px]" />
+ * ```
+ */
+declare function Skeleton({ className, ...props }: React$1.HTMLAttributes<HTMLDivElement>): react_jsx_runtime.JSX.Element;
 
 /**
  * Spinner component
@@ -1130,159 +1283,6 @@ declare const Radio: React$1.ForwardRefExoticComponent<Omit<React$1.DetailedHTML
 declare const Spinner: ({ size }: {
     size?: number;
 }) => react_jsx_runtime.JSX.Element;
-
-declare const ErrorMessage: ({ error }: {
-    error: FieldError | undefined;
-}) => react_jsx_runtime.JSX.Element;
-
-declare const ErrorToastContent: ({ message, error, }: {
-    message: string;
-    error: string;
-}) => react_jsx_runtime.JSX.Element;
-
-interface IAlertWithIconProps {
-    icon: ReactNode;
-    title: string;
-    description: string;
-    variant?: "default" | "destructive";
-    className?: string;
-}
-/**
- * Alert with icon, title and description.
- */
-declare function AlertWithIcon({ icon, title, description, variant, className, }: IAlertWithIconProps): react_jsx_runtime.JSX.Element;
-
-type DynamicListFn = (modelClass: string, filterDict: Record<string, unknown>, searchFields?: string[]) => Promise<[
-    Record<string, unknown>[] | null,
-    {
-        message: string;
-    } | null
-]>;
-type FKSelectFetcherParams = {
-    search: string;
-    modelClass: string;
-    labelName: string;
-    additionalFilters?: Record<string, unknown>;
-    fields?: string[];
-};
-type CreateFKSelectFetcherOptions = {
-    additionalFilters?: Record<string, unknown>;
-    fields?: string[];
-};
-/**
- * Fetches FK select options via an injected dynamicList function.
- */
-declare const fkSelectFetcher: (dynamicList: DynamicListFn, { search, modelClass, labelName, additionalFilters, fields, }: FKSelectFetcherParams) => Promise<Record<string, unknown>[]>;
-/**
- * Creates a stable fetcher function for FKSelect.
- */
-declare const createFKSelectFetcher: (dynamicList: DynamicListFn, labelName: string, options?: CreateFKSelectFetcherOptions) => (params: FKFetcherParams) => Promise<Record<string, unknown>[]>;
-
-interface IMarkdownEditorProps {
-    value: string;
-    onChange: (value: string) => void;
-    placeholder?: string;
-    error?: string;
-    disabled?: boolean;
-    className?: string;
-    /** Toast UI theme. Defaults to following the document `.dark` class. */
-    theme?: "light" | "dark";
-}
-/**
- * WYSIWYG markdown editor wrapper around Toast UI Editor.
- */
-declare function MarkdownEditor({ value, onChange, placeholder, error, disabled, className, theme, }: IMarkdownEditorProps): react_jsx_runtime.JSX.Element;
-
-declare function Loading(): react_jsx_runtime.JSX.Element;
-
-interface ErrorBoundaryProps {
-    children: ReactNode;
-    hasError: boolean;
-    message?: string;
-    className?: string;
-}
-declare const ErrorBoundary: ({ children, hasError, message, }: ErrorBoundaryProps) => react_jsx_runtime.JSX.Element;
-
-/**
- * DeleteDialog - Confirmation dialog component for delete documents.
- */
-declare const DeleteDialog: ({ openDialog, setOpenDialog, handleDelete, count, }: {
-    openDialog: boolean;
-    setOpenDialog: (value: boolean) => void;
-    handleDelete: () => void;
-    count?: number;
-}) => react_jsx_runtime.JSX.Element;
-
-declare const ClearButton: ({ handleClear }: {
-    handleClear: () => void;
-}) => react_jsx_runtime.JSX.Element;
-
-type TooltipComponentProps = {
-    trigger: React.ReactNode;
-    children: React.ReactNode;
-    className?: string;
-    triggerClassName?: string;
-};
-declare const TooltipComponent: ({ triggerClassName, className, trigger, children, }: TooltipComponentProps) => react_jsx_runtime.JSX.Element;
-
-type PaginationProps = {
-    startRecord: number;
-    endRecord: number;
-    hasValidSearchValues: boolean;
-    tabCount: number;
-    disabledLoadBackButton: boolean;
-    disabledLoadMoreButton: boolean;
-    loadBack: () => void;
-    loadMore: () => void;
-};
-declare const Pagination: ({ startRecord, endRecord, hasValidSearchValues, tabCount, disabledLoadBackButton, disabledLoadMoreButton, loadBack, loadMore, }: PaginationProps) => react_jsx_runtime.JSX.Element;
-
-interface ITagItem {
-    key: string;
-    value: string;
-}
-interface ITagInputProps {
-    value: ITagItem[];
-    onChange: (tags: ITagItem[]) => void;
-    keyPlaceholder?: string;
-    valuePlaceholder?: string;
-    disabled?: boolean;
-}
-declare function TagInput({ value, onChange, keyPlaceholder, valuePlaceholder, disabled, }: ITagInputProps): react_jsx_runtime.JSX.Element;
-
-type ExpectedFile = {
-    file: string;
-};
-type RetrieveFileFn = (modelClass: string, fileId: number) => Promise<[
-    {
-        data: number[];
-        contentType: string;
-    } | null,
-    {
-        message: string;
-    } | null
-]>;
-interface IDownloadButtonProps<T extends ExpectedFile> {
-    item: T;
-    propertyName: keyof T;
-    modelClass: string;
-    retrieveFile?: RetrieveFileFn;
-}
-declare const DownloadButton: <T extends ExpectedFile>({ item, modelClass, propertyName, retrieveFile, }: IDownloadButtonProps<T>) => react_jsx_runtime.JSX.Element;
-
-interface IMultiSelectOption {
-    label: string;
-    value: string;
-}
-interface IMultiSelectDropdownProps {
-    options: IMultiSelectOption[];
-    selected: string[];
-    onChange: (selected: string[]) => void;
-    placeholder?: string;
-    className?: string;
-    maxDisplay?: number;
-}
-declare function MultiSelectDropdown({ options, selected, onChange, placeholder, className, maxDisplay, }: IMultiSelectDropdownProps): react_jsx_runtime.JSX.Element;
 
 declare const Table: React$1.ForwardRefExoticComponent<React$1.HTMLAttributes<HTMLTableElement> & {
     /** When false, renders only the table element (no scroll wrapper). */
@@ -1296,16 +1296,30 @@ declare const TableHead: React$1.ForwardRefExoticComponent<React$1.ThHTMLAttribu
 declare const TableCell: React$1.ForwardRefExoticComponent<React$1.TdHTMLAttributes<HTMLTableCellElement> & React$1.RefAttributes<HTMLTableCellElement>>;
 declare const TableCaption: React$1.ForwardRefExoticComponent<React$1.HTMLAttributes<HTMLTableCaptionElement> & React$1.RefAttributes<HTMLTableCaptionElement>>;
 
-declare const Select: React$1.FC<SelectPrimitive.SelectProps>;
-declare const SelectGroup: React$1.ForwardRefExoticComponent<SelectPrimitive.SelectGroupProps & React$1.RefAttributes<HTMLDivElement>>;
-declare const SelectValue: React$1.ForwardRefExoticComponent<SelectPrimitive.SelectValueProps & React$1.RefAttributes<HTMLSpanElement>>;
-declare const SelectTrigger: React$1.ForwardRefExoticComponent<Omit<SelectPrimitive.SelectTriggerProps & React$1.RefAttributes<HTMLButtonElement>, "ref"> & React$1.RefAttributes<HTMLButtonElement>>;
-declare const SelectScrollUpButton: React$1.ForwardRefExoticComponent<Omit<SelectPrimitive.SelectScrollUpButtonProps & React$1.RefAttributes<HTMLDivElement>, "ref"> & React$1.RefAttributes<HTMLDivElement>>;
-declare const SelectScrollDownButton: React$1.ForwardRefExoticComponent<Omit<SelectPrimitive.SelectScrollDownButtonProps & React$1.RefAttributes<HTMLDivElement>, "ref"> & React$1.RefAttributes<HTMLDivElement>>;
-declare const SelectContent: React$1.ForwardRefExoticComponent<Omit<SelectPrimitive.SelectContentProps & React$1.RefAttributes<HTMLDivElement>, "ref"> & React$1.RefAttributes<HTMLDivElement>>;
-declare const SelectLabel: React$1.ForwardRefExoticComponent<Omit<SelectPrimitive.SelectLabelProps & React$1.RefAttributes<HTMLDivElement>, "ref"> & React$1.RefAttributes<HTMLDivElement>>;
-declare const SelectItem: React$1.ForwardRefExoticComponent<Omit<SelectPrimitive.SelectItemProps & React$1.RefAttributes<HTMLDivElement>, "ref"> & React$1.RefAttributes<HTMLDivElement>>;
-declare const SelectSeparator: React$1.ForwardRefExoticComponent<Omit<SelectPrimitive.SelectSeparatorProps & React$1.RefAttributes<HTMLDivElement>, "ref"> & React$1.RefAttributes<HTMLDivElement>>;
+/**
+ * A set of layered sections of content—known as tab panels—that are displayed one at a time.
+ *
+ * @example
+ * ```tsx
+ * <Tabs defaultValue="account">
+ *   <TabsList>
+ *     <TabsTrigger value="account">Account</TabsTrigger>
+ *   </TabsList>
+ *   <TabsContent value="account">Content</TabsContent>
+ * </Tabs>
+ * ```
+ */
+declare const Tabs: React$1.ForwardRefExoticComponent<TabsPrimitive.TabsProps & React$1.RefAttributes<HTMLDivElement>>;
+declare const TabsList: React$1.ForwardRefExoticComponent<Omit<TabsPrimitive.TabsListProps & React$1.RefAttributes<HTMLDivElement>, "ref"> & React$1.RefAttributes<HTMLDivElement>>;
+declare const TabsTrigger: React$1.ForwardRefExoticComponent<Omit<TabsPrimitive.TabsTriggerProps & React$1.RefAttributes<HTMLButtonElement>, "ref"> & React$1.RefAttributes<HTMLButtonElement>>;
+declare const TabsContent: React$1.ForwardRefExoticComponent<Omit<TabsPrimitive.TabsContentProps & React$1.RefAttributes<HTMLDivElement>, "ref"> & React$1.RefAttributes<HTMLDivElement>>;
+
+declare const Textarea: React$1.ForwardRefExoticComponent<Omit<React$1.DetailedHTMLProps<React$1.TextareaHTMLAttributes<HTMLTextAreaElement>, HTMLTextAreaElement>, "ref"> & React$1.RefAttributes<HTMLTextAreaElement>>;
+
+declare const TooltipProvider: React$1.FC<TooltipPrimitive.TooltipProviderProps>;
+declare const Tooltip: React$1.FC<TooltipPrimitive.TooltipProps>;
+declare const TooltipTrigger: React$1.ForwardRefExoticComponent<TooltipPrimitive.TooltipTriggerProps & React$1.RefAttributes<HTMLButtonElement>>;
+declare const TooltipContent: React$1.ForwardRefExoticComponent<Omit<TooltipPrimitive.TooltipContentProps & React$1.RefAttributes<HTMLDivElement>, "ref"> & React$1.RefAttributes<HTMLDivElement>>;
 
 export { Accordion, AccordionContent, AccordionItem, AccordionTrigger, Alert, AlertDescription, AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, AlertDialogPortal, AlertDialogTitle, AlertDialogTrigger, AlertTitle, AlertWithIcon, Badge, Breadcrumb, BreadcrumbEllipsis, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator, Button, Calendar, Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle, Checkbox, ClearButton, Combobox, Command, CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator, CommandShortcut, ConfirmationDialog, DatePicker, DeleteDialog, Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger, DownloadButton, DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuPortal, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger, PumpwoodDropzone as Dropzone, Empty, EmptyContainer, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle, ErrorBoundary, ErrorMessage, ErrorToastContent, FKSelect, FileDropzone, Input, Label, Loading, MarkdownEditor, MultiSelectDropdown, NoResult, Pagination, PopConfirm, Popover, PopoverContent, PopoverTrigger, PumpwoodBadge, PumpwoodCard, PumpwoodTable, Radio, RangePicker, Select$1 as Select, SelectContent, SelectGroup, SelectItem, SelectLabel, Select as SelectPrimitive, SelectScrollDownButton, SelectScrollUpButton, SelectSeparator, SelectTrigger, SelectValue, Sidebar, Skeleton, Spinner, Stack, Table$1 as Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, Table as TablePrimitive, TableRow, TableSkeleton, Tabs, TabsContent, TabsList, TabsTrigger, TagInput, Textarea, Tooltip, TooltipComponent, TooltipContent, TooltipProvider, TooltipTrigger, Typography, badgeVariants, createFKSelectFetcher, fkSelectFetcher, pumpwoodBadgeVariants, useSidebarCollapse };
-export type { ComboboxItem, CreateFKSelectFetcherOptions, DynamicListFn, FKFetcherParams, FKSelectFetcherParams, IAlertWithIconProps, IDatePickerProps, IFKSelectProps, IMarkdownEditorProps, IMultiSelectOption, IRangePickerProps, ISelectFKProps, ISelectProps, IStaticSelectProps, ITableColumn, ITableProps, ITagItem, IUseSidebarCollapseOptions, PopConfirmProps, RetrieveFileFn };
+export type { ComboboxItem, CreateFKSelectFetcherOptions, DynamicListFn, DynamicListPagination, FKFetcherPageResult, FKFetcherParams, FKFetcherReturn, FKSelectFetcherParams, IAlertWithIconProps, IDatePickerProps, IFKSelectProps, IMarkdownEditorProps, IMultiSelectOption, IRangePickerProps, ISelectFKProps, ISelectProps, IStaticSelectProps, ITableColumn, ITableProps, ITagItem, IUseSidebarCollapseOptions, PopConfirmProps, RetrieveFileFn };
