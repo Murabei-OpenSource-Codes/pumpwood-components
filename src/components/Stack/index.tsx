@@ -1,18 +1,23 @@
 "use client";
 
-import type { HTMLAttributes, KeyboardEvent, ReactNode } from "react";
+import {
+	forwardRef,
+	type HTMLAttributes,
+	type KeyboardEvent,
+	type ReactNode,
+} from "react";
 
 import { cn } from "@/lib/utils";
 
 type StackProps = HTMLAttributes<HTMLDivElement> & {
-    children: ReactNode;
-    /** The direction of the stack. Defaults to 'col'. */
-    direction?: "row" | "col";
-    /** The gap between elements. Maps to Tailwind gap utility (e.g. 4 -> gap-4). */
-    gap?: number;
-    /** Click handler. When set, the stack becomes keyboard-accessible (role="button"). */
-    onClick?: () => void;
-    className?: string;
+	children: ReactNode;
+	/** The direction of the stack. Defaults to 'col'. */
+	direction?: "row" | "col";
+	/** The gap between elements. Maps to Tailwind gap utility (e.g. 4 -> gap-4). */
+	gap?: number;
+	/** Click handler. When set, the stack becomes keyboard-accessible (role="button"). */
+	onClick?: () => void;
+	className?: string;
 };
 
 /**
@@ -30,39 +35,43 @@ type StackProps = HTMLAttributes<HTMLDivElement> & {
  * </Stack>
  * ```
  */
-function Stack({
-    children,
-    onClick,
-    direction,
-    gap,
-    className,
-    ...props
-}: StackProps) {
-    const baseGap = gap ? `gap-${gap}` : "gap-0";
-    const baseDirection = direction === "row" ? "flex flex-row" : "flex flex-col";
-    const baseStyle = `${baseDirection} ${baseGap}`;
+const Stack = forwardRef<HTMLDivElement, StackProps>(function Stack(
+	{ children, onClick, direction, gap, className, ...props },
+	ref,
+) {
+	const baseGap = gap ? `gap-${gap}` : "gap-0";
+	const baseDirection =
+		direction === "row" ? "flex flex-row" : "flex flex-col";
+	const baseStyle = `${baseDirection} ${baseGap}`;
 
-    const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
-        if (onClick && (event.key === "Enter" || event.key === " ")) {
-            event.preventDefault();
-            onClick();
-        }
-    };
+	const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+		if (onClick && (event.key === "Enter" || event.key === " ")) {
+			event.preventDefault();
+			onClick();
+		}
+	};
 
-    const interactiveProps = onClick
-        ? {
-                role: "button" as const,
-                tabIndex: 0,
-                onClick,
-                onKeyDown: handleKeyDown,
-            }
-        : {};
+	const interactiveProps = onClick
+		? {
+				role: "button" as const,
+				tabIndex: 0,
+				onClick,
+				onKeyDown: handleKeyDown,
+			}
+		: {};
 
-    return (
-        <div {...interactiveProps} className={cn(baseStyle, className)} {...props}>
-            {children}
-        </div>
-    );
-}
+	return (
+		<div
+			ref={ref}
+			{...interactiveProps}
+			className={cn(baseStyle, className)}
+			{...props}
+		>
+			{children}
+		</div>
+	);
+});
+
+Stack.displayName = "Stack";
 
 export default Stack;

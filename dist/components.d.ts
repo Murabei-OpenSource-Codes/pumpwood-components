@@ -757,16 +757,6 @@ declare const Sidebar: {
     Action: typeof Action;
 };
 
-type StackProps = HTMLAttributes<HTMLDivElement> & {
-    children: ReactNode;
-    /** The direction of the stack. Defaults to 'col'. */
-    direction?: "row" | "col";
-    /** The gap between elements. Maps to Tailwind gap utility (e.g. 4 -> gap-4). */
-    gap?: number;
-    /** Click handler. When set, the stack becomes keyboard-accessible (role="button"). */
-    onClick?: () => void;
-    className?: string;
-};
 /**
  * A layout component that arranges children in a stack (vertical or horizontal).
  *
@@ -782,7 +772,16 @@ type StackProps = HTMLAttributes<HTMLDivElement> & {
  * </Stack>
  * ```
  */
-declare function Stack({ children, onClick, direction, gap, className, ...props }: StackProps): react_jsx_runtime.JSX.Element;
+declare const Stack: React$1.ForwardRefExoticComponent<HTMLAttributes<HTMLDivElement> & {
+    children: ReactNode;
+    /** The direction of the stack. Defaults to 'col'. */
+    direction?: "row" | "col";
+    /** The gap between elements. Maps to Tailwind gap utility (e.g. 4 -> gap-4). */
+    gap?: number;
+    /** Click handler. When set, the stack becomes keyboard-accessible (role="button"). */
+    onClick?: () => void;
+    className?: string;
+} & React$1.RefAttributes<HTMLDivElement>>;
 
 /**
  * Column definition for Table.
