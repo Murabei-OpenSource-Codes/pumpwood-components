@@ -1,0 +1,13 @@
+import type { GeoJsonMapData, IGeoJsonFeature, IGeoJsonFeatureCollection, IGeoJsonGeometry, IGeoJsonMapPosition, IGeoJsonPointMarker } from "./types";
+export declare function isFiniteNumber(value: unknown): value is number;
+export declare function isLngLatPair(value: unknown): value is [number, number];
+export declare function getDefaultFeatureId(feature: IGeoJsonFeature, index: number): string;
+export declare function getFeatureLabel(feature: IGeoJsonFeature): string;
+export declare function collectLngLatPairs(value: unknown, pairs: [number, number][]): void;
+export declare function collectGeometryPositions(geometry: IGeoJsonGeometry | null): IGeoJsonMapPosition[];
+export declare function computeFeatureCollectionBbox(collection: IGeoJsonFeatureCollection): [[number, number], [number, number]] | null;
+export declare function hasPolygonOrLineGeometry(collection: IGeoJsonFeatureCollection): boolean;
+export declare function normalizeGeoJsonData(data: GeoJsonMapData): IGeoJsonFeatureCollection;
+export declare function withPromotedFeatureIds(collection: IGeoJsonFeatureCollection, getFeatureId: (feature: IGeoJsonFeature, index: number) => string): IGeoJsonFeatureCollection;
+export declare function extractPointMarkers(collection: IGeoJsonFeatureCollection, getFeatureId: (feature: IGeoJsonFeature, index: number) => string): IGeoJsonPointMarker[];
+export declare function resolvePopupPosition(feature: IGeoJsonFeature, fallback: IGeoJsonMapPosition | null): IGeoJsonMapPosition | null;

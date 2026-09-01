@@ -44,6 +44,19 @@ export {
 	MarkdownEditor,
 } from "./MarkdownEditor";
 export {
+	GeoJsonMap,
+	type GeoJsonGeometryType,
+	type GeoJsonMapData,
+	type GeoJsonMapStyle,
+	type IGeoJsonFeature,
+	type IGeoJsonFeatureCollection,
+	type IGeoJsonGeometry,
+	type IGeoJsonMapPosition,
+	type IGeoJsonMapProps,
+	type IGeoJsonMapViewState,
+	type IGeoJsonPointMarker,
+} from "./GeoJsonMap";
+export {
 	type IMultiSelectOption,
 	MultiSelectDropdown,
 } from "./MultiSelectDropdown";

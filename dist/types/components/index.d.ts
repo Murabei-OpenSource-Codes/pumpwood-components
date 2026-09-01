@@ -17,6 +17,7 @@ export { default as FileDropzone } from "./FileDropzone";
 export { type FKFetcherPageResult, type FKFetcherParams, type FKFetcherReturn, FKSelect, type IFKSelectProps, } from "./FKSelect";
 export { default as Loading } from "./Loading";
 export { type IMarkdownEditorProps, MarkdownEditor, } from "./MarkdownEditor";
+export { GeoJsonMap, type GeoJsonGeometryType, type GeoJsonMapData, type GeoJsonMapStyle, type IGeoJsonFeature, type IGeoJsonFeatureCollection, type IGeoJsonGeometry, type IGeoJsonMapPosition, type IGeoJsonMapProps, type IGeoJsonMapViewState, type IGeoJsonPointMarker, } from "./GeoJsonMap";
 export { type IMultiSelectOption, MultiSelectDropdown, } from "./MultiSelectDropdown";
 export { NoResult } from "./NoResult";
 export { Pagination } from "./Pagination";

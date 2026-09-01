@@ -32,6 +32,8 @@ const peerExternals = new Set([
 	"swr",
 	"@toast-ui/react-editor",
 	"@toast-ui/editor",
+	"maplibre-gl",
+	"react-map-gl",
 ]);
 
 function isPeerExternal(id) {
@@ -42,6 +44,12 @@ function isPeerExternal(id) {
 		return true;
 	}
 	if (id.startsWith("@toast-ui/")) {
+		return true;
+	}
+	if (id.startsWith("maplibre-gl")) {
+		return true;
+	}
+	if (id.startsWith("react-map-gl")) {
 		return true;
 	}
 	return false;
@@ -175,6 +183,12 @@ function createDtsConfig({ input, outputFile, externalComponents }) {
 		],
 		external: (id) => {
 			if (id === "react" || id === "react-dom" || id === "react/jsx-runtime") {
+				return true;
+			}
+			if (id === "maplibre-gl" || id.startsWith("maplibre-gl")) {
+				return true;
+			}
+			if (id === "react-map-gl" || id.startsWith("react-map-gl")) {
 				return true;
 			}
 			if (id === componentsEntry) {

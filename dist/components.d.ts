@@ -1,10 +1,11 @@
 import * as react_jsx_runtime from 'react/jsx-runtime';
 import * as React$1 from 'react';
-import { ReactNode, ReactElement, ComponentType, HTMLAttributes, InputHTMLAttributes, TimeHTMLAttributes } from 'react';
+import { ReactNode, CSSProperties, ReactElement, ComponentType, HTMLAttributes, InputHTMLAttributes, TimeHTMLAttributes } from 'react';
 import * as class_variance_authority_types from 'class-variance-authority/types';
 import { VariantProps } from 'class-variance-authority';
 import { FileWithPath, Accept } from 'react-dropzone';
 import { FieldError } from 'react-hook-form';
+import { StyleSpecification } from 'maplibre-gl';
 import { IFKSelectProps as IFKSelectProps$1 } from '@/components/FKSelect';
 import { LucideIcon } from 'lucide-react';
 import * as AccordionPrimitive from '@radix-ui/react-accordion';
@@ -405,6 +406,71 @@ interface IMarkdownEditorProps {
  * WYSIWYG markdown editor wrapper around Toast UI Editor.
  */
 declare function MarkdownEditor({ value, onChange, placeholder, error, disabled, className, theme, }: IMarkdownEditorProps): react_jsx_runtime.JSX.Element;
+
+type GeoJsonGeometryType = "Point" | "MultiPoint" | "LineString" | "MultiLineString" | "Polygon" | "MultiPolygon";
+interface IGeoJsonGeometry {
+    type: GeoJsonGeometryType;
+    coordinates: unknown;
+}
+interface IGeoJsonFeature {
+    type: "Feature";
+    id?: string | number;
+    geometry: IGeoJsonGeometry | null;
+    properties?: Record<string, unknown> | null;
+}
+interface IGeoJsonFeatureCollection {
+    type: "FeatureCollection";
+    features: IGeoJsonFeature[];
+}
+type GeoJsonMapData = IGeoJsonFeatureCollection | IGeoJsonFeature | IGeoJsonGeometry;
+interface IGeoJsonMapViewState {
+    longitude: number;
+    latitude: number;
+    zoom: number;
+}
+interface IGeoJsonMapPosition {
+    lng: number;
+    lat: number;
+}
+type GeoJsonMapStyle = string | StyleSpecification;
+interface IGeoJsonMapProps {
+    data: GeoJsonMapData;
+    mapStyle?: GeoJsonMapStyle;
+    fitToData?: boolean;
+    maxZoom?: number;
+    initialViewState?: IGeoJsonMapViewState;
+    className?: string;
+    style?: CSSProperties;
+    /**
+     * MapLibre GL JS v6 worker asset URL. Required when the app is bundled
+     * (Next.js, Vite, webpack). Omit for MapLibre v5.
+     */
+    workerUrl?: string;
+    testId?: string;
+    popupTestId?: string;
+    polygonFillColor?: string;
+    polygonFillOpacity?: number;
+    polygonLineColor?: string;
+    polygonLineWidth?: number;
+    renderPopup?: (feature: IGeoJsonFeature) => ReactNode;
+    getFeatureId?: (feature: IGeoJsonFeature, index: number) => string;
+    getPointTestId?: (feature: IGeoJsonFeature, index: number, vertexIndex: number) => string;
+    onFeatureClick?: (feature: IGeoJsonFeature) => void;
+}
+interface IGeoJsonPointMarker {
+    key: string;
+    feature: IGeoJsonFeature;
+    featureIndex: number;
+    vertexIndex: number;
+    position: IGeoJsonMapPosition;
+    label: string;
+}
+
+/**
+ * Map canvas that renders GeoJSON points as HTML pins and polygons as
+ * shaded fill layers. MapLibre is loaded on the client only.
+ */
+declare function GeoJsonMap(props: IGeoJsonMapProps): react_jsx_runtime.JSX.Element;
 
 interface IMultiSelectOption {
     label: string;
@@ -1344,5 +1410,5 @@ declare const Tooltip: React$1.FC<TooltipPrimitive.TooltipProps>;
 declare const TooltipTrigger: React$1.ForwardRefExoticComponent<TooltipPrimitive.TooltipTriggerProps & React$1.RefAttributes<HTMLButtonElement>>;
 declare const TooltipContent: React$1.ForwardRefExoticComponent<Omit<TooltipPrimitive.TooltipContentProps & React$1.RefAttributes<HTMLDivElement>, "ref"> & React$1.RefAttributes<HTMLDivElement>>;
 
-export { Accordion, AccordionContent, AccordionItem, AccordionTrigger, Alert, AlertDescription, AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, AlertDialogPortal, AlertDialogTitle, AlertDialogTrigger, AlertTitle, AlertWithIcon, Badge, Breadcrumb, BreadcrumbEllipsis, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator, Button, Calendar, Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle, Checkbox, ClearButton, Combobox, Command, CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator, CommandShortcut, ConfirmationDialog, DatePicker, DeleteDialog, Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger, DownloadButton, DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuPortal, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger, PumpwoodDropzone as Dropzone, Empty, EmptyContainer, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle, ErrorBoundary, ErrorMessage, ErrorToastContent, FKSelect, FileDropzone, Input, Label, Loading, MarkdownEditor, MultiSelectDropdown, NoResult, Pagination, PopConfirm, Popover, PopoverContent, PopoverTrigger, PumpwoodBadge, PumpwoodCard, PumpwoodTable, Radio, RangePicker, Select$1 as Select, SelectContent, SelectGroup, SelectItem, SelectLabel, Select as SelectPrimitive, SelectScrollDownButton, SelectScrollUpButton, SelectSeparator, SelectTrigger, SelectValue, Sidebar, Skeleton, Spinner, Stack, Table$1 as Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, Table as TablePrimitive, TableRow, TableSkeleton, Tabs, TabsContent, TabsList, TabsTrigger, TagInput, Textarea, Timeline, TimelineContent, TimelineDate, TimelineHeader, TimelineIndicator, TimelineItem, TimelineSeparator, TimelineTitle, Tooltip, TooltipComponent, TooltipContent, TooltipProvider, TooltipTrigger, Typography, badgeVariants, createFKSelectFetcher, fkSelectFetcher, pumpwoodBadgeVariants, useSidebarCollapse };
-export type { ComboboxItem, CreateFKSelectFetcherOptions, DynamicListFn, DynamicListPagination, FKFetcherPageResult, FKFetcherParams, FKFetcherReturn, FKSelectFetcherParams, IAlertWithIconProps, IDatePickerProps, IFKSelectProps, IMarkdownEditorProps, IMultiSelectOption, IRangePickerProps, ISelectFKProps, ISelectProps, IStaticSelectProps, ITableColumn, ITableProps, ITagItem, IUseSidebarCollapseOptions, PopConfirmProps, RetrieveFileFn };
+export { Accordion, AccordionContent, AccordionItem, AccordionTrigger, Alert, AlertDescription, AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, AlertDialogPortal, AlertDialogTitle, AlertDialogTrigger, AlertTitle, AlertWithIcon, Badge, Breadcrumb, BreadcrumbEllipsis, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator, Button, Calendar, Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle, Checkbox, ClearButton, Combobox, Command, CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator, CommandShortcut, ConfirmationDialog, DatePicker, DeleteDialog, Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger, DownloadButton, DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuPortal, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger, PumpwoodDropzone as Dropzone, Empty, EmptyContainer, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle, ErrorBoundary, ErrorMessage, ErrorToastContent, FKSelect, FileDropzone, GeoJsonMap, Input, Label, Loading, MarkdownEditor, MultiSelectDropdown, NoResult, Pagination, PopConfirm, Popover, PopoverContent, PopoverTrigger, PumpwoodBadge, PumpwoodCard, PumpwoodTable, Radio, RangePicker, Select$1 as Select, SelectContent, SelectGroup, SelectItem, SelectLabel, Select as SelectPrimitive, SelectScrollDownButton, SelectScrollUpButton, SelectSeparator, SelectTrigger, SelectValue, Sidebar, Skeleton, Spinner, Stack, Table$1 as Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, Table as TablePrimitive, TableRow, TableSkeleton, Tabs, TabsContent, TabsList, TabsTrigger, TagInput, Textarea, Timeline, TimelineContent, TimelineDate, TimelineHeader, TimelineIndicator, TimelineItem, TimelineSeparator, TimelineTitle, Tooltip, TooltipComponent, TooltipContent, TooltipProvider, TooltipTrigger, Typography, badgeVariants, createFKSelectFetcher, fkSelectFetcher, pumpwoodBadgeVariants, useSidebarCollapse };
+export type { ComboboxItem, CreateFKSelectFetcherOptions, DynamicListFn, DynamicListPagination, FKFetcherPageResult, FKFetcherParams, FKFetcherReturn, FKSelectFetcherParams, GeoJsonGeometryType, GeoJsonMapData, GeoJsonMapStyle, IAlertWithIconProps, IDatePickerProps, IFKSelectProps, IGeoJsonFeature, IGeoJsonFeatureCollection, IGeoJsonGeometry, IGeoJsonMapPosition, IGeoJsonMapProps, IGeoJsonMapViewState, IGeoJsonPointMarker, IMarkdownEditorProps, IMultiSelectOption, IRangePickerProps, ISelectFKProps, ISelectProps, IStaticSelectProps, ITableColumn, ITableProps, ITagItem, IUseSidebarCollapseOptions, PopConfirmProps, RetrieveFileFn };
