@@ -42,6 +42,33 @@ export const Default: Story = {
     ),
 };
 
+export const Loading: Story = {
+    render: () => (
+        <div className="w-[600px]">
+            <Accordion
+                type="single"
+                collapsible
+                defaultValue="loading-section"
+                className="w-full"
+            >
+                <AccordionItem value="loading-section" className="border-b">
+                    <AccordionTrigger
+                        isLoading
+                        className="hover:no-underline text-base font-normal"
+                    >
+                        Carregando dados
+                    </AccordionTrigger>
+                    <AccordionContent className="pt-4">
+                        <p className="text-sm text-muted-foreground">
+                            Conteúdo disponível após o carregamento.
+                        </p>
+                    </AccordionContent>
+                </AccordionItem>
+            </Accordion>
+        </div>
+    ),
+};
+
 export const MultipleSections: Story = {
     render: () => (
         <div className="w-[600px]">
