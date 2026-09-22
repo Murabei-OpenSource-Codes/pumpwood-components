@@ -3,6 +3,7 @@ export { type CreateFKSelectFetcherOptions, createFKSelectFetcher, type DynamicL
 export { AlertWithIcon, type IAlertWithIconProps, } from "./AlertWithIcon";
 export { PumpwoodBadge, pumpwoodBadgeVariants, } from "./Badge";
 export { PumpwoodCard } from "./Card";
+export { CurrencyRangeSlider, type ICurrencyRangeSliderProps, } from "./CurrencyRangeSlider";
 export { ClearButton } from "./ClearButton";
 export { ConfirmationDialog } from "./ConfirmationDialog";
 export { DatePicker, type IDatePickerProps } from "./DatePicker";
@@ -52,6 +53,7 @@ export { Popover, PopoverContent, PopoverTrigger, } from "./ui/popover";
 export { Radio } from "./ui/radio";
 export { Select as SelectPrimitive, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectScrollDownButton, SelectScrollUpButton, SelectSeparator, SelectTrigger, SelectValue, } from "./ui/select";
 export { Skeleton } from "./ui/skeleton";
+export { Slider } from "./ui/slider";
 export { Spinner } from "./ui/spinner";
 export { Table as TablePrimitive, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow, } from "./ui/table";
 export { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";

@@ -1,5 +1,5 @@
 import * as react_jsx_runtime from 'react/jsx-runtime';
-import * as react from 'react';
+import * as React from 'react';
 import { ReactNode, ComponentType, ImgHTMLAttributes } from 'react';
 import { LucideIcon } from 'lucide-react';
 
@@ -247,7 +247,7 @@ interface IDetailPageProps {
 /**
  * Reusable detail page shell with header, loading/error states and sections.
  */
-declare function DetailPage({ title, titleAddon, isLoading, error, onBack, actions, sections, children, loadingComponent, errorComponent, backButtonLabel, }: IDetailPageProps): string | number | bigint | boolean | Iterable<ReactNode> | Promise<string | number | bigint | boolean | react.ReactPortal | react.ReactElement<unknown, string | react.JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | react_jsx_runtime.JSX.Element;
+declare function DetailPage({ title, titleAddon, isLoading, error, onBack, actions, sections, children, loadingComponent, errorComponent, backButtonLabel, }: IDetailPageProps): string | number | boolean | Iterable<ReactNode> | react_jsx_runtime.JSX.Element;
 
 /**
  * Interface representing a form field specification
@@ -291,7 +291,7 @@ interface IAutoFormContentProps {
         error?: string;
         disabled?: boolean;
         fieldKey: string;
-    }) => react.ReactNode>;
+    }) => React.ReactNode>;
 }
 declare function AutoFormContent({ fields, values: externalValues, defaultValue, onChange, errors, config, customFields, }: IAutoFormContentProps): react_jsx_runtime.JSX.Element;
 

@@ -17,6 +17,10 @@ export {
 	pumpwoodBadgeVariants,
 } from "./Badge";
 export { PumpwoodCard } from "./Card";
+export {
+	CurrencyRangeSlider,
+	type ICurrencyRangeSliderProps,
+} from "./CurrencyRangeSlider";
 export { ClearButton } from "./ClearButton";
 export { ConfirmationDialog } from "./ConfirmationDialog";
 export { DatePicker, type IDatePickerProps } from "./DatePicker";
@@ -194,6 +198,7 @@ export {
 	SelectValue,
 } from "./ui/select";
 export { Skeleton } from "./ui/skeleton";
+export { Slider } from "./ui/slider";
 export { Spinner } from "./ui/spinner";
 export {
 	Table as TablePrimitive,

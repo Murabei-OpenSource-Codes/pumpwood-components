@@ -21,4 +21,4 @@ export interface IDetailPageProps {
 /**
  * Reusable detail page shell with header, loading/error states and sections.
  */
-export declare function DetailPage({ title, titleAddon, isLoading, error, onBack, actions, sections, children, loadingComponent, errorComponent, backButtonLabel, }: IDetailPageProps): string | number | bigint | boolean | Iterable<ReactNode> | Promise<string | number | bigint | boolean | import("react").ReactPortal | import("react").ReactElement<unknown, string | import("react").JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | import("react/jsx-runtime").JSX.Element;
+export declare function DetailPage({ title, titleAddon, isLoading, error, onBack, actions, sections, children, loadingComponent, errorComponent, backButtonLabel, }: IDetailPageProps): string | number | boolean | Iterable<ReactNode> | import("react/jsx-runtime").JSX.Element;

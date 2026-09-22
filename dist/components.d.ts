@@ -20,6 +20,7 @@ import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu';
 import * as LabelPrimitive from '@radix-ui/react-label';
 import * as PopoverPrimitive from '@radix-ui/react-popover';
 import * as SelectPrimitive from '@radix-ui/react-select';
+import * as SliderPrimitive from '@radix-ui/react-slider';
 import * as TabsPrimitive from '@radix-ui/react-tabs';
 import * as TooltipPrimitive from '@radix-ui/react-tooltip';
 
@@ -136,7 +137,7 @@ interface IAlertWithIconProps {
 declare function AlertWithIcon({ icon, title, description, variant, className, }: IAlertWithIconProps): react_jsx_runtime.JSX.Element;
 
 declare const pumpwoodBadgeVariants: (props?: ({
-    variant?: "destructive" | "primary" | "secondary" | "warning" | "muted" | null | undefined;
+    variant?: "muted" | "destructive" | "primary" | "secondary" | "warning" | null | undefined;
     size?: "default" | "sm" | "lg" | null | undefined;
 } & class_variance_authority_types.ClassProp) | undefined) => string;
 interface PumpwoodBadgeProps extends React.HTMLAttributes<HTMLDivElement>, VariantProps<typeof pumpwoodBadgeVariants> {
@@ -175,6 +176,33 @@ declare const PumpwoodCard: {
     Title: React$1.ForwardRefExoticComponent<React$1.HTMLAttributes<HTMLDivElement> & React$1.RefAttributes<HTMLDivElement>>;
     Description: React$1.ForwardRefExoticComponent<React$1.HTMLAttributes<HTMLDivElement> & React$1.RefAttributes<HTMLDivElement>>;
 };
+
+interface ICurrencyRangeSliderProps {
+    id?: string;
+    "data-testid"?: string;
+    label?: string;
+    domainMin?: number;
+    domainMax?: number;
+    step?: number;
+    minValue: number;
+    maxValue: number;
+    onMinChange: (value: number) => void;
+    onMaxChange: (value: number) => void;
+    formatValue?: (value: number) => string;
+    className?: string;
+    /** When true, shows editable numeric inputs for min and max below the slider. */
+    showNumericInputs?: boolean;
+    minInputLabel?: string;
+    maxInputLabel?: string;
+    minReadoutTestId?: string;
+    maxReadoutTestId?: string;
+    minInputTestId?: string;
+    maxInputTestId?: string;
+}
+/**
+ * Range slider for currency values with formatted min/max readouts.
+ */
+declare const CurrencyRangeSlider: ({ id, "data-testid": dataTestId, label, domainMin, domainMax, step, minValue, maxValue, onMinChange, onMaxChange, formatValue, className, showNumericInputs, minInputLabel, maxInputLabel, minReadoutTestId, maxReadoutTestId, minInputTestId, maxInputTestId, }: ICurrencyRangeSliderProps) => react_jsx_runtime.JSX.Element;
 
 declare const ClearButton: ({ handleClear }: {
     handleClear: () => void;
@@ -1342,6 +1370,8 @@ declare const SelectSeparator: React$1.ForwardRefExoticComponent<Omit<SelectPrim
  */
 declare function Skeleton({ className, ...props }: React$1.HTMLAttributes<HTMLDivElement>): react_jsx_runtime.JSX.Element;
 
+declare const Slider: React$1.ForwardRefExoticComponent<Omit<SliderPrimitive.SliderProps & React$1.RefAttributes<HTMLSpanElement>, "ref"> & React$1.RefAttributes<HTMLSpanElement>>;
+
 /**
  * Spinner component
  * @param size the size of the spinner in REM
@@ -1413,5 +1443,5 @@ declare const Tooltip: React$1.FC<TooltipPrimitive.TooltipProps>;
 declare const TooltipTrigger: React$1.ForwardRefExoticComponent<TooltipPrimitive.TooltipTriggerProps & React$1.RefAttributes<HTMLButtonElement>>;
 declare const TooltipContent: React$1.ForwardRefExoticComponent<Omit<TooltipPrimitive.TooltipContentProps & React$1.RefAttributes<HTMLDivElement>, "ref"> & React$1.RefAttributes<HTMLDivElement>>;
 
-export { Accordion, AccordionContent, AccordionItem, AccordionTrigger, Alert, AlertDescription, AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, AlertDialogPortal, AlertDialogTitle, AlertDialogTrigger, AlertTitle, AlertWithIcon, Badge, Breadcrumb, BreadcrumbEllipsis, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator, Button, Calendar, Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle, Checkbox, ClearButton, Combobox, Command, CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator, CommandShortcut, ConfirmationDialog, DatePicker, DeleteDialog, Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger, DownloadButton, DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuPortal, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger, PumpwoodDropzone as Dropzone, Empty, EmptyContainer, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle, ErrorBoundary, ErrorMessage, ErrorToastContent, FKSelect, FileDropzone, GeoJsonMap, Input, Label, Loading, MarkdownEditor, MultiSelectDropdown, NoResult, Pagination, PopConfirm, Popover, PopoverContent, PopoverTrigger, PumpwoodBadge, PumpwoodCard, PumpwoodTable, Radio, RangePicker, Select$1 as Select, SelectContent, SelectGroup, SelectItem, SelectLabel, Select as SelectPrimitive, SelectScrollDownButton, SelectScrollUpButton, SelectSeparator, SelectTrigger, SelectValue, Sidebar, Skeleton, Spinner, Stack, Table$1 as Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, Table as TablePrimitive, TableRow, TableSkeleton, Tabs, TabsContent, TabsList, TabsTrigger, TagInput, Textarea, Timeline, TimelineContent, TimelineDate, TimelineHeader, TimelineIndicator, TimelineItem, TimelineSeparator, TimelineTitle, Tooltip, TooltipComponent, TooltipContent, TooltipProvider, TooltipTrigger, Typography, badgeVariants, createFKSelectFetcher, fkSelectFetcher, pumpwoodBadgeVariants, useSidebarCollapse };
-export type { ComboboxItem, CreateFKSelectFetcherOptions, DynamicListFn, DynamicListPagination, FKFetcherPageResult, FKFetcherParams, FKFetcherReturn, FKSelectFetcherParams, GeoJsonGeometryType, GeoJsonMapData, GeoJsonMapStyle, IAlertWithIconProps, IDatePickerProps, IFKSelectProps, IGeoJsonFeature, IGeoJsonFeatureCollection, IGeoJsonGeometry, IGeoJsonMapPosition, IGeoJsonMapProps, IGeoJsonMapViewState, IGeoJsonPointMarker, IMarkdownEditorProps, IMultiSelectOption, IRangePickerProps, ISelectFKProps, ISelectProps, IStaticSelectProps, ITableColumn, ITableProps, ITagItem, IUseSidebarCollapseOptions, PopConfirmProps, RetrieveFileFn };
+export { Accordion, AccordionContent, AccordionItem, AccordionTrigger, Alert, AlertDescription, AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, AlertDialogPortal, AlertDialogTitle, AlertDialogTrigger, AlertTitle, AlertWithIcon, Badge, Breadcrumb, BreadcrumbEllipsis, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator, Button, Calendar, Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle, Checkbox, ClearButton, Combobox, Command, CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator, CommandShortcut, ConfirmationDialog, CurrencyRangeSlider, DatePicker, DeleteDialog, Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger, DownloadButton, DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuPortal, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger, PumpwoodDropzone as Dropzone, Empty, EmptyContainer, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle, ErrorBoundary, ErrorMessage, ErrorToastContent, FKSelect, FileDropzone, GeoJsonMap, Input, Label, Loading, MarkdownEditor, MultiSelectDropdown, NoResult, Pagination, PopConfirm, Popover, PopoverContent, PopoverTrigger, PumpwoodBadge, PumpwoodCard, PumpwoodTable, Radio, RangePicker, Select$1 as Select, SelectContent, SelectGroup, SelectItem, SelectLabel, Select as SelectPrimitive, SelectScrollDownButton, SelectScrollUpButton, SelectSeparator, SelectTrigger, SelectValue, Sidebar, Skeleton, Slider, Spinner, Stack, Table$1 as Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, Table as TablePrimitive, TableRow, TableSkeleton, Tabs, TabsContent, TabsList, TabsTrigger, TagInput, Textarea, Timeline, TimelineContent, TimelineDate, TimelineHeader, TimelineIndicator, TimelineItem, TimelineSeparator, TimelineTitle, Tooltip, TooltipComponent, TooltipContent, TooltipProvider, TooltipTrigger, Typography, badgeVariants, createFKSelectFetcher, fkSelectFetcher, pumpwoodBadgeVariants, useSidebarCollapse };
+export type { ComboboxItem, CreateFKSelectFetcherOptions, DynamicListFn, DynamicListPagination, FKFetcherPageResult, FKFetcherParams, FKFetcherReturn, FKSelectFetcherParams, GeoJsonGeometryType, GeoJsonMapData, GeoJsonMapStyle, IAlertWithIconProps, ICurrencyRangeSliderProps, IDatePickerProps, IFKSelectProps, IGeoJsonFeature, IGeoJsonFeatureCollection, IGeoJsonGeometry, IGeoJsonMapPosition, IGeoJsonMapProps, IGeoJsonMapViewState, IGeoJsonPointMarker, IMarkdownEditorProps, IMultiSelectOption, IRangePickerProps, ISelectFKProps, ISelectProps, IStaticSelectProps, ITableColumn, ITableProps, ITagItem, IUseSidebarCollapseOptions, PopConfirmProps, RetrieveFileFn };
