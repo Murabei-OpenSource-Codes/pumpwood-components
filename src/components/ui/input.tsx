@@ -14,8 +14,9 @@ const inputClassName =
 	"placeholder:text-muted-foreground";
 
 const inputWithIconWrapperClassName =
-	fieldTriggerClassName + " gap-2 focus-within:ring-2 " +
-	"focus-within:ring-ring focus-within:ring-offset-2";
+	fieldTriggerClassName +
+	" gap-2 focus-within:ring-0 focus-within:ring-offset-0 " +
+	"focus-within:border-[hsl(var(--focus-ring))]";
 
 const inputWithIconInnerClassName =
 	"min-h-0 min-w-0 w-auto flex-1 rounded-none border-0 bg-transparent p-0 " +

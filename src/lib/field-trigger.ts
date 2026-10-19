@@ -4,8 +4,8 @@ export const fieldTriggerClassName =
     "flex h-10 w-full items-center rounded-md border border-input " +
     "bg-background px-3 text-sm font-normal shadow-none " +
     "hover:bg-[hsl(var(--hover-ring))] hover:border-[hsl(var(--focus-ring))] " +
-    "focus:outline-none focus-visible:ring-2 focus-visible:ring-ring " +
-    "focus-visible:ring-offset-2 ring-offset-background " +
+    "focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 " +
+    "focus-visible:border-[hsl(var(--focus-ring))] " +
     "disabled:cursor-not-allowed disabled:opacity-50";
 
 export const fieldTriggerPlaceholderClassName = "text-muted-foreground";

@@ -190,19 +190,22 @@ interface ICurrencyRangeSliderProps {
     onMaxChange: (value: number) => void;
     formatValue?: (value: number) => string;
     className?: string;
-    /** When true, shows editable numeric inputs for min and max below the slider. */
+    /** When true, shows editable numeric inputs beside the slider. */
     showNumericInputs?: boolean;
+    /** When false, hides per-input labels (min/max); use `label` for the field. */
+    showInputLabels?: boolean;
     minInputLabel?: string;
     maxInputLabel?: string;
     minReadoutTestId?: string;
     maxReadoutTestId?: string;
     minInputTestId?: string;
     maxInputTestId?: string;
+    sliderClassName?: string;
 }
 /**
  * Range slider for currency values with formatted min/max readouts.
  */
-declare const CurrencyRangeSlider: ({ id, "data-testid": dataTestId, label, domainMin, domainMax, step, minValue, maxValue, onMinChange, onMaxChange, formatValue, className, showNumericInputs, minInputLabel, maxInputLabel, minReadoutTestId, maxReadoutTestId, minInputTestId, maxInputTestId, }: ICurrencyRangeSliderProps) => react_jsx_runtime.JSX.Element;
+declare const CurrencyRangeSlider: ({ id, "data-testid": dataTestId, label, domainMin, domainMax, step, minValue, maxValue, onMinChange, onMaxChange, formatValue, className, showNumericInputs, showInputLabels, minInputLabel, maxInputLabel, minReadoutTestId, maxReadoutTestId, minInputTestId, maxInputTestId, sliderClassName, }: ICurrencyRangeSliderProps) => react_jsx_runtime.JSX.Element;
 
 declare const ClearButton: ({ handleClear }: {
     handleClear: () => void;
