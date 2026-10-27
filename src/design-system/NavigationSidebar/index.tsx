@@ -130,9 +130,9 @@ export function NavigationSidebar({
             isCollapsing={isCollapsing}
             onToggleCollapse={handleCollapseSidebar}
             onTransitionEnd={handleTransitionEnd}
-            className="h-full"
+            className="flex h-full min-h-0 min-w-0 flex-1 flex-col"
         >
-            <Stack className="w-full shrink-0 items-center gap-1 mb-2">
+            <Stack className="mb-2 w-full shrink-0 items-center gap-1">
                 <Sidebar.Toggle />
 
                 <Sidebar.Logo

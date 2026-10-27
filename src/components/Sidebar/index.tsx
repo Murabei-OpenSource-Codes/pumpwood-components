@@ -67,7 +67,7 @@ function Root({
             <nav
                 className={cn(
                     sidebarWidth,
-                    "smaller:p-3 px-2 py-6 flex flex-col items-stretch bg-primary mb-2 rounded-lg transition-all duration-300 ease-in-out h-full min-h-0",
+                    "smaller:p-3 px-2 py-6 flex flex-col items-stretch overflow-hidden bg-primary mb-2 rounded-lg transition-all duration-300 ease-in-out h-full min-h-0",
                     className,
                 )}
                 onTransitionEnd={onTransitionEnd}
@@ -111,7 +111,9 @@ function Content({ children, className }: SidebarContentProps) {
     return (
         <Stack
             className={cn(
-                "w-full flex-1 min-h-0 items-stretch gap-1 overflow-y-auto",
+                "w-full min-h-0 flex-1 items-stretch gap-1 overflow-y-auto overflow-x-hidden overscroll-y-contain",
+                "scrollbar-thin [scrollbar-color:rgba(255,255,255,0.35)_transparent] [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-white/35",
+                "[&>*]:shrink-0",
                 className,
             )}
         >
@@ -129,7 +131,11 @@ export interface SidebarFooterProps {
 }
 
 function Footer({ children, className }: SidebarFooterProps) {
-    return <div className={cn("mt-auto w-full", className)}>{children}</div>;
+    return (
+        <div className={cn("mt-auto w-full shrink-0", className)}>
+            {children}
+        </div>
+    );
 }
 
 /**
@@ -260,18 +266,27 @@ function Link({
     LinkComponent = ({ children, ...props }) => <a {...props}>{children}</a>,
 }: SidebarLinkProps) {
     const { isCollapsed, isCollapsing } = useSidebar();
+    const showCollapsed = isCollapsed && !isCollapsing;
 
     return (
         <LinkComponent
             href={href}
             title={typeof children === "string" ? children : undefined}
             className={cn(
-                "flex w-full h-12 smaller:p-3 p-4 font-bold text-white rounded-md overflow-hidden transition-all duration-300 ease-in-out hover:bg-white/5",
+                "flex h-12 w-full shrink-0 smaller:p-3 p-4 font-bold text-white rounded-md overflow-hidden transition-all duration-300 ease-in-out hover:bg-white/5",
+                showCollapsed ? "justify-center" : "",
                 active ? "bg-white/5" : "",
                 className,
             )}
         >
-            <Stack direction="row" gap={2} className="w-full items-center">
+            <Stack
+                direction="row"
+                gap={2}
+                className={cn(
+                    "w-full items-center",
+                    showCollapsed ? "justify-center" : "",
+                )}
+            >
                 <Icon className="size-6 shrink-0" />
                 {!isCollapsed && !isCollapsing && (
                     <span className="transition-opacity duration-300 ease-in-out opacity-100">
@@ -303,9 +318,10 @@ function NavGroup({
     className,
 }: SidebarNavGroupProps) {
     const { isCollapsed, isCollapsing } = useSidebar();
+    const showCollapsed = isCollapsed && !isCollapsing;
 
     return (
-        <Stack className={cn("w-full gap-0", className)}>
+        <Stack className={cn("w-full shrink-0 gap-0", className)}>
             <Button
                 type="button"
                 title={title}
@@ -313,14 +329,18 @@ function NavGroup({
                 variant="ghost"
                 height={48}
                 className={cn(
-                    "w-full smaller:p-3 p-4 font-bold text-white hover:bg-white/5 hover:text-white justify-start rounded-md transition-all duration-300 ease-in-out",
+                    "w-full smaller:p-3 p-4 font-bold text-white hover:bg-white/5 hover:text-white rounded-md transition-all duration-300 ease-in-out",
+                    showCollapsed ? "justify-center" : "justify-start",
                     isActive ? "bg-white/5" : "",
                 )}
             >
                 <Stack
                     direction="row"
                     gap={2}
-                    className="w-full items-center"
+                    className={cn(
+                        "w-full items-center",
+                        showCollapsed ? "justify-center" : "",
+                    )}
                 >
                     <Icon className="size-6 shrink-0" />
                     {!isCollapsed && !isCollapsing && (
@@ -341,18 +361,11 @@ function NavGroup({
                 </Stack>
             </Button>
 
-            {!isCollapsed && !isCollapsing && (
-                <div
-                    className={cn(
-                        "overflow-hidden transition-all duration-300 ease-in-out",
-                        isExpanded
-                            ? "max-h-96 opacity-100 mt-1"
-                            : "max-h-0 opacity-0",
-                    )}
-                >
-                    <Stack className="w-full gap-1 pl-9 pr-1">{children}</Stack>
-                </div>
-            )}
+            {!isCollapsed && !isCollapsing && isExpanded ? (
+                <Stack className="mt-1 w-full shrink-0 gap-1 pl-9 pr-1">
+                    {children}
+                </Stack>
+            ) : null}
         </Stack>
     );
 }
@@ -382,7 +395,7 @@ function NavSubLink({
             href={href}
             title={title}
             className={cn(
-                "flex w-full h-10 items-center px-3 text-sm text-white rounded-md transition-all duration-200 ease-in-out hover:bg-white/5",
+                "flex h-10 w-full shrink-0 items-center px-3 text-sm text-white rounded-md transition-all duration-200 ease-in-out hover:bg-white/5",
                 active ? "bg-white/10 font-semibold" : "",
                 className,
             )}
@@ -401,6 +414,7 @@ export interface SidebarActionProps {
 
 function Action({ icon: Icon, label, onClick, className }: SidebarActionProps) {
     const { isCollapsed, isCollapsing } = useSidebar();
+    const showCollapsed = isCollapsed && !isCollapsing;
 
     return (
         <Button
@@ -409,11 +423,19 @@ function Action({ icon: Icon, label, onClick, className }: SidebarActionProps) {
             variant="ghost"
             height={48}
             className={cn(
-                "w-full smaller:p-3 p-4 font-bold text-white hover:bg-transparent hover:text-white/80 transition-all duration-300 ease-in-out justify-start",
+                "w-full smaller:p-3 p-4 font-bold text-white hover:bg-transparent hover:text-white/80 transition-all duration-300 ease-in-out",
+                showCollapsed ? "justify-center" : "justify-start",
                 className,
             )}
         >
-            <Stack direction="row" gap={2} className="w-full items-center">
+            <Stack
+                direction="row"
+                gap={2}
+                className={cn(
+                    "w-full items-center",
+                    showCollapsed ? "justify-center" : "",
+                )}
+            >
                 <Icon width={24} height={24} className="shrink-0" />
                 {!isCollapsed && !isCollapsing && (
                     <span className="transition-opacity duration-300 ease-in-out opacity-100">
