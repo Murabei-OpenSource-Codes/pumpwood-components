@@ -2,7 +2,7 @@ export { DateRangeFilter } from "./Filters/DateRangeFilter";
 export { CreatedByUserFilter } from "./Filters/CreatedByUserFilter";
 export { CombinedFilterTable } from "./CombinedFilterTable";
 export { KeyValueContent } from "./KeyValueContent";
-export { LoginCard, LoginCardSSO, AuthenticatedView, NotAuthenticatedView, type ILoginCardProps, type ILoginCardSSOProps, type IAuthenticatedViewProps, type INotAuthenticatedViewProps, } from "./Auth";
+export { LoginCard, LoginCardSSO, LoginPageV2, LoginPageSSOV2, LoginPageLayoutV2, AuthenticatedView, NotAuthenticatedView, type ILoginCardProps, type ILoginCardSSOProps, type ILoginPageV2Props, type ILoginPageSSOV2Props, type ILoginPageLayoutV2Props, type IAuthenticatedViewProps, type INotAuthenticatedViewProps, } from "./Auth";
 export { AutoDetailContent, DetailPage, formatDetailLabel, formatDetailValue, getDetailFieldValue, FULL_WIDTH_DETAIL_FIELDS, type IAutoDetailContentProps, type IDetailPageProps, type IDetailPageSection, type IDetailFieldConfig, type IDetailSection, type IFormatDetailValueOptions, } from "./DetailPage";
 export { AutoFormContent, type IFormField, type IFormSection, type IAutoFormContentProps, } from "./AutoFormContent";
 export { default as CustomBreadcrumb } from "./CustomBreadcrumb";

@@ -5,10 +5,16 @@ export { KeyValueContent } from "./KeyValueContent";
 export {
 	LoginCard,
 	LoginCardSSO,
+	LoginPageV2,
+	LoginPageSSOV2,
+	LoginPageLayoutV2,
 	AuthenticatedView,
 	NotAuthenticatedView,
 	type ILoginCardProps,
 	type ILoginCardSSOProps,
+	type ILoginPageV2Props,
+	type ILoginPageSSOV2Props,
+	type ILoginPageLayoutV2Props,
 	type IAuthenticatedViewProps,
 	type INotAuthenticatedViewProps,
 } from "./Auth";

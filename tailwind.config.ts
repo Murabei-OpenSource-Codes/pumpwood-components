@@ -5,6 +5,7 @@ const config: Config = {
     darkMode: "class",
     content: [
         "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
+        "./src/design-system/**/*.{js,ts,jsx,tsx,mdx}",
         "./src/stories/**/*.{js,ts,jsx,tsx,mdx}",
         "./src/lib/**/*.{js,ts,jsx,tsx,mdx}",
     ],
