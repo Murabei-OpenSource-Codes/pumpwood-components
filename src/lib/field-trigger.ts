@@ -3,6 +3,7 @@
 export const fieldTriggerClassName =
     "flex h-10 w-full items-center rounded-md border border-input " +
     "bg-background px-3 text-sm font-normal shadow-none " +
+    "transition-colors duration-500 ease-out " +
     "hover:bg-[hsl(var(--hover-ring))] hover:border-[hsl(var(--focus-ring))] " +
     "focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 " +
     "focus-visible:border-[hsl(var(--focus-ring))] " +
