@@ -130,7 +130,8 @@ interface ILoginCardSSOProps {
  */
 declare function LoginCardSSO({ onLoginSSO, onRedirect, onError, sessionExpired, sessionExpiredAlert, forgotPasswordHref, forgotPasswordLabel, emailLabel, submitLabel, unauthorizedMessage, genericErrorMessage, LinkComponent, className, }: ILoginCardSSOProps): react_jsx_runtime.JSX.Element;
 
-interface ILoginPageV2Props extends ILoginCardProps {
+type LoginPageVariant = "default" | "v2";
+interface ILoginPageSplitLayoutProps {
     brand: ReactNode;
     brandPanelClassName?: string;
     formPanelClassName?: string;
@@ -139,26 +140,29 @@ interface ILoginPageV2Props extends ILoginCardProps {
     cardClassName?: string;
     welcomeTitle?: ReactNode;
     welcomeDescription?: ReactNode;
+    /** Murabei easter-egg graph on the form panel (default: on). */
+    formPanelNetwork?: boolean;
 }
-/**
- * Split-screen login (V2). Auth logic lives in LoginCard unchanged.
- */
-declare function LoginPageV2({ brand, brandPanelClassName, formPanelClassName, pageClassName, backgroundImageSrc, cardClassName, welcomeTitle, welcomeDescription, className, ...loginCardProps }: ILoginPageV2Props): react_jsx_runtime.JSX.Element;
 
-interface ILoginPageSSOV2Props extends ILoginCardSSOProps {
-    brand: ReactNode;
-    brandPanelClassName?: string;
-    formPanelClassName?: string;
-    pageClassName?: string;
-    backgroundImageSrc?: string;
-    cardClassName?: string;
-    welcomeTitle?: ReactNode;
-    welcomeDescription?: ReactNode;
-}
+type ILoginPageProps = ILoginCardProps & ({
+    variant?: "default";
+} | ({
+    variant: "v2";
+} & ILoginPageSplitLayoutProps));
 /**
- * Split-screen SSO login (V2). Auth logic lives in LoginCardSSO unchanged.
+ * Full-page login. Use variant="v2" for split-screen layout; auth logic lives in LoginCard.
  */
-declare function LoginPageSSOV2({ brand, brandPanelClassName, formPanelClassName, pageClassName, backgroundImageSrc, cardClassName, welcomeTitle, welcomeDescription, className, ...loginCardProps }: ILoginPageSSOV2Props): react_jsx_runtime.JSX.Element;
+declare function LoginPage(props: ILoginPageProps): react_jsx_runtime.JSX.Element;
+
+type ILoginPageSSOProps = ILoginCardSSOProps & ({
+    variant?: "default";
+} | ({
+    variant: "v2";
+} & ILoginPageSplitLayoutProps));
+/**
+ * Full-page SSO login. Use variant="v2" for split-screen layout; auth logic lives in LoginCardSSO.
+ */
+declare function LoginPageSSO(props: ILoginPageSSOProps): react_jsx_runtime.JSX.Element;
 
 interface ILoginPageLayoutV2Props {
     brand: ReactNode;
@@ -169,12 +173,33 @@ interface ILoginPageLayoutV2Props {
     backgroundImageSrc?: string;
     welcomeTitle?: ReactNode;
     welcomeDescription?: ReactNode;
+    formPanelNetwork?: boolean;
 }
 /**
  * Split-screen shell for login V2. Two grid children only so Tailwind
  * `lg:grid-cols-2` stays a true 50/50 split.
  */
-declare function LoginPageLayoutV2({ brand, children, brandPanelClassName, formPanelClassName, pageClassName, backgroundImageSrc, welcomeTitle, welcomeDescription, }: ILoginPageLayoutV2Props): react_jsx_runtime.JSX.Element;
+declare function LoginPageLayoutV2({ brand, children, brandPanelClassName, formPanelClassName, pageClassName, backgroundImageSrc, welcomeTitle, welcomeDescription, formPanelNetwork, }: ILoginPageLayoutV2Props): react_jsx_runtime.JSX.Element;
+
+interface ILoginFormPanelNetworkNode {
+    id: string;
+    x: number;
+    y: number;
+    title: string;
+    message: string;
+}
+interface ILoginFormPanelNetworkEdge {
+    from: string;
+    to: string;
+}
+declare function LoginFormPanelNetwork({ enabled, className, }: {
+    enabled?: boolean;
+    className?: string;
+}): react_jsx_runtime.JSX.Element | null;
+
+/** Murabei login easter eggs — ciência, colaboração, sistemas complexos e IA. */
+declare const MURABEI_LOGIN_NETWORK_NODES: ILoginFormPanelNetworkNode[];
+declare const MURABEI_LOGIN_NETWORK_EDGES: ILoginFormPanelNetworkEdge[];
 
 interface IAuthenticatedViewProps {
     redirectHref: string;
@@ -406,5 +431,5 @@ interface INavigationSidebarProps {
  */
 declare function NavigationSidebar({ links, iconMap, pathname, isSidebarCollapsedFromQuery, logo, onLogout, logoutIcon, logoutLabel, footerActions, LinkComponent, ImageComponent, }: INavigationSidebarProps): react_jsx_runtime.JSX.Element;
 
-export { AuthenticatedView, AutoDetailContent, AutoFormContent, CombinedFilterTable, CreatedByUserFilter, CustomBreadcrumb, DateRangeFilter, DetailPage, FULL_WIDTH_DETAIL_FIELDS, FilePreview, KeyValueContent, LoginCard, LoginCardSSO, LoginPageLayoutV2, LoginPageSSOV2, LoginPageV2, NavigationSidebar, NotAuthenticatedView, formatDetailLabel, formatDetailValue, getDetailFieldValue };
-export type { FileTypeCategory, IAuthenticatedViewProps, IAutoDetailContentProps, IAutoFormContentProps, IDetailFieldConfig, IDetailPageProps, IDetailPageSection, IDetailSection, IFormField, IFormSection, IFormatDetailValueOptions, ILoginCardProps, ILoginCardSSOProps, ILoginPageLayoutV2Props, ILoginPageSSOV2Props, ILoginPageV2Props, INavigationSidebarLink, INavigationSidebarLogo, INavigationSidebarProps, INavigationSidebarSubLink, INotAuthenticatedViewProps };
+export { AuthenticatedView, AutoDetailContent, AutoFormContent, CombinedFilterTable, CreatedByUserFilter, CustomBreadcrumb, DateRangeFilter, DetailPage, FULL_WIDTH_DETAIL_FIELDS, FilePreview, KeyValueContent, LoginCard, LoginCardSSO, LoginFormPanelNetwork, LoginPage, LoginPageLayoutV2, LoginPageSSO, MURABEI_LOGIN_NETWORK_EDGES, MURABEI_LOGIN_NETWORK_NODES, NavigationSidebar, NotAuthenticatedView, formatDetailLabel, formatDetailValue, getDetailFieldValue };
+export type { FileTypeCategory, IAuthenticatedViewProps, IAutoDetailContentProps, IAutoFormContentProps, IDetailFieldConfig, IDetailPageProps, IDetailPageSection, IDetailSection, IFormField, IFormSection, IFormatDetailValueOptions, ILoginCardProps, ILoginCardSSOProps, ILoginFormPanelNetworkEdge, ILoginFormPanelNetworkNode, ILoginPageLayoutV2Props, ILoginPageProps, ILoginPageSSOProps, ILoginPageSplitLayoutProps, INavigationSidebarLink, INavigationSidebarLogo, INavigationSidebarProps, INavigationSidebarSubLink, INotAuthenticatedViewProps, LoginPageVariant };

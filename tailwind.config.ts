@@ -78,11 +78,28 @@ const config: Config = {
                     to: {
                         height: '0'
                     }
-                }
+                },
+                'login-dot-grid-drift': {
+                    '0%': { backgroundPosition: '0px 0px' },
+                    '100%': { backgroundPosition: '24px 24px' },
+                },
+                'login-node-float': {
+                    '0%, 100%': { transform: 'translate(0, 0)' },
+                    '50%': { transform: 'translate(5px, -4px)' },
+                },
+                'login-node-float-alt': {
+                    '0%, 100%': { transform: 'translate(0, 0)' },
+                    '50%': { transform: 'translate(-4px, 5px)' },
+                },
             },
             animation: {
                 'accordion-down': 'accordion-down 0.2s ease-out',
-                'accordion-up': 'accordion-up 0.2s ease-out'
+                'accordion-up': 'accordion-up 0.2s ease-out',
+                'login-dot-grid-drift':
+                    'login-dot-grid-drift 28s linear infinite',
+                'login-node-float': 'login-node-float 11s ease-in-out infinite',
+                'login-node-float-alt':
+                    'login-node-float-alt 13s ease-in-out infinite',
             }
         }
     },

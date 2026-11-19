@@ -8,9 +8,10 @@ export interface ILoginPageLayoutV2Props {
     backgroundImageSrc?: string;
     welcomeTitle?: ReactNode;
     welcomeDescription?: ReactNode;
+    formPanelNetwork?: boolean;
 }
 /**
  * Split-screen shell for login V2. Two grid children only so Tailwind
  * `lg:grid-cols-2` stays a true 50/50 split.
  */
-export declare function LoginPageLayoutV2({ brand, children, brandPanelClassName, formPanelClassName, pageClassName, backgroundImageSrc, welcomeTitle, welcomeDescription, }: ILoginPageLayoutV2Props): import("react/jsx-runtime").JSX.Element;
+export declare function LoginPageLayoutV2({ brand, children, brandPanelClassName, formPanelClassName, pageClassName, backgroundImageSrc, welcomeTitle, welcomeDescription, formPanelNetwork, }: ILoginPageLayoutV2Props): import("react/jsx-runtime").JSX.Element;
